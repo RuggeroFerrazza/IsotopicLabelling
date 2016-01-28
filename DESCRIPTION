@@ -1,0 +1,10 @@
+Package: IsotopicLabeling
+Type: Package
+Title: A package for analyzing LC-MS isotopic patterns from labeling experiments
+Version: 1.0
+Date: 2016-01-26
+Author: Ruggero Ferrazza
+Maintainer: Ruggero Ferrazza <r.ferrazza@unitn.it>
+Description: The IsotopicLabeling package allows to analyze LC-MS data coming from isotopic labeling experiments. By looking at the isotopic patterns of the specified compound, the package estimates the isotopic abundance of the stable isotope employed during the labeling experiment (either 2H or 13C) within that compound. 
+Depends: xcms, ecipex, stringr, gsubfn
+License: GPL-2
