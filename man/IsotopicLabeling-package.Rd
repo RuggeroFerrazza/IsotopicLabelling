@@ -1,5 +1,5 @@
 \name{IsotopicLabeling-package}
-\alias{IsotopicLabeling-package}
+\alias{IsotopicLabeling-package prova}
 \alias{IsotopicLabeling}
 \docType{package}
 \title{
