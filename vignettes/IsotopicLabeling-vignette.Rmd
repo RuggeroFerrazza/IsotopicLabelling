@@ -8,6 +8,7 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+
 # Introduction
 
 This document describes how to use the IsotopicLabeling R package to analyze MS data coming from isotopic labeling experiments. The main purpose of this package is to serve as a tool to determine the isotopic abundance of the isotope used in the labeling experiments (either <sup>2</sup>H or <sup>13</sup>C), in the metabolites of interest, which can be achieved by inspection of their isotopic patterns. In the following is a practical demonstration of how to use this package, together with a description of the main functions involved.
@@ -50,6 +51,3 @@ Once the table of peaks is available, a single function may be run to directly g
 ```
 fitted_abundances <- main_labeling(peak_table, compound, labeling, mass_shift, RT, RT_shift, chrom_width, initial_abundance)
 ```
-
-
-
