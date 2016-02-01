@@ -1,0 +1,55 @@
+---
+title: "Using the IsotopicLabeling R package"
+author: "Ruggero Ferrazza"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+# Introduction
+
+This document describes how to use the IsotopicLabeling R package to analyze MS data coming from isotopic labeling experiments. The main purpose of this package is to serve as a tool to determine the isotopic abundance of the isotope used in the labeling experiments (either <sup>2</sup>H or <sup>13</sup>C), in the metabolites of interest, which can be achieved by inspection of their isotopic patterns. In the following is a practical demonstration of how to use this package, together with a description of the main functions involved.
+
+# Preparing the data
+
+The IsotopicLabeling R package requires the input data to be an xcmsSet object, the result of LC-MS data pre-processing with the xcms package, the well-known framework for processing and visualization of chromatographically separated and single-spectra mass spectral data. An xcmsSet object basically contains the peak intensities or areas associated to each of the processed samples, together with their average retention time and *m/z*.
+
+The xcmsSet object provided in the package, and easily accessible through the command
+```
+data("xcms_obj")
+```
+is an example of data set that may be obtained from labeling experiments: it contains LC-MS data relative to <sup>13</sup>C labeling experiments on 8 samples: the first 4 represent the lipid extracts of cell coltures grown under normal conditions (natural <sup>13</sup>C abundance), whereas in the last 4 samples the lipids were extracted from cells grown using with uniformly-labeled <sup>13</sup>C glucose (99% <sup>13</sup>C labeling). 
+
+The first thing to do with the package is to convert the xcmsSet object into a data frame of experimental peak intensities or areas (one column for each sample), with the first two columns being the *m/z* and the retention times of the peaks. This data frame can be obtained with the table_xcms function:
+```
+peak_table <- table_xcms(xcms_obj)
+```
+
+which produces a data frame with as many columns as the number of samples, plus the first two columns reserved for *m/z* and the retention times. Below are the first rows of the table resulting from the example data.
+
+```{r, results = "hide", echo = FALSE, message = FALSE, warning = FALSE}
+library(IsotopicLabeling)
+data("xcms_obj")
+peak_table <- table_xcms(xcms_obj)
+```
+```{r, echo = FALSE}
+head(peak_table)
+```
+
+Clearly, it is not compulsory to pre-process the LC-MS data with xcms, since such a data frame can be obtained in a number of other independent ways, such as by using proprietary software of the vendor of the MS instrument. The important thing is to provide to the IsotopicLabeling package a data frame formatted this way: 
+
+- the first column, named "mz", should contain the mass-to-charge ratios of the peaks;
+- the second column, named "rt", should contain the average retention times of the peaks (in seconds);
+- the other columns should be named after the samples (one column for sample), and contain peak intensities or areas.
+
+# Getting the results (quick way)
+
+Once the table of peaks is available, a single function may be run to directly get the needed information:
+```
+fitted_abundances <- main_labeling(peak_table, compound, labeling, mass_shift, RT, RT_shift, chrom_width, initial_abundance)
+```
+
+
+
