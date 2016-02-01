@@ -1,6 +1,10 @@
 ---
 title: "IsotopicLabeling vignette"
 author: "Ruggero Ferrazza"
+=======
+title: "Vignette Title"
+author: "Vignette Author"
+>>>>>>> 66907c2727189112e78bf0f0b18fcbd17dd69ab3
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
