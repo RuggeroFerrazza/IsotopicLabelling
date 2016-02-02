@@ -114,15 +114,10 @@ info$isotopes
 
 Another important object is the "target" vector, which contains the exact masses of all the possible isotopologues of the species of interest coming from the labeling isotope. In the example, the [PC 32:2 + H]<sup>+</sup> adduct has 40 carbon atoms, and therefore the possible isotopologues coming from <sup>13</sup>C span a 41 mass range: from the monoisotopic species, where all the C atoms are <sup>12</sup>C, to the species where all the 40 C atoms are <sup>13</sup>C. However, since the isotopic patterns also depend on the other elements making up the compound, the list of target isotopologues is extended of two *m/z* units beyond the maximum achievable, which is enough for small and medium-sized molecules such as lipids and metabolites. 
 
-Worth of note, 
-ic variants of the species of interest. M+0 is the species where all the atoms (including
-X) are the lighest isotopes; in M+1 one light isotope is replaced by its heaviest
-counterpart, and so forth.isotopic_pattern 5
-nX The number of X atoms. In other words, the number of atoms with unkwown
-isotopic distribution.
-nTOT The total number of atoms of the labeling element (either H+X or C+X).
+The naming of the masses follows this convention:
+- **M+0** is the monoisotopic species, where all the atoms (including X) are the lighest isotopes; 
+- in **M+1** one light isotope (either X or any other element) is replaced by its heaviest counterpart;
+- in **M+2** there have been two replacements, and so forth.
 
- 
-
-What the IsotopicLabeling package aims to do is the opposite: since the relative isotopic distribution  
+The underlying assumption is that the MS resolution is not high enough to resolve the isotopic fine structure, and therefore the replacement of, say, <sup>1</sup>H with <sup>2</sup>H is indistinguishable from the replacement of <sup>12</sup>C with <sup>13</sup>C. This is true for most of the instruments currently used in LC-MS measurements.
 
