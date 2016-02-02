@@ -49,7 +49,8 @@ Clearly, it is not compulsory to pre-process the LC-MS data with xcms, since suc
 
 Once the table of peaks is available, a single function may be run to directly get the needed information:
 ```
-fitted_abundances <- main_labeling(peak_table, compound, labeling, mass_shift, RT, RT_shift, chrom_width, initial_abundance)
+fitted_abundances <- main_labeling(peak_table, compound, labeling, mass_shift, RT, RT_shift, 
+chrom_width, initial_abundance)
 ```
 
 The `main_labeling` function requires some input parameters:
@@ -68,7 +69,8 @@ The `main_labeling` function requires some input parameters:
 
 Using the data set of the example, the following parameters should be entered for the [PC 32:2 + H]<sup>+</sup> adduct:
 ```
-fitted_abundances <- main_labeling(peak_table, compound="X40H77NO8P", labeling="C", mass_shift=0.05, RT=285, RT_shift=20, chrom_width=7, initial_abundance=NA)
+fitted_abundances <- main_labeling(peak_table, compound="X40H77NO8P", labeling="C", 
+mass_shift=0.05, RT=285, RT_shift=20, chrom_width=7, initial_abundance=NA)
 ```
 
 
@@ -115,10 +117,41 @@ info$isotopes
 Another important object is the "target" vector, which contains the exact masses of all the possible isotopologues of the species of interest coming from the labeling isotope. In the example, the [PC 32:2 + H]<sup>+</sup> adduct has 40 carbon atoms, and therefore the possible isotopologues coming from <sup>13</sup>C span a 41 mass range: from the monoisotopic species, where all the C atoms are <sup>12</sup>C, to the species where all the 40 C atoms are <sup>13</sup>C. However, since the isotopic patterns also depend on the other elements making up the compound, the list of target isotopologues is extended of two *m/z* units beyond the maximum achievable, which is enough for small and medium-sized molecules such as lipids and metabolites. 
 
 The naming of the masses follows this convention:
+
 - **M+0** is the monoisotopic species, where all the atoms (including X) are the lighest isotopes; 
 - in **M+1** one light isotope (either X or any other element) is replaced by its heaviest counterpart;
 - in **M+2** there have been two replacements, and so forth.
 
 The underlying assumption is that the MS resolution is not high enough to resolve the isotopic fine structure, and therefore the replacement of, say, <sup>1</sup>H with <sup>2</sup>H is indistinguishable from the replacement of <sup>12</sup>C with <sup>13</sup>C. This is true for most of the instruments currently used in LC-MS measurements.
 
+## Extracting the Experimental Isotopic Patterns
 
+The next step is to extract the isotopic patterns from the experimental data. To this aim, the `isotopic_pattern` function can be used. In the example of [PC 32:2 + H]<sup>+</sup>, it is used this way:
+
+```
+experimental_patterns <- isotopic_pattern(peak_table, info, mass_shift=0.05, RT=285, 
+RT_shift=20, chrom_width=7)
+```
+Among the input parameters are the table of peak intensities or areas, together with the list produced during the previous step. In addition, other parameters have to be specified, which have already been discussed previously, and are also detailed in the reference manual.
+
+The net result is a matrix of the extracted patterns, with the first two columns reserved for the exact *m/z* and the retention times of the extracted peaks:
+```{r, results = "hide", echo = FALSE, message = FALSE, warning = FALSE}
+experimental_patterns <- isotopic_pattern(peak_table, info, mass_shift=0.05, RT=285, 
+RT_shift=20, chrom_width=7)
+```
+```{r}
+head(experimental_patterns, n=3)
+```
+
+In summary, what this function does is the following: 
+
+1. It finds and stores the indices of the peaks that are within the specified *m/z* and RT ranges. This for all the target masses of the info$target vector;
+2. It considers the retention times of the identified indices, and compares them across isotopologues in order to group them: peaks that differ in RT within the specified chromatographic width are assumed to come from two isotopologues of the same species;
+3. At this point, more groups may be left: those having less than two identified isotopologues are discarded. If still more than one group is left, the one is chosen with the smallest difference between true and expected RT.
+
+The figure below 
+
+
+
+
+![Caption of Figure 1](Figure_1.png)
