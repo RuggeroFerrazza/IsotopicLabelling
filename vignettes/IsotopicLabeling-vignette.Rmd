@@ -86,12 +86,43 @@ The details of the output can be found on the reference manual.
  
 The IsotopicLabeling package is based on the fact that the isotopic patterns obtained by MS reflect the isotopic abundances of the elements making up the observed compounds. Over the years, a number of different algorithms have been developed to a-priori compute isotopic patterns, knowing the relative distributions of the isotopes of any element. 
 
-What the IsotopicLabeling package aims to do is the opposite: since the relative isotopic distribution 
+The problem with isotopic labeling experiments, though, is the opposite: a labeling isotope is used, and its relative abundance within the compounds of interest has to be inferred. The IsotopicLabeling package proposes to achieve this by exploiting the hidden information contained in the isotopic patterns. As explained above, an easy way to get this is by using the `main_labeling` function, which is basically a merging of successive functions each performing a particular job. In particular, the main steps are:
 
-starting from experimental isotopic patterns, its purpose is to understand the relative distribution of the isotopes of the element used 
+1. Gather information about the isotopes and all the possible isotopogues arising due to the labeling;
+2. Extract the isotopic patterns of the compound of interest from the experimental data;
+3. Analyze the obtained patterns in order to find the isotopic distribution of the labeling element that best describes the patterns.
 
+Although the `main_labeling` function can perform all these steps at once, it is also possible to run separate functions for each of them. In the following, for the sake of explanation the second route is covered, an the steps are detailed.
+
+## Isotopes and Isotopologues
+
+The first function run by `main_labeling` is `isotopic_information`, which aims at gathering important information that will be required by the other functions of the package. It requires as input values the compound of interest, together with the type of labeling; in the example of [PC 32:2 + H]<sup>+</sup>, this would be:
+```
+info <- isotopic_information(compound="X40H77NO8P", labeling="C")
+```
+As detailed in the reference manual, the output is a named list:
+```{r, results = "hide", echo = FALSE, message = FALSE, warning = FALSE}
+info <- isotopic_information(compound="X40H77NO8P", labeling="C")
+```
+```{r}
+attributes(info)
+```
+In particular, "isotopes" is a table with the natural isotopic abundances of the elements present in the compound, with the two isotopes of the labeling element X being given NA values:
+```{r}
+info$isotopes
+```
+
+Another important object is the "target" vector, which contains the exact masses of all the possible isotopologues of the species of interest coming from the labeling isotope. In the example, the [PC 32:2 + H]<sup>+</sup> adduct has 40 carbon atoms, and therefore the possible isotopologues coming from <sup>13</sup>C span a 41 mass range: from the monoisotopic species, where all the C atoms are <sup>12</sup>C, to the species where all the 40 C atoms are <sup>13</sup>C. However, since the isotopic patterns 
+
+
+ic variants of the species of interest. M+0 is the species where all the atoms (including
+X) are the lighest isotopes; in M+1 one light isotope is replaced by its heaviest
+counterpart, and so forth.isotopic_pattern 5
+nX The number of X atoms. In other words, the number of atoms with unkwown
+isotopic distribution.
+nTOT The total number of atoms of the labeling element (either H+X or C+X).
 
  
- 
-# Surveying the results
+
+What the IsotopicLabeling package aims to do is the opposite: since the relative isotopic distribution  
 
