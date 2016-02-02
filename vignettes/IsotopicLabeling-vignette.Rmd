@@ -120,3 +120,5 @@ The naming of the masses follows this convention:
 - in **M+2** there have been two replacements, and so forth.
 
 The underlying assumption is that the MS resolution is not high enough to resolve the isotopic fine structure, and therefore the replacement of, say, <sup>1</sup>H with <sup>2</sup>H is indistinguishable from the replacement of <sup>12</sup>C with <sup>13</sup>C. This is true for most of the instruments currently used in LC-MS measurements.
+
+
