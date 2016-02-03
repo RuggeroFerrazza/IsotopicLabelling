@@ -201,10 +201,28 @@ Following the analysis, the results contained in the object of class *labeling* 
     ```
     plot(fitted_abundances, what="patterns")
     ```
-    Two of the produced plots are reported here:
+    Two of the plots are reported here:
+    
     ![Figure 2](Figure_2.png)
     ![Figure 3](Figure_3.png)
+    
     In addition, a further plot is created showing the estimated abundances with related standard errors:
+    
     ![Figure 4](Figure_4.png)
     
     Notice that the plots are both shown to the screen and saved as *.png files; see the reference manual for further information. 
+    
+    Alternatively, also the residuals can be looked at by specifying it in the "what" parameter:
+    ```
+    plot(fitted_abundances, what="residuals")
+    ```
+    This produces another series of plots, and the two of them related to the previous ones are the following:
+    
+    ![Figure 5](Figure_5.png)
+    ![Figure 6](Figure_6.png)
+    
+3. The results can be saved to a *.csv file through the `save_labeling` function:
+    ```
+    save_labeling(fitted_abundances)
+    ``` 
+    
