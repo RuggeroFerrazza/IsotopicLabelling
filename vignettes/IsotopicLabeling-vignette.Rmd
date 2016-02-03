@@ -187,4 +187,26 @@ What the function performs can be summarized as follows:
 
 # Looking at the results
 
-Following the analysis,   
+Following the analysis, the results contained in the object of class *labeling* have to be looked at. To this aim, the IsotopicLabeling package provides several alternatives:
+
+1. It is possible to quickly glance at the estimated abundances by using the generic function `summary`. In the example:
+
+    ```{r}
+    summary(fitted_abundances)
+    ```
+
+    A table is produced with in its first row the estimated values, and in the second one the standard deviations of the estimates from the fitting procedure. In the example, it can be seen that the estimates for the unlabeled samples have an average value of 1.08% (close to the natural value of 1.07%), whereas for the labeled samples the average is 98.94%.
+    
+2. A series of plots can be produced with the generic function `plot`, to get the normalized experimental patterns superimposed to the best fitted theoretical patterns:
+    ```
+    plot(fitted_abundances, what="patterns")
+    ```
+    Two of the produced plots are reported here:
+    ![Figure 2](Figure_2.png)
+    ![Figure 3](Figure_3.png)
+    In addition, a further plot is created showing the estimated abundances with related standard errors:
+    ![Figure 4](Figure_4.png)
+    
+    Notice that the plots are both shown to the screen and saved as *.png files; see the reference manual for further information.
+    
+    
