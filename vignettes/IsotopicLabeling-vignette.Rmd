@@ -208,5 +208,3 @@ Following the analysis, the results contained in the object of class *labeling* 
     ![Figure 4](Figure_4.png)
     
     Notice that the plots are both shown to the screen and saved as *.png files; see the reference manual for further information. 
-    
-    
