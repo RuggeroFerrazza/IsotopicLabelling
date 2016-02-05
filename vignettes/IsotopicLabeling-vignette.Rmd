@@ -1,8 +1,11 @@
 ---
 title: "Using the IsotopicLabeling R package"
+output:
+  html_document:
+    toc: true
+    theme: united
 author: "Ruggero Ferrazza"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
@@ -226,3 +229,8 @@ Following the analysis, the results contained in the object of class *labeling* 
     save_labeling(fitted_abundances)
     ``` 
     
+    The file is saved in the working directory, and for each sample it  reports:
+    1. The estimated abundance of the labeling isotope;
+    2. The related standard error from the fitting procedure;
+    3. The percentage deviation between theoretical and experimental isotopic patterns;
+    4. The outcome message from the fitting procedure. 
