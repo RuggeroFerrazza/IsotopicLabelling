@@ -1,37 +1,54 @@
 ---
-title: "Using the IsotopicLabeling R package"
+title: "How to use the IsotopicLabeling R package"
+author: "Ruggero Ferrazza"
+date: '`r Sys.Date()`'
 output:
   html_document:
-    toc: true
+    fig_caption: yes
+    number_sections: yes
     theme: united
-author: "Ruggero Ferrazza"
-date: "`r Sys.Date()`"
-vignette: >
-  %\VignetteIndexEntry{Vignette Title}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+    toc: yes
+  pdf_document:
+    fig_caption: yes
+    number_sections: yes
+    toc: yes
+vignette: |
+  %\VignetteIndexEntry{Vignette Title} %\VignetteEngine{knitr::rmarkdown} %\VignetteEncoding{UTF-8}
 ---
 
 # Introduction
 
-This document describes how to use the IsotopicLabeling R package to analyze MS data coming from isotopic labeling experiments. The main purpose of this package is to serve as a tool to determine the isotopic abundance of the isotope used in the labeling experiments (either ^2^H or ^13^C), in the metabolites of interest, which can be achieved by inspection of their isotopic patterns. In the following is a practical demonstration of how to use this package, together with a description of the main functions involved.
+The purpose of this document is to explain how to use the *IsotopicLabeling* R package to analyse isotopic patterns from mass spectrometric data.
 
-# Preparing the data
+A typical labeling experiment involves the use of substrates enriched in one stable isotope, such as ^2^H or ^13^C; for example, cell cultures can be fed with ^13^C-labeled glucose. Consequently, after the growth period, the metabolites coming from the enriched substrate will have incorporated the labeling isotope.
 
-The IsotopicLabeling R package requires the input data to be an xcmsSet object, the result of LC-MS data pre-processing with the xcms package, the well-known framework for processing and visualization of chromatographically separated and single-spectra mass spectral data. An xcmsSet object basically contains the peak intensities or areas associated to each of the processed samples, together with their average retention time and *m/z*.
+Since the isotopic patterns observed by mass spectrometry reflect the isotopic abundances of the elements making up the observed species, the amount of labeling can be assessed by their proper examination, and the *IsotopicLabeling* R package provides such a tool.
 
-The xcmsSet object provided in the package, and easily accessible through the command
+In the following, a step-by-step explanation on how to use the *IsotopicLabeling* package will be given by using an example data set; the involved functions will be properly intoduced and discussed.
+
+# The MS data set
+
+The *IsotopicLabeling* package requires the MS data to be in the form of a data frame where the first two columns represent the *m/z* and the retention time (RT) of the mass peaks, whereas the other columns contain the peak intensities or areas (one column for each sample).
+
+Since a very popular R package for pre-processing MS data is *xcms*, the *IsotopicLabeling* R package can also accept input data as *xcmsSet* objects, which basically contain the peak intensities or areas associated to each of the processed samples, together with their average retention time and *m/z*. In this case, the function `table_xcms` is available for converting such objects to the required data frame.
+
+The example data set that comes with the *IsotopicLabeling* package is easily accessible through the command
 ```
 data("xcms_obj")
 ```
-is an example of data set that may be obtained from labeling experiments: it contains LC-MS data relative to ^13^C labeling experiments on 8 samples: the first 4 represent the lipid extracts of cell coltures grown under normal conditions (natural ^13^C abundance), whereas in the last 4 samples the lipids were extracted from cells grown using with uniformly-labeled ^13^C glucose (99% ^13^C labeling). 
 
-The first thing to do with the package is to convert the xcmsSet object into a data frame of experimental peak intensities or areas (one column for each sample), with the first two columns being the *m/z* and the retention times of the peaks. This data frame can be obtained with the table_xcms function:
+It is an *xcmsSet* object containing LC-MS data relative to lipid extracts obtained from ^13^C labeling experiments on 8 samples: 
+
+- The first 4 samples come from unlabeled cell coltures (natural ^13^C abundance);
+- In the last 4 samples the cells were grown in a substrate where the glucose was replaced by uniformly-labeled ^13^C glucose (99% ^13^C labeling). 
+
+The conversion of this data set can be achieved through the command:
+
 ```
 peak_table <- table_xcms(xcms_obj)
 ```
 
-which produces a data frame with as many columns as the number of samples, plus the first two columns reserved for *m/z* and the retention times. Below are the first rows of the table resulting from the example data.
+The result is a data frame with as many columns as the number of samples, plus the first two columns reserved for *m/z* and retention times (see the reference manual for more information); here are its first few rows:
 
 ```{r, results = "hide", echo = FALSE, message = FALSE, warning = FALSE}
 library(IsotopicLabeling)
@@ -39,24 +56,24 @@ data("xcms_obj")
 peak_table <- table_xcms(xcms_obj)
 ```
 ```{r, echo = FALSE}
-head(peak_table)
+head(peak_table, n=3)
 ```
 
-Clearly, it is not compulsory to pre-process the LC-MS data with xcms, since such a data frame can be obtained in a number of other independent ways, such as by using proprietary software of the vendor of the MS instrument. The important thing is to provide to the IsotopicLabeling package a data frame formatted this way: 
+Please not that it is not compulsory to pre-process the LC-MS data with *xcms*, since this data frame can be obtained in a number of other independent ways, such as by using proprietary software of the vendor of the MS instrument; the important thing is for the data frame to be properly formatted:
 
-- the first column, named "mz", should contain the mass-to-charge ratios of the peaks;
-- the second column, named "rt", should contain the average retention times of the peaks (in seconds);
+- its first column, named "mz", should contain the mass-to-charge ratios of the peaks;
+- its second column, named "rt", should contain the average retention times of the peaks (in seconds);
 - the other columns should be named after the samples (one column for sample), and contain peak intensities or areas.
 
-# Getting the results (quick way)
+# A compact way of processing the data
 
-Once the table of peaks is available, a single function may be run to directly get the needed information:
+From the MS data set, the whole analysis of the isotopic patterns can be performed through the single, compact function `main_labeling`. Using the example data set, this becomes:
 ```
 fitted_abundances <- main_labeling(peak_table, compound, labeling, mass_shift, RT, RT_shift, 
 chrom_width, initial_abundance)
 ```
 
-The `main_labeling` function requires some input parameters:
+As explained in the reference manual, some input parameters have to be specified:
 
 - **peak_table**, the data frame of experimental peak intensities or areas;
 - **compound**, a character vector specifying the chemical formula of the compound of interest. A special notation should be used, whereby the character "X" is used for denoting the element with unknown isotopic distribution (to be fitted by the package). For example, the [PC 34:1 + H]^+^ adduct, with chemical formula C42H83NO8P, should be written as "X42H83NO8P" for ^13^C isotopic labeling experiments, and "C42X82HNO8P" for ^2^H isotopic labeling experiments, in this last case keeping in mind that one hydrogen atom comes from the solvent, and has therefore fixed natural abundance.
@@ -207,7 +224,10 @@ Following the analysis, the results contained in the object of class *labeling* 
     Two of the plots are reported here:
     
     ![Figure 2](Figure_2.png)
+    
+    
     ![Figure 3](Figure_3.png)
+    
     
     In addition, a further plot is created showing the estimated abundances with related standard errors:
     
@@ -222,7 +242,10 @@ Following the analysis, the results contained in the object of class *labeling* 
     This produces another series of plots, and the two of them related to the previous ones are the following:
     
     ![Figure 5](Figure_5.png)
+    
+    
     ![Figure 6](Figure_6.png)
+    
     
 3. The results can be saved to a *.csv file through the `save_labeling` function:
     ```
