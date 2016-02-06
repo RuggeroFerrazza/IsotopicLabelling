@@ -3,14 +3,14 @@ title: "How to use the IsotopicLabeling R package"
 author: "Ruggero Ferrazza"
 date: '`r Sys.Date()`'
 output:
-  html_document:
-    fig_caption: yes
-    number_sections: yes
-    theme: united
-    toc: yes
   pdf_document:
     fig_caption: yes
     number_sections: yes
+    toc: yes
+  html_document:
+    fig_caption: yes
+    number_sections: yes
+    theme: default
     toc: yes
 vignette: |
   %\VignetteIndexEntry{Vignette Title} %\VignetteEngine{knitr::rmarkdown} %\VignetteEncoding{UTF-8}
@@ -59,7 +59,7 @@ peak_table <- table_xcms(xcms_obj)
 head(peak_table, n=3)
 ```
 
-Please not that it is not compulsory to pre-process the LC-MS data with *xcms*, since this data frame can be obtained in a number of other independent ways, such as by using proprietary software of the vendor of the MS instrument; the important thing is for the data frame to be properly formatted:
+Please note that it is not compulsory to pre-process the LC-MS data with *xcms*, since this data frame can be obtained in a number of other independent ways, such as by using proprietary software of the vendor of the MS instrument; the important thing is for the data frame to be properly formatted:
 
 - its first column, named "mz", should contain the mass-to-charge ratios of the peaks;
 - its second column, named "rt", should contain the average retention times of the peaks (in seconds);
@@ -67,34 +67,33 @@ Please not that it is not compulsory to pre-process the LC-MS data with *xcms*, 
 
 # A compact way of processing the data
 
-From the MS data set, the whole analysis of the isotopic patterns can be performed through the single, compact function `main_labeling`. Using the example data set, this becomes:
+From the MS data set, the whole analysis of the isotopic patterns can be performed through the single, compact function `main_labeling`. Using the example data set, this can be achieved through:
 ```
 fitted_abundances <- main_labeling(peak_table, compound, labeling, mass_shift, RT, RT_shift, 
 chrom_width, initial_abundance)
 ```
 
-As explained in the reference manual, some input parameters have to be specified:
+As explained in the reference manual, the function requires some input:
 
-- **peak_table**, the data frame of experimental peak intensities or areas;
-- **compound**, a character vector specifying the chemical formula of the compound of interest. A special notation should be used, whereby the character "X" is used for denoting the element with unknown isotopic distribution (to be fitted by the package). For example, the [PC 34:1 + H]^+^ adduct, with chemical formula C42H83NO8P, should be written as "X42H83NO8P" for ^13^C isotopic labeling experiments, and "C42X82HNO8P" for ^2^H isotopic labeling experiments, in this last case keeping in mind that one hydrogen atom comes from the solvent, and has therefore fixed natural abundance.
+- **peak_table**, the data frame of peak intensities or areas;
+- **compound**, a character vector specifying the chemical formula of the compound of interest. A special notation should be used, whereby the character "X" specifies the element with unknown isotopic distribution. For example, the [PC 34:1 + H]^+^ adduct, with chemical formula C42H83NO8P, is written "X42H83NO8P" for ^13^C isotopic labeling experiments, and "C42X82HNO8P" for ^2^H isotopic labeling experiments, in this last case considering that one hydrogen atom comes from the solvent, and has therefore fixed natural abundance.
 
-    Please remember that adduct ions should be specified, and not the neutral molecular species;
+    Please keep in mind that adduct ions should be specified, and not the neutral molecular species;
 
-- **labeling**, a character specifying the labeling element. It can be either "H" or "C";
-- **mass_shift**, the maximum mass shift between measured and true mass. In other words, the mass accuracy of the measurements;
+- **labeling**, a character (either "H" or "C") denoting the labeling element;
+- **mass_shift**, the maximum mass shift between measured and true mass. In other words, the mass accuracy;
 - **RT**, the expected retention time of the compound of interest (in sec);
-- **RT_shift**, the maximum time shift allowed of the peaks with respect to the expected retention time (in sec);
+- **RT_shift**, the maximum difference between true and expected retention time (in sec);
 - **chrom_width**, an estimate of the chromatographic width of the peaks (in sec);
-- **initial_abundance**, either NA, or a numeric vector of the same length as the number of samples, with the initial guesses on the isotopic abundance of the labeling isotope. If provided, numbers between 0 and 1.
+- **initial_abundance**, either NA (the default value) or a numeric vector of the same length as the number of samples, with the initial estimates on the isotopic abundance of the labeling isotope in compound. If provided, numbers between 0 and 1.
 
-Using the data set of the example, the following parameters should be entered for the [PC 32:2 + H]^+^ adduct:
+Using the example data set, the parameters to enter in the case of the [PC 32:2 + H]^+^ adduct are:
 ```
 fitted_abundances <- main_labeling(peak_table, compound="X40H77NO8P", labeling="C", 
 mass_shift=0.05, RT=285, RT_shift=20, chrom_width=7, initial_abundance=NA)
 ```
 
-
-The steps undertaken by the `main_labeling` function are detailed in the following sections; the output of the analysis is an object of the class labeling, basically a list containing the results of the analysis. 
+The output is an object of the class *labeling*, a list containing the results of the analysis:
 ```{r, results = "hide", echo = FALSE, message = FALSE, warning = FALSE}
 fitted_abundances <- main_labeling(peak_table, compound="X40H77NO8P", labeling="C", mass_shift=0.05, RT=285, RT_shift=20, chrom_width=7, initial_abundance=NA)
 ```
@@ -102,23 +101,25 @@ fitted_abundances <- main_labeling(peak_table, compound="X40H77NO8P", labeling="
 attributes(fitted_abundances)
 ```
 
-The details of the output can be found on the reference manual.
+The details of the information contained in this object will be given in the following sections, where also what happens within the `main_labeling` function will be discussed.
 
-# Understanding the IsotoicLabeling package: a block scheme of the processing steps
+# Step-by-step processing
  
-The IsotopicLabeling package is based on the fact that the isotopic patterns obtained by MS reflect the isotopic abundances of the elements making up the observed compounds. Over the years, a number of different algorithms have been developed to a-priori compute isotopic patterns, knowing the relative distributions of the isotopes of any element. 
+The *IsotopicLabeling* package aims to find the abundance of the isotope used during the labeling experiment within the compounds of interest, based on their MS isotopic patterns. Since a number of algorithms are available to a-priori compute the isotopic patterns knowing the isotopic abundances, the goal of the *IsotopicLabeling* package is achieved by a fitting procedure that finds the abundance that best explains the experimental patterns.  
 
-The problem with isotopic labeling experiments, though, is the opposite: a labeling isotope is used, and its relative abundance within the compounds of interest has to be inferred. The IsotopicLabeling package proposes to achieve this by exploiting the hidden information contained in the isotopic patterns. As explained above, an easy way to get this is by using the `main_labeling` function, which is basically a merging of successive functions each performing a particular job. In particular, the main steps are:
+As discussed in the previous section, a compact way of processing the data is by using the *main_labeling* function. More in details, this is a blending of other functions, each of them performing a specific step:
 
-1. Gather information about the isotopes and all the possible isotopogues arising due to the labeling;
-2. Extract the isotopic patterns of the compound of interest from the experimental data;
-3. Analyze the obtained patterns in order to find the isotopic distribution of the labeling element that best describes the patterns.
+1. Gather information about the isotopes and all the possible isotopologues caused by the labeling;
+2. Extract from the experimental data the isotopic patterns of the compound of interest;
+3. Analyse the patterns to estimate the isotopic abundance of the labeling element.
 
-Although the `main_labeling` function can perform all these steps at once, it is also possible to run separate functions for each of them. In the following, for the sake of explanation the second route is covered, an the steps are detailed.
+An alternative to using `main_labeling` is to run the separate functions it is made of; for the sake of explanation, this second strategy is covered in the following, where each step is thoroughly discussed.
 
 ## Isotopes and Isotopologues
 
-The first function run by `main_labeling` is `isotopic_information`, which aims at gathering important information that will be required by the other functions of the package. It requires as input values the compound of interest, together with the type of labeling; in the example of [PC 32:2 + H]^+^, this would be:
+The first function used by `main_labeling` is `isotopic_information`, which summarizes important isotopic information in a single object (a list) that will be required by subsequent functions. The required inputs are the chemical formula of the compound of interest and the type of labeling.
+
+In the example of [PC 32:2 + H]^+^, the parameters to use are the following:
 ```
 info <- isotopic_information(compound="X40H77NO8P", labeling="C")
 ```
@@ -129,12 +130,12 @@ info <- isotopic_information(compound="X40H77NO8P", labeling="C")
 ```{r}
 attributes(info)
 ```
-In particular, "isotopes" is a table with the natural isotopic abundances of the elements present in the compound, with the two isotopes of the labeling element X being given NA values:
+In particular, "isotopes" is a table with the natural isotopic abundances of the elements present in the compound. The two isotopes of X (the labeling element) are given NA values:
 ```{r}
 info$isotopes
 ```
 
-Another important object is the "target" vector, which contains the exact masses of all the possible isotopologues of the species of interest coming from the labeling isotope. In the example, the [PC 32:2 + H]^+^ adduct has 40 carbon atoms, and therefore the possible isotopologues coming from ^13^C span a 41 mass range: from the monoisotopic species, where all the C atoms are ^12^C, to the species where all the 40 C atoms are ^13^C. However, since the isotopic patterns also depend on the other elements making up the compound, the list of target isotopologues is extended of two *m/z* units beyond the maximum achievable, which is enough for small and medium-sized molecules such as lipids and metabolites. 
+Importantly, "target" is a vector with the exact masses of all the possible isotopologues coming from the labeling isotope. In the example, [PC 32:2 + H]^+^ has 40 carbon atoms, and therefore the possible isotopologues coming from ^13^C span a 41 mass range: from the monoisotopic species having 40 ^12^C atoms, to the species with 40 ^13^C atoms. In addition, since the isotopic patterns also depend on the other elements making up the compound, the list of target isotopologues is extended to two *m/z* units beyond the maximum achievable, which is enough for small and medium-sized molecules such as lipids and metabolites. 
 
 The naming of the masses follows this convention:
 
