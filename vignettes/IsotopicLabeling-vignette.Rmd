@@ -1,16 +1,16 @@
 ---
-title: "How to use the IsotopicLabeling R package"
+title: "IsotopicLabeling R Package: a Practical Guide"
 author: "Ruggero Ferrazza"
 date: '`r Sys.Date()`'
 output:
-  pdf_document:
-    fig_caption: yes
-    number_sections: yes
-    toc: yes
   html_document:
     fig_caption: yes
     number_sections: yes
     theme: default
+    toc: yes
+  pdf_document:
+    fig_caption: yes
+    number_sections: yes
     toc: yes
 vignette: |
   %\VignetteIndexEntry{Vignette Title} %\VignetteEngine{knitr::rmarkdown} %\VignetteEncoding{UTF-8}
@@ -26,14 +26,14 @@ Since the isotopic patterns observed by mass spectrometry reflect the isotopic a
 
 In the following, a step-by-step explanation on how to use the *IsotopicLabeling* package will be given by using an example data set; the involved functions will be properly intoduced and discussed.
 
-# The MS data set
+# The MS Data Set
 
 The *IsotopicLabeling* package requires the MS data to be in the form of a data frame where the first two columns represent the *m/z* and the retention time (RT) of the mass peaks, whereas the other columns contain the peak intensities or areas (one column for each sample).
 
 Since a very popular R package for pre-processing MS data is *xcms*, the *IsotopicLabeling* R package can also accept input data as *xcmsSet* objects, which basically contain the peak intensities or areas associated to each of the processed samples, together with their average retention time and *m/z*. In this case, the function `table_xcms` is available for converting such objects to the required data frame.
 
 The example data set that comes with the *IsotopicLabeling* package is easily accessible through the command
-```
+```{r, eval=FALSE}
 data("xcms_obj")
 ```
 
@@ -44,7 +44,7 @@ It is an *xcmsSet* object containing LC-MS data relative to lipid extracts obtai
 
 The conversion of this data set can be achieved through the command:
 
-```
+```{r, eval=FALSE}
 peak_table <- table_xcms(xcms_obj)
 ```
 
@@ -65,12 +65,13 @@ Please note that it is not compulsory to pre-process the LC-MS data with *xcms*,
 - its second column, named "rt", should contain the average retention times of the peaks (in seconds);
 - the other columns should be named after the samples (one column for sample), and contain peak intensities or areas.
 
-# A compact way of processing the data
+# A Compact Way of Processing the Data
 
 From the MS data set, the whole analysis of the isotopic patterns can be performed through the single, compact function `main_labeling`. Using the example data set, this can be achieved through:
-```
-fitted_abundances <- main_labeling(peak_table, compound, labeling, mass_shift, RT, RT_shift, 
-chrom_width, initial_abundance)
+```{r, eval=FALSE}
+fitted_abundances <- main_labeling(peak_table, compound, labeling, 
+                                   mass_shift, RT, RT_shift, 
+                                   chrom_width, initial_abundance)
 ```
 
 As explained in the reference manual, the function requires some input:
@@ -88,12 +89,13 @@ As explained in the reference manual, the function requires some input:
 - **initial_abundance**, either NA (the default value) or a numeric vector of the same length as the number of samples, with the initial estimates on the isotopic abundance of the labeling isotope in compound. If provided, numbers between 0 and 1.
 
 Using the example data set, the parameters to enter in the case of the [PC 32:2 + H]^+^ adduct are:
-```
+```{r, eval=FALSE}
 fitted_abundances <- main_labeling(peak_table, compound="X40H77NO8P", labeling="C", 
-mass_shift=0.05, RT=285, RT_shift=20, chrom_width=7, initial_abundance=NA)
+                                   mass_shift=0.05, RT=285, RT_shift=20, 
+                                   chrom_width=7, initial_abundance=NA)
 ```
 
-The output is an object of the class *labeling*, a list containing the results of the analysis:
+The output is an object of class *labeling*, a list containing the results of the analysis:
 ```{r, results = "hide", echo = FALSE, message = FALSE, warning = FALSE}
 fitted_abundances <- main_labeling(peak_table, compound="X40H77NO8P", labeling="C", mass_shift=0.05, RT=285, RT_shift=20, chrom_width=7, initial_abundance=NA)
 ```
@@ -103,11 +105,11 @@ attributes(fitted_abundances)
 
 The details of the information contained in this object will be given in the following sections, where also what happens within the `main_labeling` function will be discussed.
 
-# Step-by-step processing
+# Step-by-Step Processing
  
 The *IsotopicLabeling* package aims to find the abundance of the isotope used during the labeling experiment within the compounds of interest, based on their MS isotopic patterns. Since a number of algorithms are available to a-priori compute the isotopic patterns knowing the isotopic abundances, the goal of the *IsotopicLabeling* package is achieved by a fitting procedure that finds the abundance that best explains the experimental patterns.  
 
-As discussed in the previous section, a compact way of processing the data is by using the *main_labeling* function. More in details, this is a blending of other functions, each of them performing a specific step:
+As discussed in the previous section, a compact way of processing the data is by using the `main_labeling` function. More in details, this is a blending of other functions, each of them performing a specific step:
 
 1. Gather information about the isotopes and all the possible isotopologues caused by the labeling;
 2. Extract from the experimental data the isotopic patterns of the compound of interest;
@@ -120,7 +122,7 @@ An alternative to using `main_labeling` is to run the separate functions it is m
 The first function used by `main_labeling` is `isotopic_information`, which summarizes important isotopic information in a single object (a list) that will be required by subsequent functions. The required inputs are the chemical formula of the compound of interest and the type of labeling.
 
 In the example of [PC 32:2 + H]^+^, the parameters to use are the following:
-```
+```{r, eval=FALSE}
 info <- isotopic_information(compound="X40H77NO8P", labeling="C")
 ```
 As detailed in the reference manual, the output is a named list:
@@ -135,27 +137,27 @@ In particular, "isotopes" is a table with the natural isotopic abundances of the
 info$isotopes
 ```
 
-Importantly, "target" is a vector with the exact masses of all the possible isotopologues coming from the labeling isotope. In the example, [PC 32:2 + H]^+^ has 40 carbon atoms, and therefore the possible isotopologues coming from ^13^C span a 41 mass range: from the monoisotopic species having 40 ^12^C atoms, to the species with 40 ^13^C atoms. In addition, since the isotopic patterns also depend on the other elements making up the compound, the list of target isotopologues is extended to two *m/z* units beyond the maximum achievable, which is enough for small and medium-sized molecules such as lipids and metabolites. 
+Importantly, "target" is a named vector with the exact masses of all the possible isotopologues coming from the labeling isotope. In the example, [PC 32:2 + H]^+^ has 40 carbon atoms, and therefore the possible isotopologues coming from ^13^C span a 41 mass range: from the monoisotopic species having 40 ^12^C atoms, to the species with 40 ^13^C atoms. In addition, since the isotopic patterns also depend on the other elements, the list of target isotopologues is further extended of two *m/z* units, which is enough for small and medium-sized molecules such as lipids and metabolites.
 
-The naming of the masses follows this convention:
+The naming of the target masses follows this convention:
 
-- **M+0** is the monoisotopic species, where all the atoms (including X) are the lighest isotopes; 
-- in **M+1** one light isotope (either X or any other element) is replaced by its heaviest counterpart;
-- in **M+2** there have been two replacements, and so forth.
+- **M+0** is the monoisotopic mass, the sum of the masses of the atoms using the lightest isotope for each element (including X);
+- **M+1** is the mass where one light isotope (either X or any other element) is replaced by its heaviest counterpart;
+- **M+i** is the mass where there have been "i" replacements.
 
-The underlying assumption is that the MS resolution is not high enough to resolve the isotopic fine structure, and therefore the replacement of, say, ^1^H with ^2^H is indistinguishable from the replacement of ^12^C with ^13^C. This is true for most of the instruments currently used in LC-MS measurements.
+The underlying assumption is that the MS resolution is not high enough to resolve the isotopic fine structure; consequently, the replacement of, for example, ^1^H with ^2^H is indistinguishable from ^12^C with ^13^C. This is true for most of the instruments currently used in LC-MS measurements.
 
-## Extracting the Experimental Isotopic Patterns
+## Extraction of the Experimental Isotopic Patterns
 
-The next step is to extract the isotopic patterns from the experimental data. To this aim, the `isotopic_pattern` function can be used. In the example of [PC 32:2 + H]^+^, it is used this way:
+Once the target massed are known, the experimental isotopic patterns have to be extracted from the data, which can be achieved by the function `isotopic_pattern`. Keeping on with the example of [PC 32:2 + H]^+^, the patterns are extracted thorugh:
 
+```{r, eval=FALSE}
+experimental_patterns <- isotopic_pattern(peak_table, info, mass_shift=0.05, 
+                                          RT=285, RT_shift=20, chrom_width=7)
 ```
-experimental_patterns <- isotopic_pattern(peak_table, info, mass_shift=0.05, RT=285, 
-RT_shift=20, chrom_width=7)
-```
-Among the input parameters are the table of peak intensities or areas, together with the list produced during the previous step. In addition, other parameters have to be specified, which have already been discussed previously, and are also detailed in the reference manual.
+The required inputs are the table of peaks, the list obtained in the previous step, and the other parameters already discussed above (for the details, please refer to the reference manual).
 
-The net result is a matrix of the extracted patterns, with the first two columns reserved for the exact *m/z* and the retention times of the extracted peaks:
+The resulting matrix contains the extracted patterns, with its first two columns reserved for the exact *m/z* and the retention times of the peaks:
 ```{r, results = "hide", echo = FALSE, message = FALSE, warning = FALSE}
 experimental_patterns <- isotopic_pattern(peak_table, info, mass_shift=0.05, RT=285, 
 RT_shift=20, chrom_width=7)
@@ -164,97 +166,139 @@ RT_shift=20, chrom_width=7)
 head(experimental_patterns, n=3)
 ```
 
-In summary, what this function does is the following: 
+The steps undertaken by `isotopic_pattern` to get this result are the following:
 
-1. It finds and stores the indices of the peaks that are within the specified *m/z* and RT ranges. This for all the target masses of the info$target vector;
-2. It considers the retention times of the identified indices, and compares them across isotopologues in order to group them: peaks that differ in RT within the specified chromatographic width are assumed to come from two isotopologues of the same species;
-3. At this point, more groups may be left: those having less than two identified isotopologues are discarded. If still more than one group is left, the one is chosen with the smallest difference between true and expected RT.
+1. It finds and stores the indices of the peaks in the experimental peaks table that are within the specified *m/z* and RT ranges. This for all the masses in the "target" vector;
+2. It considers the retention times of the identified indices, and compares them across isotopologues in order to group them: peaks that differ in RT within the specified chromatographic width are assumed to be two isotopologues;
+3. More groups may have been identified: those containing less than two isotopologues are discarded and, if still more groups are left, the one closer in retention time to the expected value is chosen.
 
-The figure below provides a graphical example of the patterns extracted for [PC 32:2 + H]^+^ in two samples, the first (to the left) without labeling, and the second one (to the right) with 99% ^13^C labeling. 
+Two of the patterns extracted for [PC 32:2 + H]^+^ are shown below: the first (to the left) is relative to an unlabeled sample, whereas the second one (to the right) is relative to a labeled sample (99% ^13^C labeling). 
 
-![Figure 1](Figure_1.png)
+![Figure 1: An example of the patterns extracted from the experimental data.](Figure_1.png)
 
-In this simple case, it can be seen at a glance that in the second case there is a great deal of labeling, since the most intense signal is shifted 40 mass units upwards with respect to the monoisotopic peak, therefore indicating that the most abundant species is the one where all the 40 carbon atoms have been replaced by its heaviest isotope (the labeling isotope, ^13^C). It is now the job of the IsotopicLabeling package to provide a quantitative estimate of the relative distribution between isotopes ^12^C and ^13^C in each sample.
+In this simple case, the difference is straightorward: in the second case the most intense signal is shifted 40 mass units upwards with respect to the monoisotopic peak, indicating that the most abundant species is the one where all the 40 carbon atoms have been replaced by the labeling isotope, ^13^C. 
 
-## Analyzing the experimental patterns
+What still remains to do is for the *IsotopicLabeling* package to provide a quantitative estimate of the relative distribution between ^12^C and ^13^C in each sample.
 
-Once the experimental patterns are available, they have to be analyzed in order to get an estimate of the isotopic abundance of the labeling isotope. This can be achieved through the function `find_abundance`. In the example,
+## Isotopic Pattern Analysis
+
+The experimental patterns can be analysed by the function `find_abundance`, which takes each of the patterns and fit the best theoretical pattern that reproduces it by iteratively changing the relative abundance of the isotopes of element X (either C or H, depending on the labeling experiment).
+
+In the example, this information can be achieved through:
+
+```{r, eval=FALSE}
+fitted_abundances <- find_abundance(patterns=experimental_patterns, info, 
+                                    initial_abundance=NA)
 ```
-fitted_abundances <- find_abundance(patterns=experimental_patterns, info, initial_abundance=NA)
-```
-There are three input parameters: the matrix of experimental patterns, the list "info" coming from the `isotopic_information` function, and the estimated initial abundances (default value= NA).
 
-What the function does is to take each of the patterns, and fit the best theoretical pattern that reproduces it by iteratively changing the relative abundance between the isotopes of element X (either C or H, depending on the labeling experiment).
+The required inputs are the matrix of experimental patterns, the list coming from the `isotopic_information` function and, if known, the estimated initial abundances (default value= NA).
 
-The output is an object of the class `labeling`, a list containing the results:
+The output is an object of class *labeling*, a list with the results of the analysis:
 ```{r, results = "hide", echo = FALSE, message = FALSE, warning = FALSE}
 fitted_abundances <- find_abundance(patterns=experimental_patterns, info, initial_abundance=NA)
 ```
 ```{r}
 attributes(fitted_abundances)
 ```
-The details of each object can be found in the reference manual. Briefly, the estimated abundances of the labeling isotope are contained in `Best_estimate`, as numbers between 0 and 1. The standard errors coming from the fitting procedure (via the `nls` function) are in `std_error`, whereas `dev_percent` contains the percentage deviations of the best fitted theoretical patterns to the provided experimental patterns. The *m/z* values of the peaks in the patterns are in `x_scale`, whereas in `y_exp` are their normalized intensities, and in `y_theor` are the intensities of the fitted theoretical patterns. In addition, the residuals can be found in `residuals`.
+In particular, the estimated abundances of the labeling isotope are contained in "best_estimate", as numbers between 0 and 1. The standard errors from the fitting procedure (via the `nls` function) are in "std_error", whereas "dev_percent" contains the percentage deviations between best fitted and experimental patterns. The *m/z* values of the peaks in the patterns are in "x_scale", while in "y_exp" are their normalized intensities, and in "y_theor" are the intensities of the best fitted theoretical patterns. The differences between experimental and theoretical patterns are in "residuals".
 
-What the function performs can be summarized as follows:
+The `find_abundance` function performs the following:
 
-- Each experimental pattern is taken and normalized so that its highest signal is set to 100;
-- The position of the most intense signal is assessed and used to get a first rough estimate of the isotopic abundance of X;
-- A fitting procedure ensues through the `nls` function, whereby the single unkwown variable "isotopic  abundance of X" is iteratively changed starting from its estimated value, and each time the resulting (normalized) theoretical patterns are compared to the experimental pattern. The value obtained from the fitting procedure is the one that minimizes the the sum of squares of the difference between observed and theoretical values. 
+1. It takes each experimental pattern and normalizes it to its highest signal, set to 100;
+2. It looks at the position of the most intense signal, and uses it to get a first rough estimate of the isotopic abundance of X;
+3. A fitting procedure ensues, whereby the single unkwown variable "isotopic  abundance of X" is iteratively changed starting from its initial estimate, and the resulting theoretical patterns are compared to the experimental pattern. The value obtained from the fitting procedure is the one that minimizes the the sum of squares of the difference between experimental and theoretical patterns.
 
-    In order to take noise into account, a weight is given to the signals, proportional to the square root of their intensities. 
+    In order to account for noise, a weight is given to the signals, proportional to the square root of their intensities. 
     
-    The theoretical patterns are built by making use of the `ecipex` R package, which computes them by exploiting Fourier transforms of simplex-based elemental models.
+    The theoretical patterns are computed using the *ecipex* R package, which exploits Fourier transforms of simplex-based elemental models.
 
+# Overview of the Results
 
-# Looking at the results
+There are a number of ways to look at and save the results encoded in the class *labeling* object coming from the isotopic pattern analysis:
 
-Following the analysis, the results contained in the object of class *labeling* have to be looked at. To this aim, the IsotopicLabeling package provides several alternatives:
-
-1. It is possible to quickly glance at the estimated abundances by using the generic function `summary`. In the example:
+1. The generic function `summary` allows to quickly glance at the estimated abundances:
 
     ```{r}
     summary(fitted_abundances)
     ```
 
-    A table is produced with in its first row the estimated values, and in the second one the standard deviations of the estimates from the fitting procedure. In the example, it can be seen that the estimates for the unlabeled samples have an average value of 1.08% (close to the natural value of 1.07%), whereas for the labeled samples the average is 98.94%.
+    A table is produced with the estimated values and their standard deviations. In this example, the average value for unlabeled samples is 1.08% (close to the natural ^13^C abundance, 1.07%), whereas it is 98.94% for the labeled samples.
     
-2. A series of plots can be produced with the generic function `plot`, to get the normalized experimental patterns superimposed to the best fitted theoretical patterns:
-    ```
+2. The generic function `plot` produces a series of plots (one for each sample) with the normalized experimental patterns superimposed to their best fitted theoretical patterns:
+    ```{r, eval=FALSE}
     plot(fitted_abundances, what="patterns")
     ```
-    Two of the plots are reported here:
+    Below are two of them:
     
-    ![Figure 2](Figure_2.png)
-    
-    
-    ![Figure 3](Figure_3.png)
+    ![Figure 2: Graphical summary of the isotopic pattern analysis for an unlabeled sample. ](Figure_2.png)
     
     
-    In addition, a further plot is created showing the estimated abundances with related standard errors:
+    ![Figure 3: Graphical summary of the isotopic pattern analysis for a labeled sample.](Figure_3.png)
     
-    ![Figure 4](Figure_4.png)
     
-    Notice that the plots are both shown to the screen and saved as *.png files; see the reference manual for further information. 
+    In addition, a further plot is produced reporting the estimated abundances with related standard errors:
     
-    Alternatively, also the residuals can be looked at by specifying it in the "what" parameter:
-    ```
+    ![Figure 4: Graphical summary of the estimated abundances and related standard errors (the error bars).](Figure_4.png)
+    
+    The plots are both shown to the screen and saved as *.png files in a dedicated directory (see the reference manual for further information).
+    
+    The parameter "what" can assume two values: either "patterns" (the default), or "residuals". In the first case the former plots are produced, in the latter another series of plots allows to look at the residuals:
+    ```{r, eval=FALSE}
     plot(fitted_abundances, what="residuals")
     ```
-    This produces another series of plots, and the two of them related to the previous ones are the following:
+    Two of them are:
     
-    ![Figure 5](Figure_5.png)
-    
-    
-    ![Figure 6](Figure_6.png)
+    ![Figure 5: Plot of the residuals (the differences between experimental and theoretical patterns) for an unlabeled sample.](Figure_5.png)
     
     
-3. The results can be saved to a *.csv file through the `save_labeling` function:
-    ```
+    ![Figure 6: Plot of the residuals (the differences between experimental and theoretical patterns) for a labeled sample.](Figure_6.png)
+    
+    
+3. The `save_labeling` function allows to save the results to a *.csv file:
+    ```{r, eval=FALSE}
     save_labeling(fitted_abundances)
     ``` 
     
-    The file is saved in the working directory, and for each sample it  reports:
-    1. The estimated abundance of the labeling isotope;
-    2. The related standard error from the fitting procedure;
-    3. The percentage deviation between theoretical and experimental isotopic patterns;
-    4. The outcome message from the fitting procedure. 
+    This file is saved in the working directory, and for each sample it reports:
+    a. The estimated abundance of the labeling isotope;
+    b. The related standard error;
+    c. The percentage deviation between theoretical and experimental isotopic patterns;
+    d. The outcome message from the fitting procedure.
+
+# Conclusion
+
+The aim of this document was to show how to use the *IsotopicLabeling* R package in practice, making use of the example data set that comes with it. In addition, each of the more important steps was critically described in order to let the user understand the rationale of it.
+
+Here is a compact summary that may be used as script in order to analyse LC-MS data from labeling experiments via the *IsotopicLabeling* package:
+
+```{r, eval=FALSE}
+
+    # Load the package
+    library("IsotopicLabeling")
+    
+    # Load the xcmsSet object
+    data(xcms_obj)
+    
+    # Convert the object into the required data frame
+    peak_table <- table_xcms(xcms_obj)
+    
+    # Process the data
+    fitted_abundances <- main_labeling(peak_table, compound="X40H77NO8P", labeling="C",
+                                       mass_shift=0.05, RT=285, RT_shift=20, 
+                                       chrom_width=7, initial_abundance=NA)
+
+    # Summary of the results
+    summary(fitted_abundances)
+    
+    # Plot the patterns
+    plot(fitted_abundances, what="patterns")
+    
+    # Plot the residuals
+    plot(fitted_abundances, what="residuals")
+    
+    # Save the results to a *.csv file
+    save_labeling(fitted_abundances)
+
+```
+
+We hope that this package will prove to be useful for the reseachers working with labeling experiments.
