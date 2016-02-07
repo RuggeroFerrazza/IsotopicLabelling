@@ -1,16 +1,16 @@
 ---
-title: "IsotopicLabeling R Package: a Practical Guide"
+title: 'IsotopicLabeling R Package: a Practical Guide'
 author: "Ruggero Ferrazza"
 date: '`r Sys.Date()`'
 output:
+  pdf_document:
+    fig_caption: yes
+    number_sections: yes
+    toc: yes
   html_document:
     fig_caption: yes
     number_sections: yes
     theme: default
-    toc: yes
-  pdf_document:
-    fig_caption: yes
-    number_sections: yes
     toc: yes
 vignette: |
   %\VignetteIndexEntry{Vignette Title} %\VignetteEngine{knitr::rmarkdown} %\VignetteEncoding{UTF-8}

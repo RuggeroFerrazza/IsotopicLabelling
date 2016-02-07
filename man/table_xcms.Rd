@@ -6,7 +6,7 @@ Create a table of peak intensities or areas from an xcmsSet object
 }
 
 \description{
-The function generates a table of peak intensities or areas from an object of the class xcmsSet (from the \code{xcms} R package).
+The function generates a table of peak intensities or areas from an object of class \code{xcmsSet} (from the \code{xcms} R package).
 }
 
 \usage{
@@ -15,7 +15,7 @@ table_xcms(xcms_obj)
 
 \arguments{
   \item{xcms_obj}{
-An object of the xcmsSet class, output of the data processing with the \code{xcms} R package.
+An object of class \code{xcmsSet}, output of the data processing with the \code{xcms} R package.
 }
 }
 
@@ -25,7 +25,7 @@ A data frame of experimental peak intensities or areas (one column for each samp
 
 
 \note{
-The output table, required by the function \code{\link{isotopic_pattern}} or \code{\link{main_labeling}}, can be obtained in a number of other independent ways, such as through proprietary software of the vendor of the MS instrument. 
+The output table, required by other functions of the \code{\link{IsotopicLabeling}} R package, can be obtained in a number of other independent ways, such as through proprietary software of the vendor of the MS instrument. 
 }
 
 

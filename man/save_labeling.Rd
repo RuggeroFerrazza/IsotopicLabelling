@@ -2,7 +2,7 @@
 \alias{save_labeling}
 
 \title{
-Save \code{labeling} objects to *.csv files
+Save labeling objects to *.csv files
 }
 
 \description{

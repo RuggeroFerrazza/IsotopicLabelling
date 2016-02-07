@@ -11,7 +11,7 @@ function(patterns, info, initial_abundance=NA){
   # OUTPUT:
   # An object of the class "labeling", which is a list containing the results from the fitting procedure:
   # $compound: character vector specifying the chemical formula of the compound of interest, with X being the element with unknown isotopic distribution (to be fitted)
-  # $Best_estimate: numeric vector representing the best estimated abundance of the heaviest X isotope (either 2H or 13C). Number between 0 and 1.
+  # $best_estimate: numeric vector representing the best estimated abundance of the heaviest X isotope (either 2H or 13C). Number between 0 and 1.
   # $std_error: numeric vector containing the standard errors of the estimates.
   # $dev_percent: the percentage deviations of the fitted theoretical patterns to the provided experimental patterns.
   # $x_scale: vector containing the m/z signals of the isotopic patterns.
@@ -30,7 +30,7 @@ function(patterns, info, initial_abundance=NA){
             target <- info$target[-c(1,2)]
             
             # Create the list to return in case of errors
-            error_list <- list(compound=info$compound, Best_estimate=NA, std_error=NA, dev_percent=NA, x_scale=target, y_exp=pattern/max(pattern)*100, y_theor=rep(NA, times=length(pattern)), residuals=rep(NA, times=length(pattern)), warnings="An error occurred")
+            error_list <- list(compound=info$compound, best_estimate=NA, std_error=NA, dev_percent=NA, x_scale=target, y_exp=pattern/max(pattern)*100, y_theor=rep(NA, times=length(pattern)), residuals=rep(NA, times=length(pattern)), warnings="An error occurred")
     
             if (sum(pattern)==0) return(error_list)
     
@@ -57,7 +57,7 @@ function(patterns, info, initial_abundance=NA){
     
             warnings <- fit$convInfo$stopMessage
     
-            return(list(Best_estimate=summary(fit)$coefficients[1], std_error=summary(fit)$coefficients[2], dev_percent=(sqrt(sum((summary(fit)$residuals)^2)/ sum(pattern^2))*100), x_scale=target, y_exp=pattern, y_theor=pattern_fit(summary(fit)$coefficients[1]), residuals=pattern-pattern_fit(summary(fit)$coefficients[1]), warnings=warnings))
+            return(list(best_estimate=summary(fit)$coefficients[1], std_error=summary(fit)$coefficients[2], dev_percent=(sqrt(sum((summary(fit)$residuals)^2)/ sum(pattern^2))*100), x_scale=target, y_exp=pattern, y_theor=pattern_fit(summary(fit)$coefficients[1]), residuals=pattern-pattern_fit(summary(fit)$coefficients[1]), warnings=warnings))
     
       }
   
@@ -70,7 +70,7 @@ function(patterns, info, initial_abundance=NA){
   names(tmp_results) <- colnames(patterns[,-c(1,2)])
       
   # Create the output list from the results obtained 
-  best_estimate <- sapply(tmp_results, "[[", "Best_estimate")     
+  best_estimate <- sapply(tmp_results, "[[", "best_estimate")     
   std_error <- sapply(tmp_results, "[[", "std_error")  
   dev_percent <- sapply(tmp_results, "[[", "dev_percent")
   x_scale <- patterns[,"mz"]

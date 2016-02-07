@@ -6,7 +6,7 @@ Getting useful isotopic information
 }
 
 \description{
-This function performs a pre-processing step to get some useful information about all the possible isotopic variants of the compound of interest. The gathered information will be used by other functions of the \code{\link{IsotopicLabeling}} package.
+This function performs a pre-processing to get some useful information about all the possible isotopic variants of the compound of interest. This information is required by other functions of the \code{\link{IsotopicLabeling}} package.
 }
 
 \usage{
@@ -24,9 +24,9 @@ Character, either "H" or "C", specifying which is the labeling element.
 
 
 \details{
-The compound to be specified should not be the chemical formula of the neutral molecular species of interest, but the adduct seen by ESI-MS (for example, protonated or sodiated species). 
+The specified compound is not the neutral molecular species of interest, but the adduct observed by ESI-MS (such as protonated or sodiated species). 
 
-As for the chemical formula, the element whose abundance is unknown should be denoted by X. Thus, if the interest is in the proton adduct of the TAG 52:2 species, C55H103O6, this should be written X55H103O6 for \eqn{^{13}}C labeling experiments, and C55X102HO6 for \eqn{^2}H labeling experiments. Note that in this last case only 102 hydrogen atoms are specified as having unkown isotopic distribution, whereas the one left out (coming from the solvents) will be considered to have fixed natural abundance.
+As for the chemical formula, the element whose abundance is unknown should be denoted by X. For example, the proton adduct of TAG 52:2, C55H103O6, should be written X55H103O6 for \eqn{^{13}}C labeling experiments, and C55X102HO6 for \eqn{^2}H labeling experiments. Note that in this last case only 102 hydrogen atoms have unknown isotopic distribution, since the one that gives rise to the adduct comes from the solvent, and is considered to have fixed natural abundance.
 }
 
 
@@ -34,7 +34,7 @@ As for the chemical formula, the element whose abundance is unknown should be de
 A named list containing the following information:
   \item{compound}{The same as input.}
   \item{isotopes}{Table containing the natural isotopic abundances of the elements present in compound. The two isotopes of element X are given NA values.}
-  \item{target}{Named vector containing the exact masses of all the possible isotopic variants of the species of interest. M+0 is the species where all the atoms (including X) are the lighest isotopes; in M+1 one light isotope is replaced by its heaviest counterpart, and so forth.}
-  \item{nX}{The number of X atoms. In other words, the number of atoms with unkwown isotopic distribution.}
+  \item{target}{Named vector with the exact masses of all the possible isotopic variants caused by the labeling element. M+0 is the monoisotopic mass, where all the atoms (including X) are the lighest isotopes; in M+1 one light isotope is replaced by its heaviest counterpart, and so forth.}
+  \item{nX}{The number of X atoms. In other words, the number of atoms with unknown isotopic distribution.}
   \item{nTOT}{The total number of atoms of the labeling element (either H+X or C+X).}
 }

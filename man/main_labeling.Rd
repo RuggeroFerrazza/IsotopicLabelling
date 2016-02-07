@@ -2,12 +2,11 @@
 \alias{main_labeling}
 
 \title{
-Estimating isotopic abundances from experimental LC-MS data
+Estimating isotopic abundances from experimental MS data
 }
 
 \description{
-The main function of the \code{\link{IsotopicLabeling}} package, it estimates the isotopic abundance of the labeling element in the specified compound, given a table of peak intensities or areas as its input.
-More samples can be contained in the table (one for each column).
+The main function of the \code{\link{IsotopicLabeling}} package, it estimates the isotopic abundance of the labeling element in the specified compound, given a table of peak intensities or areas.
 }
 
 \usage{
@@ -19,9 +18,9 @@ main_labeling(peak_table, compound, labeling, mass_shift,
 
 \arguments{
   \item{peak_table}{
-Data frame containing experimental peak intensities or areas relative to a set of samples (one sample for each column), with the first two columns representing the m/z and the retention time of the peaks.
+Data frame containing experimental peak intensities or areas relative to a set of samples (one for each column), with the first two columns representing the m/z and the retention time of the peaks.
 
-If not available, the table can be obtained from the function \code{\link{table_xcms}}, starting from an xcmsSet object (from the \code{xcms} R package).
+If not already available, the table can be obtained from an \code{xcmsSet} object (from the \code{xcms} R package) through the \code{\link{table_xcms}} function.
 }
   \item{compound}{
 Character vector specifying the chemical formula of the compound of interest, with X being the element with unknown isotopic distribution (to be fitted). 
@@ -30,33 +29,33 @@ Character vector specifying the chemical formula of the compound of interest, wi
 Character, either "H" or "C", specifying which is the labeling element. 
 }
   \item{mass_shift}{
-Maximum shift allowed in the mass range between theoretical and experimental mass. In other words, the accuracy of the measurements.
+Maximum mass shift between theoretical and experimental mass. In other words, the mass accuracy.
 }
   \item{RT}{
 Expected retention time of the compound of interest (in sec).
 }
   \item{RT_shift}{
-Maximum shift allowed in the retention time range (in sec).
+Maximum time shift between expected and experimental retention time of the peaks (in sec).
 }
   \item{chrom_width}{
-An estimate of the chromatographic width of the peaks (in sec). 
+An estimate of the peak chromatographic width (in sec). 
 }
   \item{initial_abundance}{
-Either NA, or a numeric vector of the same length as the number of samples, containing the initial guesses on the isotopic abundance of the labeling isotope (denoted as X, it can be either \eqn{^2}H or \eqn{^{13}}C). If provided, numbers between 0 and 1. 
+Either NA, or a numeric vector of the same length as the number of samples, containing the initial guesses on the isotopic abundance of the labeling isotope (denoted as X, it can be either \eqn{^{2}}H or \eqn{^{13}}C). If provided, numbers between 0 and 1. 
 }
 }
 
 \value{
-An object of the class \code{\link{labeling}}, which is a list containing the results from the fitting procedure:
+An object of class \code{\link{labeling}}, which is a list containing the results of the fitting procedure:
   \item{compound}{Character vector specifying the chemical formula of the compound of interest, with X being the element with unknown isotopic distribution.}
-  \item{Best_estimate}{Numeric vector of length equal to the number of samples, containing the estimated abundances of the labeling isotope (either \eqn{^2}H or \eqn{^{13}}C, and denoted as X). Numbers between 0 and 1.}
-  \item{std_error}{Numeric vector with the standard errors of the estimated abundances; output of the \code{nls} fitting procedure.}
+  \item{best_estimate}{Numeric vector of length equal to the number of samples, containing the estimated abundances of the labeling isotope X (either \eqn{^2}H or \eqn{^{13}}C). Numbers between 0 and 1.}
+  \item{std_error}{Numeric vector with the standard errors of the estimated abundances, output of the \code{nls} fitting procedure.}
   \item{dev_percent}{Numeric vector with the percentage deviations of the best fitted theoretical patterns to the provided experimental patterns.}
-  \item{x_scale}{Numeric vector containing the m/z values relative to the signals of the experimental patterns}
-  \item{y_exp}{Matrix of normalized experimental isotopic patterns (one column for each sample); for each sample, the highest signal is set to 100.}
-  \item{y_theor}{Matrix of normalized fitted theoretical isotopic patterns (one column for each sample); for each sample, the highest signal is set to 100.}
-  \item{residuals}{Matrix containing the residuals: each column represents the difference between the observed normalized experimental pattern of a sample and its best fitted (normalized) theoretical pattern.}
-  \item{warnings}{Character vector of possible warnings coming from the fitting procedure.}
+  \item{x_scale}{Numeric vector containing the m/z values relative to the signals of the experimental patterns.}
+  \item{y_exp}{Matrix of normalized experimental isotopic patterns (one column for each sample). The highest signal of each pattern is set to 100.}
+  \item{y_theor}{Matrix of normalized fitted theoretical isotopic patterns (one column for each sample). The highest signal of each pattern is set to 100.}
+  \item{residuals}{Matrix of residuals: each column is the difference between (normalized) experimental and best fitted theoretical patterns.}
+  \item{warnings}{Character vector of possible warnings from the fitting procedure.}
   }
 
 
