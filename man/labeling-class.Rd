@@ -13,9 +13,10 @@ These objects can be created by the functions \code{\link{find_abundance}} and \
 
 \details{
 The methods available for class "labeling" objects are:
-
-\item{summary}{to produce a summary of the results contained in the class labeling object.}
-\item{plot}{to create plots of the fitted isotopic patterns in the class labeling object.}
+\describe{
+	\item{summary}{to produce a summary of the results contained in the class labeling object.}
+	\item{plot}{to create plots of the fitted isotopic patterns in the class labeling object.}
+}
 
 }
 
