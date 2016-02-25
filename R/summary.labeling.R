@@ -11,7 +11,7 @@ function(fitted_abundances){
   best_est <- fitted_abundances$best_estimate
   std_error <- fitted_abundances$std_error
   
-  results <- rbind(best_est, std_error); row.names(results) <- c("Best Estimate", "Standard Error")
+  results <- rbind(best_est, std_error); row.names(results) <- c("Best Estimate [%]", "Standard Error [%]")
   
   return(results)
 }

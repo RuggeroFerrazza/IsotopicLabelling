@@ -6,12 +6,12 @@ function(patterns, info, initial_abundance=NA){
   # INPUT:
   # patterns: matrix containing the experimental patterns in its columns, with the first two representing the mass and the retention time of the peaks
   # info: named list, output of the "isotopic_information" function, containing useful information about the compound of interest and the isotopic distributions of its elements.
-  # initial_abundance: numeric vector with length equal to the number of samples, with the initial estimate for the abundance of the heaviest X isotope (either 2H or 13C). If provided, number between 0 and 1. 
+  # initial_abundance: numeric vector with length equal to the number of samples, with the initial estimate for the abundance of the heaviest X isotope (either 2H or 13C). If provided, number between 0 and 100. 
   
   # OUTPUT:
   # An object of the class "labeling", which is a list containing the results from the fitting procedure:
   # $compound: character vector specifying the chemical formula of the compound of interest, with X being the element with unknown isotopic distribution (to be fitted)
-  # $best_estimate: numeric vector representing the best estimated abundance of the heaviest X isotope (either 2H or 13C). Number between 0 and 1.
+  # $best_estimate: numeric vector representing the best estimated abundance of the heaviest X isotope (either 2H or 13C). Number between 0 and 100.
   # $std_error: numeric vector containing the standard errors of the estimates.
   # $dev_percent: the percentage deviations of the fitted theoretical patterns to the provided experimental patterns.
   # $x_scale: vector containing the m/z signals of the isotopic patterns.
@@ -57,14 +57,14 @@ function(patterns, info, initial_abundance=NA){
     
             warnings <- fit$convInfo$stopMessage
     
-            return(list(best_estimate=summary(fit)$coefficients[1], std_error=summary(fit)$coefficients[2], dev_percent=(sqrt(sum((summary(fit)$residuals)^2)/ sum(pattern^2))*100), x_scale=target, y_exp=pattern, y_theor=pattern_fit(summary(fit)$coefficients[1]), residuals=pattern-pattern_fit(summary(fit)$coefficients[1]), warnings=warnings))
+            return(list(best_estimate=summary(fit)$coefficients[1]*100, std_error=summary(fit)$coefficients[2]*100, dev_percent=(sqrt(sum((summary(fit)$residuals)^2)/ sum(pattern^2))*100), x_scale=target, y_exp=pattern, y_theor=pattern_fit(summary(fit)$coefficients[1]), residuals=pattern-pattern_fit(summary(fit)$coefficients[1]), warnings=warnings))
     
       }
   
   
   for (i in 3:ncol(patterns)){
     
-    tmp_results[[i-2]] <- analysis_X(pattern=patterns[,i], info=info, initial_ab=initial_abundance[i-2])
+    tmp_results[[i-2]] <- analysis_X(pattern=patterns[,i], info=info, initial_ab=initial_abundance[i-2]/100)
 
   }
   names(tmp_results) <- colnames(patterns[,-c(1,2)])

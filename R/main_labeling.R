@@ -10,12 +10,12 @@ function(peak_table, compound, labeling, mass_shift, RT, RT_shift, chrom_width, 
   # RT: expected retention time of the compund of interest
   # RT_shift: maximum shift allowed in the retention time range
   # chrom_width: chromatographic width of the peaks
-  # initial_abundance: numeric vector of the same length as the number of samples, with the initial estimate for the abundance of the heaviest X isotope (either 2H or 13C). If provided, number between 0 and 1. Otherwise, NA
+  # initial_abundance: numeric vector of the same length as the number of samples, with the initial estimate for the abundance of the heaviest X isotope (either 2H or 13C). If provided, number between 0 and 100. Otherwise, NA
 
   # OUTPUT:
   # An object of the class "labeling", which is a list containing the results from the fitting procedure:
   # $compound: character vector specifying the chemical formula of the compound of interest, with X being the element with unknown isotopic distribution (to be fitted)
-  # $Best_estimate: numeric vector representing the best estimated abundance of the heaviest X isotope (either 2H or 13C). Number between 0 and 1.
+  # $Best_estimate: numeric vector representing the best estimated abundance of the heaviest X isotope (either 2H or 13C). Number between 0 and 100.
   # $std_error: numeric vector containing the standard errors of the estimates.
   # $dev_percent: the percentage deviations of the fitted theoretical patterns to the provided experimental patterns.
   # $x_scale: vector containing the m/z signals of the isotopic patterns.
