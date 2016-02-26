@@ -26,9 +26,9 @@ The directory where to save the *.csv file. If not specified, the file is saved 
 
 
 \value{
-The "COMPOUND Estimated abundances.csv" file, containing the results of the isotopic labeling analysis. For each sample (one for each row) there are four columns: 
+The "COMPOUND_Estimated_Abundances.csv" file, containing the results of the isotopic labeling analysis. For each sample (one for each row) there are four columns:
 \enumerate{
-\item The estimated abundance of the labeling isotope (either \eqn{^2}H or \eqn{^{13}}C);
+\item The estimated percentage abundance of the labeling isotope (either \eqn{^2}H or \eqn{^{13}}C);
 \item The related standard error coming from the fitting procedure;
 \item The percentage deviation between theoretical and experimental isotopic patterns;
 \item The outcome message from the fitting procedure, to undersand whether there have been any convergence problems.

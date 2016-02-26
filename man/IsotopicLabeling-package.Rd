@@ -1,5 +1,5 @@
 \name{IsotopicLabeling-package}
-\alias{IsotopicLabeling-package prova2}
+\alias{IsotopicLabeling-package}
 \alias{IsotopicLabeling}
 \docType{package}
 \title{
@@ -9,7 +9,7 @@
 \packageDescription{IsotopicLabeling}
 }
 \details{
-Given a table of peak intensities or areas (one column for each sample), the \code{\link{IsotopicLabeling}} package first extracts the isotopic patterns of the specified compound, and then performs an isotopic pattern analysis in order to estimate the isotopic abundance of the labeling isotope. Such estimate is obtained through a fitting procedure by which this abundance is iteratively changed and the resulting theoretical pattern is computed and compared to the experimental one; the final estimated isotopic abundance is the value that gives rise to the theoretical pattern that best reproduces the experimental one. The theoretical patterns are computed through the \code{\link[ecipex]{ecipex}} package.
+Given a table of LC-MS peak intensities or areas (one column for each sample), the \code{\link{IsotopicLabeling}} package first extracts the isotopic patterns of the specified compound, and then performs an isotopic pattern analysis in order to estimate the isotopic abundance of the labeling isotope. Such estimate is obtained through a fitting procedure by which this abundance is iteratively changed and the resulting theoretical pattern is computed and compared to the experimental one; the final estimated isotopic abundance is the value giving rise to the theoretical pattern that best reproduces the experimental one. The theoretical patterns are computed through the \code{\link[ecipex]{ecipex}} package.
 
 The analysis performed by the \code{\link{IsotopicLabeling}} package can be divided into the following steps:
 \enumerate{
@@ -35,8 +35,9 @@ peak_table <- table_xcms(xcms_obj)
 fitted_abundances <- main_labeling(peak_table, compound="X40H77NO8P", labeling="C", 
 mass_shift=0.05, RT=285, RT_shift=20, chrom_width=7, initial_abundance=NA)
 summary(fitted_abundances)
-plot(fitted_abundances, path=NA, what="patterns")
-plot(fitted_abundances, path=NA, what="residuals")
+plot(fitted_abundances, type="patterns", saveplots=F)
+plot(fitted_abundances, type="residuals", saveplots=F)
+plot(fitted_abundances, type="summary", saveplots=F)
 save_labeling(fitted_abundances)
 
 # Other possible lipid compounds include:

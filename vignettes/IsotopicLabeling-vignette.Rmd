@@ -86,7 +86,7 @@ As explained in the reference manual, the function requires some input:
 - **RT**, the expected retention time of the compound of interest (in sec);
 - **RT_shift**, the maximum difference between true and expected retention time (in sec);
 - **chrom_width**, an estimate of the chromatographic width of the peaks (in sec);
-- **initial_abundance**, either NA (the default value) or a numeric vector of the same length as the number of samples, with the initial estimates on the isotopic abundance of the labeling isotope in compound. If provided, numbers between 0 and 1.
+- **initial_abundance**, either NA (the default value) or a numeric vector of the same length as the number of samples, with the initial estimates on the percentage isotopic abundance of the labeling isotope in compound. If provided, numbers between 0 and 100.
 
 Using the example data set, the parameters to enter in the case of the [PC 32:2 + H]^+^ adduct are:
 ```{r, eval=FALSE}
@@ -149,7 +149,7 @@ The underlying assumption is that the MS resolution is not high enough to resolv
 
 ## Extraction of the Experimental Isotopic Patterns
 
-Once the target massed are known, the experimental isotopic patterns have to be extracted from the data, which can be achieved by the function `isotopic_pattern`. Keeping on with the example of [PC 32:2 + H]^+^, the patterns are extracted thorugh:
+Once the target masses are known, the experimental isotopic patterns have to be extracted from the data, which can be achieved by the function `isotopic_pattern`. Keeping on with the example of [PC 32:2 + H]^+^, the patterns are extracted thorugh:
 
 ```{r, eval=FALSE}
 experimental_patterns <- isotopic_pattern(peak_table, info, mass_shift=0.05, 
@@ -182,7 +182,7 @@ What still remains to do is for the *IsotopicLabeling* package to provide a quan
 
 ## Isotopic Pattern Analysis
 
-The experimental patterns can be analysed by the function `find_abundance`, which takes each of the patterns and fit the best theoretical pattern that reproduces it by iteratively changing the relative abundance of the isotopes of element X (either C or H, depending on the labeling experiment).
+The experimental patterns can be analysed by the function `find_abundance`, which takes each of the patterns and fits the best theoretical pattern that reproduces it by iteratively changing the relative abundance of the isotopes of element X (either C or H, depending on the labeling experiment).
 
 In the example, this information can be achieved through:
 
@@ -200,13 +200,13 @@ fitted_abundances <- find_abundance(patterns=experimental_patterns, info, initia
 ```{r}
 attributes(fitted_abundances)
 ```
-In particular, the estimated abundances of the labeling isotope are contained in "best_estimate", as numbers between 0 and 1. The standard errors from the fitting procedure (via the `nls` function) are in "std_error", whereas "dev_percent" contains the percentage deviations between best fitted and experimental patterns. The *m/z* values of the peaks in the patterns are in "x_scale", while in "y_exp" are their normalized intensities, and in "y_theor" are the intensities of the best fitted theoretical patterns. The differences between experimental and theoretical patterns are in "residuals".
+In particular, the estimated percentage abundances of the labeling isotope are contained in "best_estimate", as numbers between 0 and 100. The standard errors from the fitting procedure (via the `nls` function) are in "std_error", whereas "dev_percent" contains the percentage deviations between best fitted and experimental patterns. The *m/z* values of the peaks in the patterns are in "x_scale", while in "y_exp" are their normalized intensities, and in "y_theor" are the intensities of the best fitted theoretical patterns. The differences between experimental and theoretical patterns are in "residuals".
 
 The `find_abundance` function performs the following:
 
 1. It takes each experimental pattern and normalizes it to its highest signal, set to 100;
 2. It looks at the position of the most intense signal, and uses it to get a first rough estimate of the isotopic abundance of X;
-3. A fitting procedure ensues, whereby the single unkwown variable "isotopic  abundance of X" is iteratively changed starting from its initial estimate, and the resulting theoretical patterns are compared to the experimental pattern. The value obtained from the fitting procedure is the one that minimizes the the sum of squares of the difference between experimental and theoretical patterns.
+3. A fitting procedure ensues, whereby the single unkwown variable "isotopic  abundance of X" is iteratively changed starting from its initial estimate, and the resulting theoretical patterns are compared to the experimental pattern. The final value is the one that minimizes the sum of squares of the difference between experimental and theoretical patterns.
 
     In order to account for noise, a weight is given to the signals, proportional to the square root of their intensities. 
     
@@ -216,7 +216,7 @@ The `find_abundance` function performs the following:
 
 There are a number of ways to look at and save the results encoded in the class *labeling* object coming from the isotopic pattern analysis:
 
-1. The generic function `summary` allows to quickly glance at the estimated abundances:
+1. The generic function `summary` allows to quickly glance at the estimated percentage abundances:
 
     ```{r}
     summary(fitted_abundances)
@@ -224,9 +224,9 @@ There are a number of ways to look at and save the results encoded in the class 
 
     A table is produced with the estimated values and their standard deviations. In this example, the average value for unlabeled samples is 1.08% (close to the natural ^13^C abundance, 1.07%), whereas it is 98.94% for the labeled samples.
     
-2. The generic function `plot` produces a series of plots (one for each sample) with the normalized experimental patterns superimposed to their best fitted theoretical patterns:
+2. The generic function `plot` can be used to produce three types of plots, depending on the parameter "type". By default (type="patterns") a series of plots is returned, one for each sample, containing the normalized experimental patterns superimposed to their best fitted theoretical patterns:
     ```{r, eval=FALSE}
-    plot(fitted_abundances, what="patterns")
+    plot(fitted_abundances, type="patterns", saveplots=F)
     ```
     Below are two of them:
     
@@ -236,17 +236,10 @@ There are a number of ways to look at and save the results encoded in the class 
     ![Figure 3: Graphical summary of the isotopic pattern analysis for a labeled sample.](Figure_3.png)
     
     
-    In addition, a further plot is produced reporting the estimated abundances with related standard errors:
-    
-    ![Figure 4: Graphical summary of the estimated abundances and related standard errors (the error bars).](Figure_4.png)
-    
-    The plots are both shown to the screen and saved as *.png files in a dedicated directory (see the reference manual for further information).
-    
-    The parameter "what" can assume two values: either "patterns" (the default), or "residuals". In the first case the former plots are produced, in the latter another series of plots allows to look at the residuals:
+    If "type" is set to "residuals", the residuals are provided, and computed as the difference between normalized experimental patterns and related normalized best-fitted theoretical patterns:
     ```{r, eval=FALSE}
-    plot(fitted_abundances, what="residuals")
+    plot(fitted_abundances, type="residuals", saveplots=F)
     ```
-    Two of them are:
     
     ![Figure 5: Plot of the residuals (the differences between experimental and theoretical patterns) for an unlabeled sample.](Figure_5.png)
     
@@ -254,13 +247,20 @@ There are a number of ways to look at and save the results encoded in the class 
     ![Figure 6: Plot of the residuals (the differences between experimental and theoretical patterns) for a labeled sample.](Figure_6.png)
     
     
+    Finally, with type="summary", a summary plot with the estimated percentage abundances is provided, as shown below.
+    
+    ![Figure 4: Graphical summary of the estimated percentage abundances with related standard errors (the error bars).](Figure_4.png)
+    
+    If the parameter "saveplots" is set to `TRUE`, the plots are saved as a *.pdf file in the working directory.
+
+    
 3. The `save_labeling` function allows to save the results to a *.csv file:
     ```{r, eval=FALSE}
     save_labeling(fitted_abundances)
     ``` 
     
     This file is saved in the working directory, and for each sample it reports:
-    a. The estimated abundance of the labeling isotope;
+    a. The estimated percentage abundance of the labeling isotope;
     b. The related standard error;
     c. The percentage deviation between theoretical and experimental isotopic patterns;
     d. The outcome message from the fitting procedure.
@@ -287,14 +287,17 @@ Here is a compact summary that may be used as script in order to analyse LC-MS d
                                        mass_shift=0.05, RT=285, RT_shift=20, 
                                        chrom_width=7, initial_abundance=NA)
 
-    # Summary of the results
+    # Quickly look at the results
     summary(fitted_abundances)
     
     # Plot the patterns
-    plot(fitted_abundances, what="patterns")
+    plot(fitted_abundances, type="patterns", saveplots=F)
     
     # Plot the residuals
-    plot(fitted_abundances, what="residuals")
+    plot(fitted_abundances, type="residuals", saveplots=F)
+    
+    # Plot the overall results
+    plot(fitted_abundances, type="summary", saveplots=F)
     
     # Save the results to a *.csv file
     save_labeling(fitted_abundances)
