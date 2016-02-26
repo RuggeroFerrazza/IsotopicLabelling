@@ -6,29 +6,31 @@ Plot method for labeling objects
 }
 
 \description{
-It is a method for the plot generic. Depending on the parameter "what", two operating conditions are possible: by default this function plots, for each sample contained in the object of class labeling, both its normalized experimental pattern and the best fitted theoretical pattern (maximum signals set to 100). The estimated abundance of the labeling isotope (\eqn{^2}H or \eqn{^{13}}C) is also given. A further plot is produced, showing the estimated abundances with related standard errors.
+It is a method for the plot generic. Depending on the parameter "type", three operating conditions are possible: by default (type="patterns") this function plots, for each sample contained in the object of class labeling, both its normalized experimental pattern and the best fitted theoretical pattern (maximum signals set to 100). The estimated percentage abundance of the labeling isotope (\eqn{^2}H or \eqn{^{13}}C) is also given. 
 
-Alternatively, the function can plot the residuals (the differences between experimental and best fitted theoretical patterns).
+The function can also plot the residuals (type="residuals"), which are the differences between experimental and best fitted theoretical patterns.
 
-A copy of the plots is saved to the specified directory as *.png files. 
+Finally, a summary plot can be produced (type="summary") showing the estimated percentage abundances with related standard errors.
+
+The "saveplots" parameter allows to save the plots as a single *.pdf document. 
 }
 
 \usage{
-plot(fitted_abundances, path, what)
+plot(fitted_abundances, type, saveplots)
 }
 
 
 \arguments{
   \item{fitted_abundances}{
 Object of class \code{labeling}.}
-  \item{path}{
-The directory where to save the plots. If not specified, a folder named after the chemical formula of the compound is created in the working directory, and the plots are saved there.
+  \item{type}{
+The type of plots to produce: the default value is "patterns", which produces a series of plots (one for each sample) where the normalized experimental patterns are superimposed with their best fitted theoretical pattern.
 }
-  \item{what}{
-A character vector specifying what to plot, either "patterns" (the default value) or "residuals". In the first case, the normalized experimental patterns are plotted together with their best fitted theoretical patterns. In the second case, the residuals are plotted.
+  \item{saveplots}{
+A logical, with default value FALSE. If TRUE, the plots are saved to a single *.pdf file in the working directory.
 }
 }
 
 \value{
-A series of plots. They are all printed to the screen, but a copy of them is also saved to the specified directory as *.png files.
+One or more plots.
 }
