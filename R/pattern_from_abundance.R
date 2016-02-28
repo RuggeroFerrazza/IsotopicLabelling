@@ -1,14 +1,14 @@
 pattern_from_abundance <-
 function(abundance, info){
   # Function that, given in input the isotopic abundance of either 2H or 13C, computes the theoretical pattern
-  # The function returns a vector containing the normalized theoretical intensities (maximum signal set to 100) corresponding to the masses in the "target" vector 
+  # The function returns a vector containing the normalised theoretical intensities (maximum signal set to 100) corresponding to the masses in the "target" vector 
   
   # INPUT:
   # abundance: isotopic abundance of either 2H or 13C
   # info: list containing useful information to be used. Output of the "isotopic_information" function
   
   # OUTPUT:
-  # theoretical_pattern: vector containing the normalized intensities of the theoretical pattern expected if X had the isotopic abundance given at the input
+  # theoretical_pattern: vector containing the normalised intensities of the theoretical pattern expected if X had the isotopic abundance given at the input
   
   
   ###################
@@ -28,7 +28,7 @@ function(abundance, info){
                             }))
   
  
-  # Normalize the theoretical pattern
+  # Normalise the theoretical pattern
   theoretical_pattern <- theoretical_pattern/max(theoretical_pattern)*100
   
   return(theoretical_pattern)

@@ -32,9 +32,9 @@ An object of class \code{\link{labeling}}, which is a list containing the result
   \item{std_error}{Numeric vector with the standard errors of the estimated percentage abundances, output of the \code{nls} fitting procedure.}
   \item{dev_percent}{Numeric vector with the percentage deviations of the best fitted theoretical patterns to the provided experimental patterns.}
   \item{x_scale}{Numeric vector containing the m/z values relative to the signals of the experimental patterns.}
-  \item{y_exp}{Matrix of normalized experimental isotopic patterns (one column for each sample). The highest signal of each pattern is set to 100.}
-  \item{y_theor}{Matrix of normalized fitted theoretical isotopic patterns (one column for each sample). The highest signal of each pattern is set to 100.}
-  \item{residuals}{Matrix of residuals: each column is the difference between (normalized) experimental and best fitted theoretical patterns.}
+  \item{y_exp}{Matrix of normalised experimental isotopic patterns (one column for each sample). The highest signal of each pattern is set to 100.}
+  \item{y_theor}{Matrix of normalised fitted theoretical isotopic patterns (one column for each sample). The highest signal of each pattern is set to 100.}
+  \item{residuals}{Matrix of residuals: each column is the difference between (normalised) experimental and best fitted theoretical patterns.}
   \item{warnings}{Character vector of possible warnings from the fitting procedure.}
   }
 

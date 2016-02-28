@@ -19,8 +19,8 @@ function(peak_table, compound, labeling, mass_shift, RT, RT_shift, chrom_width, 
   # $std_error: numeric vector containing the standard errors of the estimates.
   # $dev_percent: the percentage deviations of the fitted theoretical patterns to the provided experimental patterns.
   # $x_scale: vector containing the m/z signals of the isotopic patterns.
-  # $y_exp: matrix containing normalized experimental patterns, where for each sample the most intense signal is set to 100.
-  # $y_theor: matrix of normalized fitted theoretical pattern (most intense signal set to 100 for each sample).
+  # $y_exp: matrix containing normalised experimental patterns, where for each sample the most intense signal is set to 100.
+  # $y_theor: matrix of normalised fitted theoretical pattern (most intense signal set to 100 for each sample).
   # warnings: character vector containing possible warnings coming from the fitting procedure.
   
   

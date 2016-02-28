@@ -6,7 +6,7 @@ Computing theoretical isotopic patterns
 }
 
 \description{
-Function that computes the theoretical pattern of the specified compound, given the abundance of the heaviest isotope of element X, contained in the compound. The function returns a vector of normalized theoretical intensities, where the maximum signal is set to 100; the related masses are in the "target" vector from the input list.
+Function that computes the theoretical pattern of the specified compound, given the abundance of the heaviest isotope of element X, contained in the compound. The function returns a vector of normalised theoretical intensities, where the maximum signal is set to 100; the related masses are in the "target" vector from the input list.
 }
 
 \usage{
@@ -23,7 +23,7 @@ A list with the required information, output of the \code{\link{isotopic_informa
 }
 
 \value{
-A vector representing the normalized isotopic pattern corresponding to the specified isotopic distribution of X.
+A vector representing the normalised isotopic pattern corresponding to the specified isotopic distribution of X.
 }
 
 \references{

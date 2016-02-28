@@ -15,7 +15,7 @@ The analysis performed by the \code{\link{IsotopicLabeling}} package can be divi
 \enumerate{
 \item Starting from an object class \code{xcmsSet} (from the \code{xcms} R package), create a table of peak signal intensities or areas, with each column corresponding to a sample. Here the \code{\link{table_xcms}} function is used, but this step can be skipped as well if the table is already available;
 \item Extract from the table the experimental isotopic patterns of the specified compound (one pattern for each sample). In the chemical formula of the compound, the element whose abundance is unknown should be denoted as "X";
-\item Normalize the experimental patterns and find the theoretical patterns that best fit them, by iteratively changing the isotopic distribution of the labeling element X; 
+\item Normalise the experimental patterns and find the theoretical patterns that best fit them, by iteratively changing the isotopic distribution of the labeling element X; 
 \item Provide the results in the form of both plots and summary tables.
 }
 
