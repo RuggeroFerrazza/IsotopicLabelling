@@ -6,17 +6,17 @@
 \packageTitle{IsotopicLabeling}
 }
 \description{
-\packageDescription{IsotopicLabeling}
+The \code{IsotopicLabeling} package allows to analyse the isotopic patterns in MS data obtained following isotopic labeling experiments; by looking at the isotopic patterns, the package estimates the isotopic abundance of the stable isotope employed in the labeling experiment (either ^2^H or ^13^C) within the specified compound. 
 }
 \details{
-Given a table of LC-MS peak intensities or areas (one column for each sample), the \code{\link{IsotopicLabeling}} package first extracts the isotopic patterns of the specified compound, and then performs an isotopic pattern analysis in order to estimate the isotopic abundance of the labeling isotope. Such estimate is obtained through a fitting procedure by which this abundance is iteratively changed and the resulting theoretical pattern is computed and compared to the experimental one; the final estimated isotopic abundance is the value giving rise to the theoretical pattern that best reproduces the experimental one. The theoretical patterns are computed through the \code{\link[ecipex]{ecipex}} package.
+Given a data frame of LC-MS or GC-MS peak intensities or areas (one column for each sample to analyse), the \code{\link{IsotopicLabeling}} package first extracts the isotopic patterns of the specified compound, and then performs an isotopic pattern analysis to estimate the isotopic abundance of the labeling isotope. This is obtained through a fitting procedure by which the abundance is iteratively changed and the resulting expected patterns are compared to the experimental one; the final estimated isotopic abundance is the value for which the theoretical pattern best reproduces the experimental one. The theoretical patterns are computed using the \code{\link[ecipex]{ecipex}} R package.
 
-The analysis performed by the \code{\link{IsotopicLabeling}} package can be divided into the following steps:
+The isotopic pattern analysis can be divided into the following steps:
 \enumerate{
-\item Starting from an object class \code{xcmsSet} (from the \code{xcms} R package), create a table of peak signal intensities or areas, with each column corresponding to a sample. Here the \code{\link{table_xcms}} function is used, but this step can be skipped as well if the table is already available;
-\item Extract from the table the experimental isotopic patterns of the specified compound (one pattern for each sample). In the chemical formula of the compound, the element whose abundance is unknown should be denoted as "X";
-\item Normalise the experimental patterns and find the theoretical patterns that best fit them, by iteratively changing the isotopic distribution of the labeling element X; 
-\item Provide the results in the form of both plots and summary tables.
+\item Starting from a class \code{xcmsSet} object (from the \code{xcms} R package), generate a data frame of peak signal intensities or areas, with each column corresponding to a sample. This step can be avoided if the data frame is already available (obtained by other means);
+\item Extract from the data frame the experimental isotopic patterns of the specified compound (one pattern for each sample). In the chemical formula of the compound, the element whose abundance is unknown is called "X";
+\item Normalise the patterns and find the theoretical patterns that best fit them, by iteratively changing the isotopic abundance of the labeling isotope; 
+\item Summarize the results.
 }
 
 }

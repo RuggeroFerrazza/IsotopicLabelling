@@ -2,17 +2,17 @@
 \alias{plot.labeling}
 
 \title{
-Plot method for labeling objects
+Plot method for class "labeling" objects
 }
 
 \description{
-It is a method for the plot generic. Depending on the parameter "type", three operating conditions are possible: by default (type="patterns") this function plots, for each sample contained in the object of class labeling, both its normalised experimental pattern and the best fitted theoretical pattern (maximum signals set to 100). The estimated percentage abundance of the labeling isotope (\eqn{^2}H or \eqn{^{13}}C) is also given. 
+It is a method for the plot generic. Depending on the parameter "type", three operating conditions are possible: by default (type="patterns") this function plots, for each sample in the class \code{labeling} object, its normalised experimental pattern superimposed to its fitted theoretical pattern.
 
-The function can also plot the residuals (type="residuals"), which are the differences between experimental and best fitted theoretical patterns.
+By setting type="residuals", the function plots the residuals (the differences between experimental and best fitted theoretical patterns).
 
-Finally, a summary plot can be produced (type="summary") showing the estimated percentage abundances with related standard errors.
+Finally, with type="summary" a summary plot is produced, showing the estimated percentage abundances with related standard errors.
 
-The "saveplots" parameter allows to save the plots as a single *.pdf document. 
+If the parameter "saveplots" is set to TRUE, the plots are saved as a *.pdf file in the working directory.
 }
 
 \usage{
@@ -24,7 +24,7 @@ plot(fitted_abundances, type, saveplots)
   \item{fitted_abundances}{
 Object of class \code{labeling}.}
   \item{type}{
-The type of plots to produce: the default value is "patterns", which produces a series of plots (one for each sample) where the normalised experimental patterns are superimposed with their best fitted theoretical pattern.
+The type of plots to produce: the default value is "patterns", but other two possible values are "residuals" and "summary" (see description above).
 }
   \item{saveplots}{
 A logical, with default value FALSE. If TRUE, the plots are saved to a single *.pdf file in the working directory.
