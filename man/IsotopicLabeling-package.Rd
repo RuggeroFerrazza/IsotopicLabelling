@@ -6,7 +6,7 @@
 \packageTitle{IsotopicLabeling}
 }
 \description{
-The \code{IsotopicLabeling} package allows to analyse the isotopic patterns in MS data obtained following isotopic labeling experiments; by looking at the isotopic patterns, the package estimates the isotopic abundance of the stable isotope employed in the labeling experiment (either ^2^H or ^13^C) within the specified compound. 
+The \code{IsotopicLabeling} package allows to analyse the isotopic patterns in MS data obtained following isotopic labeling experiments; by looking at the isotopic patterns, the package estimates the isotopic abundance of the stable isotope employed in the labeling experiment (either \eqn{^{2}}H or \eqn{^{13}}C) within the specified compound. 
 }
 \details{
 Given a data frame of LC-MS or GC-MS peak intensities or areas (one column for each sample to analyse), the \code{\link{IsotopicLabeling}} package first extracts the isotopic patterns of the specified compound, and then performs an isotopic pattern analysis to estimate the isotopic abundance of the labeling isotope. This is obtained through a fitting procedure by which the abundance is iteratively changed and the resulting expected patterns are compared to the experimental one; the final estimated isotopic abundance is the value for which the theoretical pattern best reproduces the experimental one. The theoretical patterns are computed using the \code{\link[ecipex]{ecipex}} R package.
