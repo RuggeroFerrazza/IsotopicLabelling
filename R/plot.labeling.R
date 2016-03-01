@@ -33,7 +33,7 @@ plot.labeling <- function(fitted_abundances, type="patterns", saveplots=F){
       for (k in 1:length(sample_name)){
     
         plot(fitted_abundances$x_scale, fitted_abundances$y_exp[,k], type="h", main=paste(sample_name[k], " ,   Compound: ",  fitted_abundances$compound), xlab="Target mass", ylab="Normalised intensity", ylim=c(0,110), cex.main=1)
-        text=100*fitted_abundances$best_estimate[k]
+        text=fitted_abundances$best_estimate[k]
     
         mtext(paste("Fitted X abundance: ", sprintf("%1.3f%%", text)), cex=0.8)
     
@@ -59,7 +59,7 @@ plot.labeling <- function(fitted_abundances, type="patterns", saveplots=F){
     for (k in 1:length(sample_name)){
       
       plot(fitted_abundances$x_scale, fitted_abundances$residuals[,k], type="h", main=paste("Residuals for ", sample_name[k]), xlab="Target mass", ylab="Normalised intensity", cex.main=1)
-      text=100*fitted_abundances$best_estimate[k]
+      text=fitted_abundances$best_estimate[k]
       
       mtext(paste("Fitted X abundance: ", sprintf("%1.3f%%", text)), cex=0.8)
       
