@@ -145,7 +145,7 @@ Each of its columns, therefore, represents the extracted experimental pattern fo
 
 Two of the patterns extracted for [PC 32:2 + H]^+^ are shown in Figure 1: the first (to the left) is relative to an unlabelled sample, whereas the second one (to the right) is relative to a labelled sample (99% ^13^C labelling). 
 
-![An example showing two of the patterns extracted from the experimental data; to the left is an unlabelled sample, to the right a labelled sample (99% ^13^C). ](Figure_1.pdf) 
+![An example showing two of the patterns extracted from the experimental data; to the left is an unlabelled sample, to the right a labelled sample (99% ^13^C). ](https://github.com/RuggeroFerrazza/IsotopicLabelling/tree/master/vignettes/Figure_1.pdf) 
 
 In this simple case, the difference is straightforward: in the labelled sample the most intense signal is shifted 40 mass units upwards with respect to the monoisotopic peak, indicating that the most abundant species is the one where all 40 carbon atoms have been replaced by the labelling isotope, ^13^C. 
 
@@ -194,7 +194,7 @@ There are a number of ways to look at and save the results of the isotopic patte
     ```
     Two of the plots obtained in this example are in Figure 2.
     
-    ![Graphical summary of the isotopic pattern analysis for an unlabelled (top) and a labelled (bottom) sample. ](Figure_2.pdf)
+    ![Graphical summary of the isotopic pattern analysis for an unlabelled (top) and a labelled (bottom) sample. ](https://github.com/RuggeroFerrazza/IsotopicLabelling/tree/master/vignettes/Figure_2.pdf)
 
     
     If "type" is set to "residuals", the residuals are plotted:
@@ -204,12 +204,12 @@ There are a number of ways to look at and save the results of the isotopic patte
     
     This is shown in Figure 3. 
     
-    ![Plot of the residuals for an unlabelled (top) and a labelled (bottom) sample. ](Figure_3.pdf)
+    ![Plot of the residuals for an unlabelled (top) and a labelled (bottom) sample. ](https://github.com/RuggeroFerrazza/IsotopicLabelling/tree/master/vignettes/Figure_3.pdf)
 
     
     Finally, with type="summary", a summary plot with the estimated percentage abundances is provided (see Figure 4).
     
-    ![Graphical summary of the estimated percentage abundances and related standard errors, following the isotopic pattern analysis.](Figure_4.pdf)
+    ![Graphical summary of the estimated percentage abundances and related standard errors, following the isotopic pattern analysis.](https://github.com/RuggeroFerrazza/IsotopicLabelling/tree/master/vignettes/Figure_4.pdf)
     
     If the parameter "saveplots" is set to `TRUE`, the plots are saved as a *.pdf file in the working directory.
 
