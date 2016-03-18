@@ -1,18 +1,6 @@
----
-title: 'IsotopicLabelling R Package: a Practical Guide'
-author: "Ruggero Ferrazza"
-date: '`r Sys.Date()`'
-output:
-  html_document:
-    toc: yes
-  pdf_document:
-    fig_caption: yes
-    number_sections: yes
-    toc: yes
-  word_document: default
-vignette: |
-  %\VignetteIndexEntry{Vignette Title} %\VignetteEngine{knitr::rmarkdown} %\VignetteEncoding{UTF-8}
----
+IsotopicLabelling R Package: a Practical Guide
+======
+
 
 # Introduction
 
