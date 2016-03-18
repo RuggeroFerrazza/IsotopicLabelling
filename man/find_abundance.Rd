@@ -6,7 +6,7 @@ Fit experimental isotopic patterns
 }
 
 \description{
-Function that takes each of the provided experimental MS isotopic patterns, and fits the best theoretical pattern that reproduces it by iteratively changing the isotopic abundance of the labeling isotope X.
+Function that takes each of the provided experimental MS isotopic patterns, and fits the best theoretical pattern that reproduces it by iteratively changing the isotopic abundance of the labelling isotope X.
 }
 
 \usage{
@@ -21,14 +21,14 @@ A matrix of experimental isotopic patterns (one column for each sample), with th
 Named list containing isotopic information, output of the \code{\link{isotopic_information}} function.
 }
   \item{initial_abundance}{
-Either NA, or a numeric vector of length equal to the number of samples, with the initial guesses on the percentage isotopic abundance of the labeling isotope (denoted as X, it can be either \eqn{^{2}}H or \eqn{^{13}}C). If provided, numbers between 0 and 100. 
+Either NA, or a numeric vector of length equal to the number of samples, with the initial guesses on the percentage isotopic abundance of the labelling isotope (denoted as X, it can be either \eqn{^{2}}H or \eqn{^{13}}C). If provided, numbers between 0 and 100. 
 }
 }
 
 \value{
-An object of class \code{\link{labeling}}, which is a list containing the results of the fitting procedure:
+An object of class \code{\link{labelling}}, which is a list containing the results of the fitting procedure:
   \item{compound}{Character vector specifying the chemical formula of the compound of interest, with X being the element with unknown isotopic distribution (to be fitted).}
-  \item{best_estimate}{Numeric vector of length equal to the number of samples, containing the estimated percentage abundances of the labeling isotope X (either \eqn{^2}H or \eqn{^{13}}C). Numbers between 0 and 100.}
+  \item{best_estimate}{Numeric vector of length equal to the number of samples, containing the estimated percentage abundances of the labelling isotope X (either \eqn{^2}H or \eqn{^{13}}C). Numbers between 0 and 100.}
   \item{std_error}{Numeric vector with the standard errors of the estimates, output of the \code{nls} fitting procedure.}
   \item{dev_percent}{Numeric vector with the percentage deviations between best fitted and related experimental patterns.}
   \item{x_scale}{Numeric vector containing the m/z values relative to the signals of the experimental patterns.}

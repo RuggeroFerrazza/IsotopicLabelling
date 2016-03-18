@@ -1,12 +1,12 @@
-plot.labeling <- function(fitted_abundances, type="patterns", saveplots=F){
-  # Function to plots the results of the Isotopic Labeling analysis
+plot.labelling <- function(fitted_abundances, type="patterns", saveplots=F){
+  # Function to plots the results of the Isotopic Labelling analysis
   # Three types of plots can be produced, depending on the parameters "type":
   # 1. The experimental patterns together with the best fitted theoretical patterns (default type of plot)
   # 2. The residuals 
   # 3. A summary of the estimated abundances
   
   # INPUT:
-  # fitted_abundances: object of class "labeling"
+  # fitted_abundances: object of class "labelling"
   # type: character vector specifying what to plot: "patterns" (the default value), "residuals" or "summary"
   # saveplots: logical. If TRUE, the plots are saved to a *.pdf file in the working directory.
    

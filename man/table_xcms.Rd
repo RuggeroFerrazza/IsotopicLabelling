@@ -25,7 +25,7 @@ A data frame of experimental MS peak intensities or areas (one column for each s
 
 
 \note{
-The output data frame, required by other functions of the \code{\link{IsotopicLabeling}} R package, can be obtained in a number of other independent ways, such as through proprietary software of the vendor of the MS instrument. 
+The output data frame, required by other functions of the \code{\link{IsotopicLabelling}} R package, can be obtained in a number of other independent ways, such as through proprietary software of the vendor of the MS instrument. 
 }
 
 

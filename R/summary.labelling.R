@@ -1,9 +1,9 @@
-summary.labeling <-
+summary.labelling <-
 function(fitted_abundances){
-  # Function that produces a summary of the results from an object of class "labeling"
+  # Function that produces a summary of the results from an object of class "labelling"
   
   # INPUT:
-  # fitted_abundances: object of class "labeling"
+  # fitted_abundances: object of class "labelling"
   
   # OUTPUT:
   # results: matrix containing a summary of the fitted results. It has two rows, the first containing the estimated X abundances, and the second one containing the related standard errors coming from the fitting procedure 

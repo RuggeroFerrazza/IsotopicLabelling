@@ -9,7 +9,7 @@ function(patterns, info, initial_abundance=NA){
   # initial_abundance: numeric vector with length equal to the number of samples, with the initial estimate for the abundance of the heaviest X isotope (either 2H or 13C). If provided, number between 0 and 100. 
   
   # OUTPUT:
-  # An object of the class "labeling", which is a list containing the results from the fitting procedure:
+  # An object of the class "labelling", which is a list containing the results from the fitting procedure:
   # $compound: character vector specifying the chemical formula of the compound of interest, with X being the element with unknown isotopic distribution (to be fitted)
   # $best_estimate: numeric vector representing the best estimated abundance of the heaviest X isotope (either 2H or 13C). Number between 0 and 100.
   # $std_error: numeric vector containing the standard errors of the estimates.
@@ -80,7 +80,7 @@ function(patterns, info, initial_abundance=NA){
   warnings <- sapply(tmp_results, "[[", "warnings")
 
   results <- list(compound=info$compound, best_estimate=best_estimate, std_error=std_error, dev_percent=dev_percent, x_scale=x_scale, y_exp=y_exp, y_theor=y_theor, residuals=residuals, warnings=warnings)
-  class(results) <- "labeling"
+  class(results) <- "labelling"
   
   return(results)
 

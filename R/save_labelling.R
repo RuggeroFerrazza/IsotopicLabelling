@@ -1,9 +1,9 @@
-save_labeling <-
+save_labelling <-
 function(fitted_abundances, path=getwd()){
   # Function that saves the obtained results to a csv file
   
   # INPUT:
-  # fitted_abundances: object of class "labeling"
+  # fitted_abundances: object of class "labelling"
   # path: the directory where to save the csv file. If not specified, the results are saved in the working directory
   
   # OUTPUT:
