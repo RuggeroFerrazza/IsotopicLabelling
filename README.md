@@ -1,12 +1,11 @@
 IsotopicLabelling R Package: a Practical Guide
 ======
 
-
 # Introduction
 
 The purpose of this document is to explain how to use the *IsotopicLabelling* R package to analyse mass spectrometric isotopic patterns obtained following isotopic labelling experiments.
 
-A typical labelling experiment makes use of substrates enriched in one stable isotope, such as ^2^H or ^13^C; consequently, after the growth period, there are expected to be metabolites that will have incorporated the labelling isotope, and therefore its relative distribution within those metabolites will be different from its natural occurrence. The *IsotopicLabelling* R package is based on the principle that, since the isotopic patterns obtained in mass spectrometry reflect the isotopic compositions of the elements making up the observed species, the amount of labelling can be assessed by their proper examination. 
+A typical labelling experiment makes use of substrates enriched in one stable isotope, such as <sup>2</sup>H or <sup>13</sup>C; consequently, after the growth period, there are expected to be metabolites that will have incorporated the labelling isotope, and therefore its relative distribution within those metabolites will be different from its natural occurrence. The *IsotopicLabelling* R package is based on the principle that, since the isotopic patterns obtained in mass spectrometry reflect the isotopic compositions of the elements making up the observed species, the amount of labelling can be assessed by their proper examination. 
 
 Worth of note, because there could be overlapping between the isotopic patterns of different species, the isotopic pattern analysis is better suited for LC-MS or GC-MS data rather than for direct-infusion MS, where the chromatographic step prior to MS detection reduces such issues. Therefore, the current implementation of the package only works for LC-MS or GC-MS data.
 
@@ -23,10 +22,10 @@ The example data set included in the package is easily accessible:
 data("xcms_obj")
 ```
 
-This is an *xcmsSet* object representing lipid extracts of 8 samples from ^13^C labelling experiments:
+This is an *xcmsSet* object representing lipid extracts of 8 samples from <sup>13</sup>C labelling experiments:
 
-- The first 4 samples are relative to unlabelled cell cultures (natural ^13^C abundance);
-- In the last 4 samples the cells were grown in a substrate where the glucose was replaced by uniformly-labelled ^13^C glucose (99% ^13^C labelling). 
+- The first 4 samples are relative to unlabelled cell cultures (natural <sup>13</sup>C abundance);
+- In the last 4 samples the cells were grown in a substrate where the glucose was replaced by uniformly-labelled <sup>13</sup>C glucose (99% <sup>13</sup>C labelling). 
 
 This LC-MS data was kindly provided by Dr. Jules Griffin and Dr. Nyasha Munjoma (Department of Biochemistry, University of Cambridge - UK). 
 
@@ -57,7 +56,7 @@ In addition to *xcms*, this data frame can be obtained in a number of other inde
 From the MS data frame, the whole isotopic pattern analysis can be performed through the single, compact function `main_labelling`. As explained in the reference manual, it requires some input parameters:
 
 - **peak_table**, the data frame containing MS peak intensities or areas;
-- **compound**, a character vector specifying the chemical formula of the compound of interest. A special notation should be used, whereby the character "X" denotes the element with unknown isotopic distribution. For example, the proton adduct of phosphocholine 32:2, [PC 32:2 + H]^+^, has chemical formula C40H77NO8P, but it should be written "X40H77NO8P" for ^13^C labelling experiments, and "C40X76HNO8P" for ^2^H experiments, in this last case keeping in mind that one hydrogen atom comes from the solvent, and has therefore fixed natural abundance. Please note that adduct ions should be specified, and not the neutral molecular species;
+- **compound**, a character vector specifying the chemical formula of the compound of interest. A special notation should be used, whereby the character "X" denotes the element with unknown isotopic distribution. For example, the proton adduct of phosphocholine 32:2, [PC 32:2 + H]<sup>+</sup>, has chemical formula C40H77NO8P, but it should be written "X40H77NO8P" for <sup>13</sup>C labelling experiments, and "C40X76HNO8P" for <sup>2</sup>H experiments, in this last case keeping in mind that one hydrogen atom comes from the solvent, and has therefore fixed natural abundance. Please note that adduct ions should be specified, and not the neutral molecular species;
 
 - **labelling**, a character, either "H" or "C", specifying the labelling isotope;
 - **mass_shift**, the maximum difference between measured and true mass. In other words, the mass accuracy;
@@ -66,7 +65,7 @@ From the MS data frame, the whole isotopic pattern analysis can be performed thr
 - **chrom_width**, an estimate of the chromatographic width of the peaks;
 - **initial_abundance**, either NA (the default value) or a numeric vector with length equal to the number of samples, containing the initial estimated percentage isotopic abundances of the labelling isotope. If provided, numbers between 0 and 100.
 
-Using the example data set, the parameters to enter for [PC 32:2 + H]^+^ are:
+Using the example data set, the parameters to enter for [PC 32:2 + H]<sup>+</sup> are:
 ```{r, eval=FALSE}
 fitted_abundances <- main_labelling(peak_table, compound="X40H77NO8P", labelling="C", 
                                    mass_shift=0.05, RT=285, RT_shift=20, 
@@ -91,7 +90,7 @@ An alternative to using `main_labelling` is to run the three distinct functions 
 
 ## Isotopes and Isotopologues
 
-The first function used by `main_labelling` is `isotopic_information`, which summarizes important isotopic information in a single object, a list required by the subsequent functions. The input parameters are the chemical formula and the type of labelling; for [PC 32:2 + H]^+^, the list can be obtained through:
+The first function used by `main_labelling` is `isotopic_information`, which summarizes important isotopic information in a single object, a list required by the subsequent functions. The input parameters are the chemical formula and the type of labelling; for [PC 32:2 + H]<sup>+</sup>, the list can be obtained through:
 ```{r, eval=FALSE}
 info <- isotopic_information(compound="X40H77NO8P", labelling="C")
 ```
@@ -107,7 +106,7 @@ In particular, "isotopes" is a table with the natural isotopic abundances (numbe
 info$isotopes
 ```
 
-Importantly, "target" is a named vector with the exact masses of all the possible isotopologues arising because of the labelling isotope; in the example, [PC 32:2 + H]^+^ has 40 carbon atoms, and therefore the possible isotopologues coming from ^13^C span a 41 mass range: the lightest one is the monoisotopic species (with 40 ^12^C atoms), whereas the heaviest is the species with 40 ^13^C atoms. However, the isotopic patterns also depend on the other elements, and therefore the list of target isotopologues is further extended by two *m/z* units, enough for small and medium-sized molecules such as lipids and metabolites.
+Importantly, "target" is a named vector with the exact masses of all the possible isotopologues arising because of the labelling isotope; in the example, [PC 32:2 + H]<sup>+</sup> has 40 carbon atoms, and therefore the possible isotopologues coming from <sup>13</sup>C span a 41 mass range: the lightest one is the monoisotopic species (with 40 <sup>12</sup>C atoms), whereas the heaviest is the species with 40 <sup>13</sup>C atoms. However, the isotopic patterns also depend on the other elements, and therefore the list of target isotopologues is further extended by two *m/z* units, enough for small and medium-sized molecules such as lipids and metabolites.
 
 The naming of the target masses follows this convention:
 
@@ -115,11 +114,11 @@ The naming of the target masses follows this convention:
 - **M+1** is the mass where one light isotope (either X or any other element) is replaced by its heaviest counterpart;
 - **M+i** is the mass where there have been "i" replacements.
 
-The underlying assumption is that the MS resolution is not high enough to resolve the isotopic fine structure; consequently, the replacement of, for example, ^1^H with ^2^H is indistinguishable from ^12^C with ^13^C. This is true for most of the instruments currently used in LC-MS measurements.
+The underlying assumption is that the MS resolution is not high enough to resolve the isotopic fine structure; consequently, the replacement of, for example, <sup>1</sup>H with <sup>2</sup>H is indistinguishable from <sup>12</sup>C with <sup>13</sup>C. This is true for most of the instruments currently used in LC-MS measurements.
 
 ## Extraction of the Experimental Isotopic Patterns
 
-Once the target masses are known, the experimental isotopic patterns are extracted from the MS data through the function `isotopic_pattern`. Keeping on with the example of [PC 32:2 + H]^+^, this can be achieved through the command:
+Once the target masses are known, the experimental isotopic patterns are extracted from the MS data through the function `isotopic_pattern`. Keeping on with the example of [PC 32:2 + H]<sup>+</sup>, this can be achieved through the command:
 
 ```{r, eval=FALSE}
 experimental_patterns <- isotopic_pattern(peak_table, info, mass_shift=0.05, 
@@ -143,11 +142,11 @@ Each of its columns, therefore, represents the extracted experimental pattern fo
 2. It considers the retention times of the obtained indices, and compares them across isotopologues in order to group them: peaks that differ in RT within the specified chromatographic width are assumed to be two isotopologues;
 3. More groups may have been identified: those containing less than two isotopologues are discarded and, if still more groups are left, the one closer in retention time to the expected value is chosen.
 
-Two of the patterns extracted for [PC 32:2 + H]^+^ are shown in Figure 1: the first (to the left) is relative to an unlabelled sample, whereas the second one (to the right) is relative to a labelled sample (99% ^13^C labelling). 
+Two of the patterns extracted for [PC 32:2 + H]<sup>+</sup> are shown in Figure 1: the first (to the left) is relative to an unlabelled sample, whereas the second one (to the right) is relative to a labelled sample (99% <sup>13</sup>C labelling). 
 
-![An example showing two of the patterns extracted from the experimental data; to the left is an unlabelled sample, to the right a labelled sample (99% ^13^C). ](https://github.com/RuggeroFerrazza/IsotopicLabelling/tree/master/vignettes/Figure_1.png) 
+![An example showing two of the patterns extracted from the experimental data; to the left is an unlabelled sample, to the right a labelled sample (99% <sup>13</sup>C). ](https://github.com/RuggeroFerrazza/IsotopicLabelling/blob/master/vignettes/Figure_1.png "Figure 1") 
 
-In this simple case, the difference is straightforward: in the labelled sample the most intense signal is shifted 40 mass units upwards with respect to the monoisotopic peak, indicating that the most abundant species is the one where all 40 carbon atoms have been replaced by the labelling isotope, ^13^C. 
+In this simple case, the difference is straightforward: in the labelled sample the most intense signal is shifted 40 mass units upwards with respect to the monoisotopic peak, indicating that the most abundant species is the one where all 40 carbon atoms have been replaced by the labelling isotope, <sup>13</sup>C. 
 
 ## Isotopic Pattern Analysis
 
@@ -186,7 +185,7 @@ There are a number of ways to look at and save the results of the isotopic patte
     summary(fitted_abundances)
     ```
 
-    In this example, the average value is 1.08% for unlabelled samples (close to the natural ^13^C abundance, 1.07%), whereas it is 98.94% for labelled samples.
+    In this example, the average value is 1.08% for unlabelled samples (close to the natural <sup>13</sup>C abundance, 1.07%), whereas it is 98.94% for labelled samples.
     
 2. The generic function `plot` can be used to produce three types of plots, depending on the parameter "type". By default (type="patterns") a series of plots is returned, one for each sample, showing the normalised experimental patterns superimposed to their fitted theoretical patterns:
     ```{r, eval=FALSE}
@@ -194,7 +193,7 @@ There are a number of ways to look at and save the results of the isotopic patte
     ```
     Two of the plots obtained in this example are in Figure 2.
     
-    ![Graphical summary of the isotopic pattern analysis for an unlabelled (top) and a labelled (bottom) sample. ](https://github.com/RuggeroFerrazza/IsotopicLabelling/tree/master/vignettes/Figure_2.pdf)
+    ![Graphical summary of the isotopic pattern analysis for an unlabelled (top) and a labelled (bottom) sample. ](https://github.com/RuggeroFerrazza/IsotopicLabelling/blob/master/vignettes/Figure_2 "Figure 2")
 
     
     If "type" is set to "residuals", the residuals are plotted:
@@ -204,12 +203,12 @@ There are a number of ways to look at and save the results of the isotopic patte
     
     This is shown in Figure 3. 
     
-    ![Plot of the residuals for an unlabelled (top) and a labelled (bottom) sample. ](https://github.com/RuggeroFerrazza/IsotopicLabelling/tree/master/vignettes/Figure_3.pdf)
+    ![Plot of the residuals for an unlabelled (top) and a labelled (bottom) sample. ](https://github.com/RuggeroFerrazza/IsotopicLabelling/blob/master/vignettes/Figure_3 "Figure 3")
 
     
     Finally, with type="summary", a summary plot with the estimated percentage abundances is provided (see Figure 4).
     
-    ![Graphical summary of the estimated percentage abundances and related standard errors, following the isotopic pattern analysis.](https://github.com/RuggeroFerrazza/IsotopicLabelling/tree/master/vignettes/Figure_4.pdf)
+    ![Graphical summary of the estimated percentage abundances and related standard errors, following the isotopic pattern analysis.](https://github.com/RuggeroFerrazza/IsotopicLabelling/blob/master/vignettes/Figure_4 "Figure 4")
     
     If the parameter "saveplots" is set to `TRUE`, the plots are saved as a *.pdf file in the working directory.
 
