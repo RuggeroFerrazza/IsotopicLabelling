@@ -193,7 +193,7 @@ There are a number of ways to look at and save the results of the isotopic patte
     ```
     Two of the plots obtained in this example are in Figure 2.
     
-    ![Graphical summary of the isotopic pattern analysis for an unlabelled (top) and a labelled (bottom) sample. ](https://github.com/RuggeroFerrazza/IsotopicLabelling/blob/master/vignettes/Figure_2 "Figure 2")
+    ![Graphical summary of the isotopic pattern analysis for an unlabelled (top) and a labelled (bottom) sample. ](https://github.com/RuggeroFerrazza/IsotopicLabelling/blob/master/vignettes/Figure_2.png "Figure 2")
 
     
     If "type" is set to "residuals", the residuals are plotted:
@@ -203,12 +203,12 @@ There are a number of ways to look at and save the results of the isotopic patte
     
     This is shown in Figure 3. 
     
-    ![Plot of the residuals for an unlabelled (top) and a labelled (bottom) sample. ](https://github.com/RuggeroFerrazza/IsotopicLabelling/blob/master/vignettes/Figure_3 "Figure 3")
+    ![Plot of the residuals for an unlabelled (top) and a labelled (bottom) sample. ](https://github.com/RuggeroFerrazza/IsotopicLabelling/blob/master/vignettes/Figure_3.png "Figure 3")
 
     
     Finally, with type="summary", a summary plot with the estimated percentage abundances is provided (see Figure 4).
     
-    ![Graphical summary of the estimated percentage abundances and related standard errors, following the isotopic pattern analysis.](https://github.com/RuggeroFerrazza/IsotopicLabelling/blob/master/vignettes/Figure_4 "Figure 4")
+    ![Graphical summary of the estimated percentage abundances and related standard errors, following the isotopic pattern analysis.](https://github.com/RuggeroFerrazza/IsotopicLabelling/blob/master/vignettes/Figure_4.png "Figure 4")
     
     If the parameter "saveplots" is set to `TRUE`, the plots are saved as a *.pdf file in the working directory.
 
