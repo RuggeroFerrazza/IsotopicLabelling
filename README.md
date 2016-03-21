@@ -1,6 +1,24 @@
 IsotopicLabelling R Package: a Practical Guide
 ======
 
+# Installation
+
+* Depends on
+```
+xcms, ecipex, stringr, gsubfn
+```
+
+* Install devtools
+```
+install.packages("devtools")
+```
+
+* Install 
+```
+library(devtools)
+install_github("RuggeroFerrazza/IsotopicLabelling") 
+```
+
 # Introduction
 
 The purpose of this document is to explain how to use the *IsotopicLabelling* R package to analyse mass spectrometric isotopic patterns obtained following isotopic labelling experiments.
