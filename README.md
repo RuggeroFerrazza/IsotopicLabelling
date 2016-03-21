@@ -106,7 +106,7 @@ In particular, "isotopes" is a table with the natural isotopic abundances (numbe
 info$isotopes
 ```
 
-Importantly, "target" is a named vector with the exact masses of all the possible isotopologues arising because of the labelling isotope; in the example, [PC 32:2 + H]<sup>+</sup> has 40 carbon atoms, and therefore the possible isotopologues coming from <sup>13</sup>C span a 41 mass range: the lightest one is the monoisotopic species (with 40 ^12^C atoms), whereas the heaviest is the species with 40 <sup>13</sup>C atoms. However, the isotopic patterns also depend on the other elements, and therefore the list of target isotopologues is further extended by two *m/z* units, enough for small and medium-sized molecules such as lipids and metabolites.
+Importantly, "target" is a named vector with the exact masses of all the possible isotopologues arising because of the labelling isotope; in the example, [PC 32:2 + H]<sup>+</sup> has 40 carbon atoms, and therefore the possible isotopologues coming from <sup>13</sup>C span a 41 mass range: the lightest one is the monoisotopic species (with 40 <sup>12</sup>C atoms), whereas the heaviest is the species with 40 <sup>13</sup>C atoms. However, the isotopic patterns also depend on the other elements, and therefore the list of target isotopologues is further extended by two *m/z* units, enough for small and medium-sized molecules such as lipids and metabolites.
 
 The naming of the target masses follows this convention:
 
@@ -144,7 +144,7 @@ Each of its columns, therefore, represents the extracted experimental pattern fo
 
 Two of the patterns extracted for [PC 32:2 + H]<sup>+</sup> are shown in Figure 1: the first (to the left) is relative to an unlabelled sample, whereas the second one (to the right) is relative to a labelled sample (99% <sup>13</sup>C labelling). 
 
-![An example showing two of the patterns extracted from the experimental data; to the left is an unlabelled sample, to the right a labelled sample (99% <sup>13</sup>C). ](https://github.com/RuggeroFerrazza/IsotopicLabelling/blob/master/vignettes/Figure_1.pdf "Figure 1") 
+![An example showing two of the patterns extracted from the experimental data; to the left is an unlabelled sample, to the right a labelled sample (99% <sup>13</sup>C). ](https://github.com/RuggeroFerrazza/IsotopicLabelling/blob/master/vignettes/Figure_1.png "Figure 1") 
 
 In this simple case, the difference is straightforward: in the labelled sample the most intense signal is shifted 40 mass units upwards with respect to the monoisotopic peak, indicating that the most abundant species is the one where all 40 carbon atoms have been replaced by the labelling isotope, <sup>13</sup>C. 
 
@@ -193,7 +193,7 @@ There are a number of ways to look at and save the results of the isotopic patte
     ```
     Two of the plots obtained in this example are in Figure 2.
     
-    ![Graphical summary of the isotopic pattern analysis for an unlabelled (top) and a labelled (bottom) sample. ](https://github.com/RuggeroFerrazza/IsotopicLabelling/tree/master/vignettes/Figure_2.pdf "Figure 2")
+    ![Graphical summary of the isotopic pattern analysis for an unlabelled (top) and a labelled (bottom) sample. ](https://github.com/RuggeroFerrazza/IsotopicLabelling/tree/master/vignettes/Figure_2.png "Figure 2")
 
     
     If "type" is set to "residuals", the residuals are plotted:
@@ -203,12 +203,12 @@ There are a number of ways to look at and save the results of the isotopic patte
     
     This is shown in Figure 3. 
     
-    ![Plot of the residuals for an unlabelled (top) and a labelled (bottom) sample. ](https://github.com/RuggeroFerrazza/IsotopicLabelling/tree/master/vignettes/Figure_3.pdf "Figure 3")
+    ![Plot of the residuals for an unlabelled (top) and a labelled (bottom) sample. ](https://github.com/RuggeroFerrazza/IsotopicLabelling/tree/master/vignettes/Figure_3.png "Figure 3")
 
     
     Finally, with type="summary", a summary plot with the estimated percentage abundances is provided (see Figure 4).
     
-    ![Graphical summary of the estimated percentage abundances and related standard errors, following the isotopic pattern analysis.](https://github.com/RuggeroFerrazza/IsotopicLabelling/tree/master/vignettes/Figure_4.pdf "Figure 4")
+    ![Graphical summary of the estimated percentage abundances and related standard errors, following the isotopic pattern analysis.](https://github.com/RuggeroFerrazza/IsotopicLabelling/tree/master/vignettes/Figure_4.png "Figure 4")
     
     If the parameter "saveplots" is set to `TRUE`, the plots are saved as a *.pdf file in the working directory.
 
