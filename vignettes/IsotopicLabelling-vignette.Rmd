@@ -246,15 +246,16 @@ As for the standard error of the mean, this is obtained by taking into account b
 
 This additional information can be achieved starting from the class *labelling* object; for example:
 
-    ```{r}
-    grouped_estimates <- group_labelling(fitted_abundances, groups=factor(c(rep("C12",4), rep("C13",4))))
-    ``` 
+```{r}
+grouped_estimates <- group_labelling(fitted_abundances, 
+                                     groups=factor(c(rep("C12",4), rep("C13",4))))
+```
 
 The second input object (`groups`) is a factor specifying the groupings. The output is a data frame containing the results for each group:
 
-    ```{r}
-    grouped_estimates
-    ```
+```{r}
+grouped_estimates
+```
 
 The last three columns of the data frame contain the critical value for a 95% confidence interval of the t distribution with N-1 degrees of freedom, and the lower and upper values for the 95% confidence interval.
 
