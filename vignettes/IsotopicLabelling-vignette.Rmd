@@ -18,7 +18,7 @@ vignette: |
 
 The purpose of this document is to explain how to use the *IsotopicLabelling* R package to analyse mass spectrometric isotopic patterns obtained following isotopic labelling experiments.
 
-A typical labelling experiment makes use of substrates enriched in one stable isotope, such as ^2^H or ^13^C; consequently, after the growth period, there are expected to be metabolites that will have incorporated the labelling isotope, and therefore its relative distribution within those metabolites will be different from its natural occurrence. The *IsotopicLabelling* R package is based on the principle that, since the isotopic patterns obtained in mass spectrometry reflect the isotopic compositions of the elements making up the observed species, the amount of labelling can be assessed by their proper examination. 
+A typical labelling experiment makes use of substrates enriched in one stable isotope, such as ^2^H or ^13^C; consequently, after the growth period, some metabolites are expected to have incorporated the labelling isotope, and therefore its relative distribution within them will be different from its natural occurrence. The *IsotopicLabelling* R package is based on the principle that, since the isotopic patterns obtained in mass spectrometry reflect the isotopic compositions of the elements making up the observed species, the amount of labelling can be assessed by their proper examination. 
 
 Worth of note, because there could be overlapping between the isotopic patterns of different species, the isotopic pattern analysis is better suited for LC-MS or GC-MS data rather than for direct-infusion MS, where the chromatographic step prior to MS detection reduces such issues. Therefore, the current implementation of the package only works for LC-MS or GC-MS data.
 
@@ -237,6 +237,30 @@ There are a number of ways to look at and save the results of the isotopic patte
     c. The percentage deviation between theoretical and experimental isotopic patterns;
     d. The outcome message from the fitting procedure.
 
+# Average the Estimates Within Groups
+Since it is usual in biochemistry to investigate different sample groups and to have more biological replicates within the same group, the *IsotopicLabelling* package provides an additional function that allows to condense the results from the individual fits (carried out on a sample-to-sample basis) into a single estimate for each of the sample groups. 
+
+For each group, the estimated isotopic abundance of the labelling isotope is calculated by simply averaging the estimates for each sample in that group. 
+
+As for the standard error of the mean, this is obtained by taking into account both the individual standard errors coming from the fittings (one for each sample) and the variability of the estimates across samples. According to the law of total variance, the overall variance is given by the sum of the variances of each estimate (the "within-sample variance"), plus the variance caused by the distribution of the obtained estimates (the "across-sample variance"). The standard error of the mean is simply the square root of this amount divided by the number of samples.
+
+This additional information can be achieved starting from the class *labelling* object; for example:
+
+    ```{r}
+    grouped_estimates <- group_labelling(fitted_abundances, groups=factor(c(rep("C12",4), rep("C13",4))))
+    ``` 
+
+The second input object (`groups`) is a factor specifying the groupings. The output is a data frame containing the results for each group:
+
+    ```{r}
+    grouped_estimates
+    ```
+
+The last three columns of the data frame contain the critical value for a 95% confidence interval of the t distribution with N-1 degrees of freedom, and the lower and upper values for the 95% confidence interval.
+
+This data frame contains all the information needed for additional statistical analysis, such as the comparison across sample groups in order to understand wheteher or not two (or more) groups have statistically different estimates.
+
+
 # Conclusion
 
 In this document we introduced the main functions of the *IsotopicLabelling* R package, explaining their basic working principles. Using the provided data set, we illustrated how to use the package in practice and how to quickly assess the results, with the hope that this package will prove to be a useful tool to researchers dealing with labelling experiments.
@@ -273,5 +297,9 @@ After having discussed the principles behind this package, our final aim here is
     
     # Save the results to a *.csv file
     save_labelling(fitted_abundances)
+    
+    # Group the samples and obtain grouped estimates
+    grouped_estimates <- group_labelling(fitted_abundances, 
+                                         groups=factor(c(rep("C12",4), rep("C13",4))))
 
 ```

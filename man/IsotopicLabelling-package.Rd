@@ -40,6 +40,8 @@ plot(fitted_abundances, type="residuals", saveplots=FALSE)
 plot(fitted_abundances, type="summary", saveplots=FALSE)
 save_labelling(fitted_abundances)
 
+grouped_estimates <- group_labelling(fitted_abundances, groups=factor(c(rep("C12",4), rep("C13",4))))
+
 # Other possible lipid compounds include:
 # [PC34:1 + H]+. compound="X42H83NO8P", RT=475, chrom_width=10
 # [TAG47:3 + NH4]+ (a minor species). compound="X50H94NO6", RT=891, chrom_width=7

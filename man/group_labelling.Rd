@@ -1,0 +1,34 @@
+\name{group_labelling}
+\alias{group_labelling}
+
+\title{
+Compute a single estimated isotopic abundance for each sample group
+}
+
+\description{
+This function groups the fitted abundances in order to give a single estimated value for each sample group, with related standard error of the mean that takes into account both the errors relative to each estimate from the fitting procedure, and the biological variability across samples
+}
+
+\usage{
+group_labelling(fitted_abundances, groups)
+}
+
+
+\arguments{
+  \item{fitted_abundances}{
+  Object of class \code{labelling}. It contains the results of the isotopic pattern analysis.
+}
+  \item{groups}{
+  A factor containing the name of the group of each sample analysed; samples belonging to the same group will be put together.
+}
+}
+
+\value{
+A data frame containing the results of the grouping. For each row (a group), it details:
+  \item{N}{The number of samples in that group.}
+  \item{Mean}{The averaged estimated percentage isotopic abundance of the labelling isotope.}
+  \item{SE mean}{The standard error of the mean.}
+  \item{t_crit}{The critical value for a 95\% confidence interval of the t distribution with N-1 degrees of freedom.}
+  \item{Lower 95\% CI}{The lower 95\% confidence interval value.}
+  \item{Upper 95\% CI}{The upper 95\% confidence interval value.}
+  }
