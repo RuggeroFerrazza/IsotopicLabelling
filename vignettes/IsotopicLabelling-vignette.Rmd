@@ -268,7 +268,6 @@ In this document we introduced the main functions of the *IsotopicLabelling* R p
 
 The package, in its current implementation, allows to deal with either ^2^H or ^13^C enrichments in the whole range 0-100\%. A note of caution is here necessary, though: during the isotopic pattern analysis, the package assumes that for each sample and analyte there is a single (unknown) isotopic distribution of the label. Consequently, *IsotopicLabelling* cannot deal with samples containing multiple sources of label abundances, such as biological samples that were spiked with a labelled analyte, or samples resulting from the pooling of several ones with different label enrichments. Therefore, pooled samples should be avoided in the isotopic pattern analysis.
 
-
 After having discussed the principles behind this package, our final aim here is to provide a compact summary that may be used as a script for analysing LC-MS data relative to labelling experiments.
 
 ```{r, eval=FALSE}
