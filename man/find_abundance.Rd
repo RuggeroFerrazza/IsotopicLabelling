@@ -6,7 +6,7 @@ Fit experimental isotopic patterns
 }
 
 \description{
-Function that takes each of the provided experimental MS isotopic patterns, and fits the best theoretical pattern that reproduces it by iteratively changing the isotopic abundance of the labelling isotope X.
+Function that takes each of the provided experimental MS isotopic patterns, and fits the best theoretical pattern that reproduces it thorugh a weighted non-linear least squares procedure.
 }
 
 \usage{

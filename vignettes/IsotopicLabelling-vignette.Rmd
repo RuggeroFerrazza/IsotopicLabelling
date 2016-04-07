@@ -91,7 +91,7 @@ Further details will be given in the following sections, where each of the steps
 
 # Step-by-Step Processing
  
-The *IsotopicLabelling* package aims to find the abundance of the isotope used during the labelling experiment within the compounds of interest, based on their MS isotopic patterns. A number of algorithms are available to a-priori compute the isotopic patterns knowing the isotopic abundances; the goal of the *IsotopicLabelling* package is the opposite: starting from measured experimental patterns, this package aims at understanding which is the isotopic distribution giving rise to those patterns. This is basically achieved by a fitting procedure through which the abundance of the labelling isotope is iteratively changed until the best match between predicted and experimental patterns is found.
+The *IsotopicLabelling* package aims to find the abundance of the isotope used during the labelling experiment within the compounds of interest, based on their MS isotopic patterns. A number of algorithms are available to a-priori compute the isotopic patterns knowing the isotopic abundances; the goal of the *IsotopicLabelling* package is the opposite: starting from measured experimental patterns, this package aims at understanding which is the isotopic distribution giving rise to those patterns. This is basically achieved by a weighted non-linear least squares fitting procedure that finds the abundance giving rise to the patterns that best match the experimental ones.
 
 The `main_labelling` function basically performs three successive steps:
 
@@ -163,7 +163,7 @@ In this simple case, the difference is straightforward: in the labelled sample t
 
 ## Isotopic Pattern Analysis
 
-The extracted patterns are then analysed by the function `find_abundance`, which takes each of them and finds the best theoretical pattern that reproduces it by iteratively changing the relative abundance of the labelling isotope.
+The extracted patterns are then analysed by the function `find_abundance`, which takes each of them and finds the best theoretical pattern that reproduces it by using a weighted non-linear squares fitting procedure where the single parameter to fit is the relative abundance of the labelling isotope.  
 
 In the example, this information can be achieved through:
 
@@ -186,7 +186,7 @@ The `find_abundance` function performs the following:
 
 1. It takes each experimental pattern and normalises it to its highest signal, set to 100;
 2. If the initial estimates are not provided, it looks for the *m/z* position of the most intense signal, and uses it to get a first rough estimate of the X isotopic abundance;
-3. A fitting procedure ensues, whereby the single unkwown variable "isotopic  abundance of X" is iteratively changed starting from its initial estimate, and the resulting theoretical patterns are compared to the experimental pattern. The final value is the one that minimizes the sum of squares of the difference between the two normalised patterns. In order to account for noise, a weight is given to the signals, proportional to the square root of their intensities. The theoretical patterns are computed using the *ecipex* R package, which exploits Fourier transforms of simplex-based elemental models.
+3. A weighted non-linear least squares fitting procedure ensues, to estimate the single unkwown parameter, the isotopic abundance of X. The obtained value is the one for which the theoretical pattern best reproduces the experimental one. In order to account for noise, a weight is given to the signals, proportional to the square root of their intensities. The theoretical patterns are computed using the *ecipex* R package, which exploits Fourier transforms of simplex-based elemental models.
 
 # Overview of the Results
 
@@ -198,8 +198,7 @@ There are a number of ways to look at and save the results of the isotopic patte
     summary(fitted_abundances)
     ```
 
-    In this example, the average value is 1.08% for unlabelled samples (close to the natural ^13^C abundance, 1.07%), whereas it is 98.94% for labelled samples.
-    
+
 2. The generic function `plot` can be used to produce three types of plots, depending on the parameter "type". By default (type="patterns") a series of plots is returned, one for each sample, showing the normalised experimental patterns superimposed to their fitted theoretical patterns:
     ```{r, eval=FALSE}
     plot(fitted_abundances, type="patterns", saveplots=F)
