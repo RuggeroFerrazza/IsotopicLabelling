@@ -7,10 +7,6 @@ output:
     fig_caption: yes
     number_sections: yes
     toc: yes
-  html_document:
-    fig_caption: yes
-    number_sections: yes
-    toc: yes
 vignette: >
   %\VignetteIndexEntry{IsotopicLabelling R Package: a Practical Guide} 
   %\VignetteEngine{knitr::rmarkdown} 
