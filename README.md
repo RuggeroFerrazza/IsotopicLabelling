@@ -16,7 +16,7 @@ install.packages("devtools")
 * Install 
 ```
 library(devtools)
-install_github("RuggeroFerrazza/IsotopicLabelling", build_vignettes = TRUE, quick=FALSE) 
+install_github("RuggeroFerrazza/IsotopicLabelling", build_vignettes = TRUE) 
 ```
 
 # Documentation
