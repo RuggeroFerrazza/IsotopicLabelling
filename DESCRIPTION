@@ -8,6 +8,5 @@ Maintainer: Ruggero Ferrazza <r.ferrazza@unitn.it>
 Description: The IsotopicLabelling package allows to analyse the isotopic patterns in MS data obtained following isotopic labelling experiments; by looking at the isotopic patterns, the package estimates the isotopic abundance of the stable isotope employed in the labelling experiment (either 2H or 13C) within the specified compound. 
 Depends: xcms, ecipex, stringr, gsubfn
 License: GPL-2
-Suggests: knitr,
-    rmarkdown
+Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
