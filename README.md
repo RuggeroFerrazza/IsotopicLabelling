@@ -19,4 +19,6 @@ library(devtools)
 install_github("RuggeroFerrazza/IsotopicLabelling", build_vignettes = TRUE) 
 ```
 
-/vignettes/IsotopicLabelling-vignette.Rmd
+# Block scheme
+
+
