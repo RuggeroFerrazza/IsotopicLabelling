@@ -1,10 +1,9 @@
 ---
-title: 'IsotopicLabelling R Package: a Practical Guide'
-author: "Ruggero Ferrazza, Pietro Franceschi"
+title: 'Vignette'
+author: "Ruggero Ferrazza"
 date: '`r Sys.Date()`'
-output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{IsotopicLabelling R Package: a Practical Guide} 
+  %\VignetteIndexEntry{Vignette} 
   %\VignetteEngine{knitr::rmarkdown} 
   %\VignetteEncoding{UTF-8}
 ---
