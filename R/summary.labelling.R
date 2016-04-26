@@ -9,7 +9,7 @@
 #' \item{results}{matrix containing a summary of the fitted results. It has two rows, 
 #' the first containing the estimated percentage isotopic abundances of the labelling isotope X (^2H or ^13C), 
 #' and the second one containing the standard errors from the fitting procedure}
-#' @export
+#' @export 
 #'
 #' @examples
 #' 

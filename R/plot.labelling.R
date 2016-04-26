@@ -39,7 +39,7 @@ plot.labelling <- function(fitted_abundances, type="patterns", saveplots=F){
       for (k in 1:length(sample_name)){
     
         plot(fitted_abundances$x_scale, fitted_abundances$y_exp[,k], type="h", main=paste(sample_name[k], " ,   Compound: ",  fitted_abundances$compound), xlab="Target mass", ylab="Normalised intensity", ylim=c(0,110), cex.main=1)
-        text=paste("Fitted X Abundance: (", sprintf("%1.3f", fitted_abundances$best_estimate[k]), "±", sprintf("%1.3f", fitted_abundances$std_error[k]), ")\ %")
+        text=paste("Fitted X Abundance: (", sprintf("%1.3f", fitted_abundances$best_estimate[k]), "+/-", sprintf("%1.3f", fitted_abundances$std_error[k]), ")\ %")
     
         mtext(text, cex=0.8)
     
@@ -65,7 +65,7 @@ plot.labelling <- function(fitted_abundances, type="patterns", saveplots=F){
     for (k in 1:length(sample_name)){
       
       plot(fitted_abundances$x_scale, fitted_abundances$residuals[,k], type="h", main=paste("Residuals for ", sample_name[k]), xlab="Target mass", ylab="Normalised intensity", cex.main=1)
-      text=paste("Fitted X Abundance: (", sprintf("%1.3f", fitted_abundances$best_estimate[k]), "±", sprintf("%1.3f", fitted_abundances$std_error[k]), ")\ %")
+      text=paste("Fitted X Abundance: (", sprintf("%1.3f", fitted_abundances$best_estimate[k]), "+/-", sprintf("%1.3f", fitted_abundances$std_error[k]), ")\ %")
       
       mtext(text, cex=0.8)
       

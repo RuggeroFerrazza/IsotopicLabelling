@@ -12,7 +12,7 @@
 #' with the initial guesses on the percentage isotopic abundance of the labelling isotope 
 #' (denoted as X, it can be either ^2H or ^13C). If provided, numbers between 0 and 100. 
 #'
-#' @return An object of class \code{\link{labelling}}, 
+#' @return An object of class \code{labelling}, 
 #' which is a list containing the results of the fitting procedure:
 #' \item{compound}{Character vector specifying the chemical formula of the compound of interest, 
 #' with X being the element with unknown isotopic distribution (to be fitted).}
