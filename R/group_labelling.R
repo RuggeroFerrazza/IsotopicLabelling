@@ -1,16 +1,38 @@
-group_labelling <- 
-function(fitted_abundances, groups){
-  # Function that groups the labelling results in order to give a single estimated abundance for each sample group, with related standard error of the mean that takes into account both the standard error relative to each estimate coming from the fitting procedure, and the biological variability across samples
-  
-  # INPUT:
-  # fitted_abundances: object of class "labelling"
-  # groups: a factor containing the name of the group of each sample analysed; samples belonging to the same group will be put together.  
-  
-  # OUTPUT:
-  # grouped_estimates: a data frame containing the results of the grouping. For each row (a group), it details: the number of samples belonging there, the averaged estimated percentage isotopic abundance of the labelling isotope, the standard error of the mean, the critical value for a 95% confidence interval of the t distribution with N-1 degrees of freedom, the lower and the upper 95% CI values.   
-  
-  ######  ------  ######
-  
+#' Compute a single estimated isotopic abundance for each sample group
+#' 
+#' This function groups the fitted abundances in order to give a single estimated value 
+#' for each sample group, with related standard error of the mean that takes into account 
+#' both the errors relative to each estimate from the fitting procedure, 
+#' and the variability across samples
+#'
+#' @param fitted_abundances Object of class \code{labelling}. 
+#' It contains the results of the isotopic pattern analysis.
+#' @param groups A factor containing the name of the group of each sample analysed; 
+#' The function will calculate summary statistics for the samples belonging to the same group.
+#'
+#' @return A data frame containing the summary statistics calculated groupwise. 
+#' For each row (a group), it details:
+#' \item{N}{The number of samples in that group.}
+#' \item{Mean}{The averaged estimated percentage isotopic abundance of the labelling isotope.}
+#' \item{SE mean}{The standard error of the mean.}
+#' \item{t_crit}{The critical value for a 95\% confidence interval 
+#' of the t distribution with N-1 degrees of freedom.}
+#' \item{Lower 95\% CI}{The lower 95\% confidence interval value.}
+#' \item{Upper 95\% CI}{The upper 95\% confidence interval value.}
+#' 
+#' @details How the average is calculated ...
+#' 
+#' @export
+#'
+#' @examples
+#' ## to be added
+#' 
+#' @author Ruggero Ferrazza
+#' @keywords manip
+#' 
+#' 
+group_labelling <- function(fitted_abundances, groups){
+
   # Extract the estimated percentage abundances and the std errors of the fit
   estimates <- fitted_abundances$best_estimate
   std_err_fit <- fitted_abundances$std_error

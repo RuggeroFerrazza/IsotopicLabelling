@@ -1,26 +1,44 @@
-find_abundance <-
-function(patterns, info, initial_abundance=NA){
-  
-  # Function that finds the isotopic distribution for element X that best reproduces the experimental patterns.
-  
-  # INPUT:
-  # patterns: matrix containing the experimental patterns in its columns, with the first two representing the mass and the retention time of the peaks
-  # info: named list, output of the "isotopic_information" function, containing useful information about the compound of interest and the isotopic distributions of its elements.
-  # initial_abundance: numeric vector with length equal to the number of samples, with the initial estimate for the abundance of the heaviest X isotope (either 2H or 13C). If provided, number between 0 and 100. 
-  
-  # OUTPUT:
-  # An object of the class "labelling", which is a list containing the results from the fitting procedure:
-  # $compound: character vector specifying the chemical formula of the compound of interest, with X being the element with unknown isotopic distribution (to be fitted)
-  # $best_estimate: numeric vector representing the best estimated abundance of the heaviest X isotope (either 2H or 13C). Number between 0 and 100.
-  # $std_error: numeric vector containing the standard errors of the estimates.
-  # $dev_percent: the percentage deviations of the fitted theoretical patterns to the provided experimental patterns.
-  # $x_scale: vector containing the m/z signals of the isotopic patterns.
-  # $y_exp: matrix containing normalised experimental patterns, where for each sample the most intense signal is set to 100.
-  # $y_theor: matrix of normalised fitted theoretical pattern (most intense signal set to 100 for each sample).
-  # warnings: character vector containing possible warnings coming from the fitting procedure.
-  
-  #######      -------      #######
+#' Fit experimental isotopic patterns
+#' 
+#' Function that takes each of the provided experimental MS isotopic patterns, 
+#' and fits the best theoretical pattern that reproduces it thorugh a weighted non-linear least squares 
+#' procedure.
+#'
+#'
+#' @param patterns A matrix of experimental isotopic patterns (one column for each sample), 
+#' with the first two columns representing \emph{m/z} and retention time of the corresponding peaks.
+#' @param info Named list containing isotopic information, output of the \code{\link{isotopic_information}} function.
+#' @param initial_abundance Either NA, or a numeric vector of length equal to the number of samples, 
+#' with the initial guesses on the percentage isotopic abundance of the labelling isotope 
+#' (denoted as X, it can be either ^2H or ^13C). If provided, numbers between 0 and 100. 
+#'
+#' @return An object of class \code{\link{labelling}}, 
+#' which is a list containing the results of the fitting procedure:
+#' \item{compound}{Character vector specifying the chemical formula of the compound of interest, 
+#' with X being the element with unknown isotopic distribution (to be fitted).}
+#' \item{best_estimate}{Numeric vector of length equal to the number of samples, 
+#' containing the estimated percentage abundances of the labelling isotope X 
+#' (either ^2H or ^13C). Numbers between 0 and 100.}
+#' \item{std_error}{Numeric vector with the standard errors of the estimates, 
+#' output of the \code{nls} fitting procedure.}
+#' \item{dev_percent}{Numeric vector with the percentage deviations between best fitted and related experimental patterns.}
+#' \item{x_scale}{Numeric vector containing the m/z values relative to the signals of the experimental patterns.}
+#' \item{y_exp}{Matrix of normalised experimental isotopic patterns (one column for each sample). 
+#' The most intense signal of each pattern is set to 100.}
+#' \item{y_theor}{Matrix of normalised fitted theoretical isotopic patterns (one column for each sample). 
+#' The most intense signal of each pattern is set to 100.}
+#' \item{residuals}{Matrix of residuals: each column is the difference between experimental and best fitted theoretical patterns.}
+#' \item{warnings}{Character vector with possible warnings from the \code{nls} fitting procedure.}
+#' 
+#' @export
+#'
+#' @examples
+#' ## to be added
+#' 
+#' @author Ruggero Ferrazza
+#' @seealso \code{\link{isotopic_information}}
 
+find_abundance <- function(patterns, info, initial_abundance=NA){
   tmp_results <- list()
   
   

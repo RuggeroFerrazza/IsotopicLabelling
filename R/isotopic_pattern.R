@@ -1,27 +1,41 @@
-isotopic_pattern <-
-function(peak_table, info, mass_shift, RT, RT_shift, chrom_width){
-  # Function that extracts the isotopic pattern from each sample in the table of peaks 
-  
-  # INPUT:
-  # peak_table: data frame containing the integrated signals for the samples. The first two columns represent the mass and the retention time of the peaks; the other columns represent peak intensities for each sample. The table can be obtained using the function "table_xcms"
-  # info: named list containing isotopic information (compound, isotopes, target, nX, nTOT), output of the "isotopic_information" function
-  # mass_shift: maximum shift allowed in the mass range
-  # RT: expected retention time of the compund of interest
-  # RT_shift: maximum shift allowed in the retention time range
-  # chrom_width: chromatographic width of the peaks
-  
-  # OUTPUT:
-  # patterns: matrix containing the extracted patterns (one for each sample). In the first two columns are the exact masses and the retention times of the peaks
-  
-  ######  ------  ######
+#' Extract experimental isotopic patterns from a table of MS peaks
+#'
+#' Function that extracts the experimental isotopic patterns of a specified compound from a data frame 
+#' containing MS peak intensities or areas.
+#'
+#' @param peak_table Data frame of experimental MS peak intensities or areas (one column for each sample), 
+#' with the first two columns representing \emph{m/z} and retention times of the peaks. 
+#' @param info Named list containing isotopic information, 
+#' output of the \code{\link{isotopic_information}} function.
+#' @param mass_shift Maximum difference between theoretical and experimental mass. 
+#' In other words, the expected mass accuracy.
+#' @param RT Expected retention time of the compound of interest.
+#' @param RT_shift Maximum difference between expected and experimental retention time of the peaks.
+#' @param chrom_width An estimate of the chromatographic peak width.
+#'
+#' @return  matrix of extracted experimental isotopic patterns (one column for each sample), 
+#' with the first two columns representing the exact \emph{m/z} and the retention times of the peaks.
+#' 
+#' @details The table can be obtained from an \code{xcmsSet} 
+#' object (output of the \code{xcms} R package) through the \code{\link{table_xcms}} function.
+#' 
+#' 
+#' @export
+#'
+#' @examples
+#' ## to be added
+#' 
+#' @author Ruggero Ferrazza
+#' @seealso \code{\link{table_xcms}} , \code{\link{isotopic_information}}
+#' @keywords manip
+
+isotopic_pattern <-function(peak_table, info, mass_shift, RT, RT_shift, chrom_width){
   
   tmp_list <- lapply(info$target, function(x){ind <- which( (abs(peak_table$mz - x) < mass_shift) & (peak_table$rt < (RT + RT_shift) ) & (peak_table$rt > (RT - RT_shift) ) )
                                   return(data.frame(ind=ind, rt=peak_table[ind,"rt"]))
                                  })
   
-  
-
-  # Extract the retention times of all the peaks
+    # Extract the retention times of all the peaks
   rt_overall <- sort(unique(unlist(lapply(tmp_list, function(x){x$rt}), use.names=F)))
   
   rt_grouped <- apply(abs(outer(rt_overall,rt_overall,'-')), 2, function(u) list(rt_overall[u<=chrom_width]))
@@ -31,7 +45,9 @@ function(peak_table, info, mass_shift, RT, RT_shift, chrom_width){
   rt_best <- rt_candidates[which.min(abs(rt_candidates - RT))]
 
   # Define the matrix where to put the signals
-  patterns <- matrix(0, nrow=length(info$target), ncol=(ncol(peak_table))); row.names(patterns) <- names(info$target); colnames(patterns) <- colnames(peak_table)
+  patterns <- matrix(0, nrow=length(info$target), ncol=(ncol(peak_table))) 
+  row.names(patterns) <- names(info$target)
+  colnames(patterns) <- colnames(peak_table)
 
   
   for (i in 1:length(info$target)){
@@ -47,7 +63,6 @@ function(peak_table, info, mass_shift, RT, RT_shift, chrom_width){
     
   }
 
-  
   # Check that the most intense signals do not come from M-2 or M-1 (which could arise from the same species as the target, with one more unsaturation)
   # If so, "delete" the whole experimental pattern
   

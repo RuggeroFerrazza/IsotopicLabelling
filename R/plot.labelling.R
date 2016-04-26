@@ -1,21 +1,27 @@
+#' Plot method for \code{labelling} objects
+#' 
+#' Produces different types of summary plots for a \code{labelling} object.
+#'
+#' @param fitted_abundances Object of class \code{labelling}
+#' @param type The of output produced. Available options are "patterns", "residuals", "summary"
+#' @param saveplots Should the plot be saved?
+#'
+#' @return One or more plots.
+#' @details The default (type 'patterns') plot shows, for each sample in the class \code{labelling} object, 
+#' the normalized experimental pattern superimposed to its fitted theoretical pattern.
+#' By setting type to 'residuals', the function plots the residuals (the differences between experimental and best fitted theoretical patterns).
+#' Type 'summary' produces a summary plot showing the estimated percentage abundances with related standard errors.
+#' If \code{saveplot} is TRUE, the plots are saved to a PDF file in the working directory.
+#' @export
+#'
+#' @examples
+#' ## to be added
+#' @author Ruggero Ferrazza
+#' @keywords hplot
+
+  
+
 plot.labelling <- function(fitted_abundances, type="patterns", saveplots=F){
-  # Function to plots the results of the Isotopic Labelling analysis
-  # Three types of plots can be produced, depending on the parameters "type":
-  # 1. The experimental patterns together with the best fitted theoretical patterns (default type of plot)
-  # 2. The residuals 
-  # 3. A summary of the estimated abundances
-  
-  # INPUT:
-  # fitted_abundances: object of class "labelling"
-  # type: character vector specifying what to plot: "patterns" (the default value), "residuals" or "summary"
-  # saveplots: logical. If TRUE, the plots are saved to a *.pdf file in the working directory.
-   
-  # OUTPUT:
-  # The resulting plots
-  
-  #####  -----  #####
-  
-  # Save default parameters
   plot.new()
   old.par <- par(no.readonly = T)
   

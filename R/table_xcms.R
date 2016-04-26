@@ -1,16 +1,31 @@
-table_xcms <-
-function(xcms_obj){
-  # Function that properly convert an xcmsSet object, from package xcms, into a table of peaks
-  
-  # INPUT:
-  # xcms_obj: an xcmsSet  object, coming from the processing of MS data with the xcms R package
+#' Process \code{xcmsSet}  
+#'
+#' Function that properly convert an xcmsSet object, 
+#' from package xcms, into a table of peaks
+#'
+#' @param xcms_obj an xcmsSet object
+#' 
+#' @return 
+#' \item{peak_table}{data frame extracted from the \code{xcmsSet} object. 
+#' The first two columns representing mass and retention 
+#' time of the related peaks}
+#'
+#' @note The output data frame, required by other functions of the 
+#' \code{\link{IsotopicLabelling}} R package, 
+#' can be obtained in a number of other independent ways, 
+#' such as through proprietary software of the vendor of the MS instrument. 
+#'
+#' @author Ruggero Ferrazza
+#' 
+#' @examples
+#' data(xcms_obj)
+#' peak_table <- table_xcms(xcms_obj) 
+#' 
+#' @keywords manip
+#' @export
 
-  # OUTPUT:
-  # peak_table: data frame containing the signals in the xcmsSet object at input, but with the proper format: it is a data frame with the first two columns representing mass and retention time of the related peaks
+table_xcms <- function(xcms_obj){
   
-  
-  ######  ------  ######
-
   # Check that the file in input is an xcmsSet object
   
   if (class(xcms_obj) != "xcmsSet") stop("ERROR: The provided object is not an xcmsSet object")
