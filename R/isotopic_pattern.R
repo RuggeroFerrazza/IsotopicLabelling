@@ -4,17 +4,17 @@
 #' containing MS peak intensities or areas.
 #'
 #' @param peak_table Data frame of experimental MS peak intensities or areas (one column for each sample), 
-#' with the first two columns representing \emph{m/z} and retention times of the peaks. 
+#' with the first two columns representing \emph{m/z} and retention times of the peaks
 #' @param info Named list containing isotopic information, 
-#' output of the \code{\link{isotopic_information}} function.
+#' output of the \code{\link{isotopic_information}} function
 #' @param mass_shift Maximum difference between theoretical and experimental mass. 
-#' In other words, the expected mass accuracy.
-#' @param RT Expected retention time of the compound of interest.
-#' @param RT_shift Maximum difference between expected and experimental retention time of the peaks.
-#' @param chrom_width An estimate of the chromatographic peak width.
+#' In other words, the expected mass accuracy
+#' @param RT Expected retention time of the compound of interest
+#' @param RT_shift Maximum difference between expected and experimental retention time of the peaks
+#' @param chrom_width An estimate of the chromatographic peak width
 #'
-#' @return  matrix of extracted experimental isotopic patterns (one column for each sample), 
-#' with the first two columns representing the exact \emph{m/z} and the retention times of the peaks.
+#' @return  A matrix of extracted experimental isotopic patterns (one column for each sample), 
+#' with the first two columns representing the exact \emph{m/z} and the retention times of the peaks
 #' 
 #' @details The table can be obtained from an \code{xcmsSet} 
 #' object (output of the \code{xcms} R package) through the \code{\link{table_xcms}} function.
@@ -23,7 +23,8 @@
 #' @export
 #'
 #' @examples
-#' ## to be added
+#' experimental_patterns <- isotopic_pattern(peak_table, info, mass_shift=0.05, 
+#' RT=285, RT_shift=20, chrom_width=7)
 #' 
 #' @author Ruggero Ferrazza
 #' @seealso \code{\link{table_xcms}} , \code{\link{isotopic_information}}

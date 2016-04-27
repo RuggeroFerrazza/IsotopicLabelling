@@ -3,29 +3,31 @@
 #' This function groups the fitted abundances in order to give a single estimated value 
 #' for each sample group, with related standard error of the mean that takes into account 
 #' both the errors relative to each estimate from the fitting procedure, 
-#' and the variability across samples
+#' and the variability across samples.
 #'
 #' @param fitted_abundances Object of class \code{labelling}. 
-#' It contains the results of the isotopic pattern analysis.
+#' It contains the results of the isotopic pattern analysis
 #' @param groups A factor containing the name of the group of each sample analysed; 
-#' The function will calculate summary statistics for the samples belonging to the same group.
+#' The function will calculate summary statistics for the samples belonging to the same group
 #'
 #' @return A data frame containing the summary statistics calculated groupwise. 
 #' For each row (a group), it details:
-#' \item{N}{The number of samples in that group.}
-#' \item{Mean}{The averaged estimated percentage isotopic abundance of the labelling isotope.}
-#' \item{SE mean}{The standard error of the mean.}
+#' \item{N}{The number of samples in that group}
+#' \item{Mean}{The averaged estimated percentage isotopic abundance of the labelling isotope}
+#' \item{SE mean}{The standard error of the mean}
 #' \item{t_crit}{The critical value for a 95\% confidence interval 
-#' of the t distribution with N-1 degrees of freedom.}
-#' \item{Lower 95\% CI}{The lower 95\% confidence interval value.}
-#' \item{Upper 95\% CI}{The upper 95\% confidence interval value.}
+#' of the t distribution with N-1 degrees of freedom}
+#' \item{Lower 95\% CI}{The lower 95\% confidence interval value}
+#' \item{Upper 95\% CI}{The upper 95\% confidence interval value}
 #' 
-#' @details How the average is calculated ...
+#' @details For each group, the average is simply computed by considering that the obtained individual values are representative of the population. 
+#' 
+#' As for the standard deviations, they are obtained using the law of total variance: the overall variance in each group is the sum of two distinct contributions, the first one related to the uncertainties associated in each sample estimate, and the second one arising from the spread of the estimates (biological variability).
 #' 
 #' @export
 #'
 #' @examples
-#' ## to be added
+#' grouped_estimates <- group_labelling(fitted_abundances, groups=factor(c(rep("CTRL",4), rep("TRTD",4))))
 #' 
 #' @author Ruggero Ferrazza
 #' @keywords manip

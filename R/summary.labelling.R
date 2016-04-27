@@ -1,12 +1,12 @@
-#' Summary of the labeling fitting 
+#' Summary of the labelling fitting 
 #'
-#' Function that produces a summary of the results from an object of class "labelling"
+#' Function that produces a summary of the results from an object of class \code{labelling}.
 #'
-#' @param fitted_abundances object of class \code{labeling},
-#' output of either \code{\link{main_labelling}} or \code{\link{find_abundance}} functions.
+#' @param fitted_abundances Object of class \code{labeling},
+#' output of either \code{\link{main_labelling}} or \code{\link{find_abundance}} functions
 #'
 #' @return 
-#' \item{results}{matrix containing a summary of the fitted results. It has two rows, 
+#' \item{results}{Matrix containing a summary of the fitted results. It has two rows, 
 #' the first containing the estimated percentage isotopic abundances of the labelling isotope X (^2H or ^13C), 
 #' and the second one containing the standard errors from the fitting procedure}
 #' @export 
@@ -15,8 +15,6 @@
 #' 
 #' @author Ruggero Ferrazza
 #' 
-#' @examples
-#' Add examples
 #' 
 #' @keywords manip
 #' 

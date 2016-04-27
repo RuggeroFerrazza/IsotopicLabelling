@@ -3,10 +3,10 @@
 #' Produces different types of summary plots for a \code{labelling} object.
 #'
 #' @param fitted_abundances Object of class \code{labelling}
-#' @param type The of output produced. Available options are "patterns", "residuals", "summary"
-#' @param saveplots Should the plot be saved?
+#' @param type The type of output produced. Available options are "patterns", "residuals", "summary"
+#' @param saveplots Should the plots be saved as a PDF file?
 #'
-#' @return One or more plots.
+#' @return One or more plots
 #' @details The default (type 'patterns') plot shows, for each sample in the class \code{labelling} object, 
 #' the normalized experimental pattern superimposed to its fitted theoretical pattern.
 #' By setting type to 'residuals', the function plots the residuals (the differences between experimental and best fitted theoretical patterns).
@@ -16,6 +16,11 @@
 #'
 #' @examples
 #' ## to be added
+#' plot(fitted_abundances, type="patterns", saveplots=TRUE) 
+#' plot(fitted_abundances, type="residuals", saveplots=TRUE) 
+#' plot(fitted_abundances, type="summary", saveplots=TRUE)
+#' 
+#' 
 #' @author Ruggero Ferrazza
 #' @keywords hplot
 

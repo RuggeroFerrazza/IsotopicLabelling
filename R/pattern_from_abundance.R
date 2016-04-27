@@ -7,19 +7,19 @@
 #' the related masses are in the "target" vector contained in the input list.
 #'
 #' @param abundance Isotopic abundance of the labelling isotope X (either ^2H or ^13C); 
-#' number between 0 and 1.
+#' number between 0 and 1
 #' @param info Named list containing isotopic information, 
-#' output of the \code{\link{isotopic_information}} function.
+#' output of the \code{\link{isotopic_information}} function
 #'
 #' @return A vector representing the normalised isotopic pattern of the compound of interest, 
-#' corresponding to the specified isotopic distribution.
+#' corresponding to the specified isotopic distribution
 #' @export
 #'
-#' @examples
-#' ## To be added 
+#' 
+#' 
 #' 
 #' @author Ruggero Ferrazza
-#' @references The function makes use of the \code{\link[ecipex]{ecipex}} R package.
+#' @references The function makes use of the \code{\link[ecipex]{ecipex}} R package
 #' @seealso \code{\link{isotopic_information}}, \code{\link[ecipex]{ecipex}}
 #' @keywords manip
 #' 

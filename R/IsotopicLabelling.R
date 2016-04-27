@@ -3,7 +3,7 @@
 #' The \code{IsotopicLabelling} package allows to analyse the isotopic patterns in MS data 
 #' obtained in isotopic labelling experiments.  From the experimental patterns, 
 #' the package estimates the isotopic abundance of the stable isotope employed in 
-#' the labelling experiment (either ^2H or ^13C) inside a specified compound. 
+#' the labelling experiment (either ^2H or ^13C) inside a specified compound.
 #' 
 #' 
 #' @section Details:
@@ -14,7 +14,7 @@
 #' where the resulting estimate is the value for which the theoretical pattern best reproduces 
 #' the experimental one. 
 #' During the fitting, the experimental signals are given weights proportional to the square root 
-#' of their intensity, to correct for the non unifor variance at different intensity levels. 
+#' of their intensity, to correct for the non uniform variance at different intensity levels. 
 #' The theoretical patterns are computed using the \code{\link[ecipex]{ecipex}} R package.
 #' 
 #' @section Block diagram:

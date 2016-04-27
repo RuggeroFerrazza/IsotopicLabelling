@@ -20,7 +20,7 @@ This is performed through a weighted non-linear least squares fitting procedure,
 where the resulting estimate is the value for which the theoretical pattern best reproduces 
 the experimental one. 
 During the fitting, the experimental signals are given weights proportional to the square root 
-of their intensity, to correct for the non unifor variance at different intensity levels. 
+of their intensity, to correct for the non uniform variance at different intensity levels. 
 The theoretical patterns are computed using the \code{\link[ecipex]{ecipex}} R package.
 }
 

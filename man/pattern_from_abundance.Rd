@@ -8,14 +8,14 @@ pattern_from_abundance(abundance, info)
 }
 \arguments{
 \item{abundance}{Isotopic abundance of the labelling isotope X (either ^2H or ^13C); 
-number between 0 and 1.}
+number between 0 and 1}
 
 \item{info}{Named list containing isotopic information, 
-output of the \code{\link{isotopic_information}} function.}
+output of the \code{\link{isotopic_information}} function}
 }
 \value{
 A vector representing the normalised isotopic pattern of the compound of interest, 
-corresponding to the specified isotopic distribution.
+corresponding to the specified isotopic distribution
 }
 \description{
 Function that computes the theoretical pattern of the specified compound, 
@@ -24,15 +24,11 @@ The function returns a vector of normalised theoretical intensities,
 where the maximum signal is set to 100; 
 the related masses are in the "target" vector contained in the input list.
 }
-\examples{
-## To be added 
-
-}
 \author{
 Ruggero Ferrazza
 }
 \references{
-The function makes use of the \code{\link[ecipex]{ecipex}} R package.
+The function makes use of the \code{\link[ecipex]{ecipex}} R package
 }
 \seealso{
 \code{\link{isotopic_information}}, \code{\link[ecipex]{ecipex}}
