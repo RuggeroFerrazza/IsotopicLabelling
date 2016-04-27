@@ -10,23 +10,23 @@ main_labelling(peak_table, compound, labelling, mass_shift, RT, RT_shift,
 \arguments{
 \item{peak_table}{A data.frame containing the integrated signals for the samples}
 
-\item{compound}{the chemical formula of the compound of interest}
+\item{compound}{The chemical formula of the compound of interest}
 
-\item{labelling}{character, either "H" or "C", specifying which is the labelling element}
+\item{labelling}{Character, either "H" or "C", specifying which is the labelling element}
 
-\item{mass_shift}{maximum shift allowed in the mass range}
+\item{mass_shift}{Maximum shift allowed in the mass range}
 
-\item{RT}{expected retention time of the compund of interest}
+\item{RT}{Expected retention time of the compund of interest}
 
-\item{RT_shift}{maximum shift allowed in the retention time range}
+\item{RT_shift}{Maximum shift allowed in the retention time range}
 
-\item{chrom_width}{chromatographic width of the peaks}
+\item{chrom_width}{Chromatographic width of the peaks}
 
-\item{initial_abundance}{initial estimate for the abundance of the heaviest X isotope (the label)}
+\item{initial_abundance}{Initial estimate for the abundance of the heaviest X isotope (the label)}
 }
 \value{
 An object of the class \code{labelling}, which is a list containing the results from the fitting procedure:
- \item{compound}{Character vector specifying the chemical formula of the compound of interest, 
+ \item{compound}{ Character vector specifying the chemical formula of the compound of interest, 
   with X being the element with unknown isotopic distribution (to be fitted)}
  \item{Best_estimate}{ Numeric vector representing the best estimated abundance 
  of the heaviest X isotope (either ^2H or ^13C). Number between 0 and 100}

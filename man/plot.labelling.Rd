@@ -10,12 +10,12 @@
 \arguments{
 \item{fitted_abundances}{Object of class \code{labelling}}
 
-\item{type}{The of output produced. Available options are "patterns", "residuals", "summary"}
+\item{type}{The type of output produced. Available options are "patterns", "residuals", "summary"}
 
-\item{saveplots}{Should the plot be saved?}
+\item{saveplots}{Should the plots be saved as a PDF file?}
 }
 \value{
-One or more plots.
+One or more plots
 }
 \description{
 Produces different types of summary plots for a \code{labelling} object.
@@ -29,6 +29,11 @@ If \code{saveplot} is TRUE, the plots are saved to a PDF file in the working dir
 }
 \examples{
 ## to be added
+plot(fitted_abundances, type="patterns", saveplots=TRUE) 
+plot(fitted_abundances, type="residuals", saveplots=TRUE) 
+plot(fitted_abundances, type="summary", saveplots=TRUE)
+
+
 }
 \author{
 Ruggero Ferrazza

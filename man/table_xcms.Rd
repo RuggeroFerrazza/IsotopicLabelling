@@ -7,16 +7,16 @@
 table_xcms(xcms_obj)
 }
 \arguments{
-\item{xcms_obj}{an xcmsSet object}
+\item{xcms_obj}{An xcmsSet object}
 }
 \value{
-\item{peak_table}{data frame extracted from the \code{xcmsSet} object. 
-The first two columns representing mass and retention 
+\item{peak_table}{Data frame extracted from the \code{xcmsSet} object. 
+The first two columns represent mass and retention 
 time of the related peaks}
 }
 \description{
-Function that properly convert an xcmsSet object, 
-from package xcms, into a table of peaks
+Function that properly converts an \code{xcmsSet} object, 
+from package \code{xcms}, into a table of peaks.
 }
 \note{
 The output data frame, required by other functions of the 

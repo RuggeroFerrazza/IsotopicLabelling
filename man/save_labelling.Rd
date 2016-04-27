@@ -7,13 +7,13 @@
 save_labelling(fitted_abundances, path = getwd())
 }
 \arguments{
-\item{fitted_abundances}{object of class \code{labelling}}
+\item{fitted_abundances}{Object of class \code{labelling}}
 
-\item{path}{he directory where to save the csv file. 
-If not specified, the results are saved in the working directory.}
+\item{path}{The directory where to save the csv file. 
+If not specified, the results are saved in the working directory}
 }
 \value{
-A COMPOUND_Estimated_Abundances.csv" file, containing the results of the analysis. 
+The "COMPOUND_Estimated_Abundances.csv" file, containing the results of the analysis. 
 For each sample (one for each row) there are four columns:
 \enumerate{
 \item The estimated percentage abundance of the labelling isotope (either ^2H or ^13C);
@@ -23,7 +23,7 @@ For each sample (one for each row) there are four columns:
 }
 }
 \description{
-Function that saves the obtained results to a csv file
+Function that saves the obtained results to a csv file.
 }
 \examples{
 

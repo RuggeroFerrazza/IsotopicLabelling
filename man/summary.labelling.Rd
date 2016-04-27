@@ -2,21 +2,21 @@
 % Please edit documentation in R/summary.labelling.R
 \name{summary.labelling}
 \alias{summary.labelling}
-\title{Summary of the labeling fitting}
+\title{Summary of the labelling fitting}
 \usage{
 \method{summary}{labelling}(fitted_abundances)
 }
 \arguments{
-\item{fitted_abundances}{object of class \code{labeling},
-output of either \code{\link{main_labelling}} or \code{\link{find_abundance}} functions.}
+\item{fitted_abundances}{Object of class \code{labeling},
+output of either \code{\link{main_labelling}} or \code{\link{find_abundance}} functions}
 }
 \value{
-\item{results}{matrix containing a summary of the fitted results. It has two rows, 
+\item{results}{Matrix containing a summary of the fitted results. It has two rows, 
 the first containing the estimated percentage isotopic abundances of the labelling isotope X (^2H or ^13C), 
 and the second one containing the standard errors from the fitting procedure}
 }
 \description{
-Function that produces a summary of the results from an object of class "labelling"
+Function that produces a summary of the results from an object of class \code{labelling}.
 }
 \examples{
 
