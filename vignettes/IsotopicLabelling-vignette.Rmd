@@ -194,13 +194,13 @@ There are a number of ways to look at and save the results of the isotopic patte
 1. The generic function `summary` allows to quickly glance at the estimated percentage abundances:
 
     ```{r}
-    summary(fitted_abundances)
+    summary(object=fitted_abundances)
     ```
 
 
 2. The generic function `plot` can be used to produce three types of plots, depending on the parameter "type". By default (type="patterns") a series of plots is returned, one for each sample, showing the normalised experimental patterns superimposed to their fitted theoretical patterns:
     ```{r, eval=FALSE}
-    plot(fitted_abundances, type="patterns", saveplots=F)
+    plot(x=fitted_abundances, type="patterns", saveplots=F)
     ```
     Two of the plots obtained in this example are in Figure 2.
     
@@ -209,10 +209,10 @@ There are a number of ways to look at and save the results of the isotopic patte
     
     If "type" is set to "residuals", the residuals are plotted:
     ```{r, eval=FALSE}
-    plot(fitted_abundances, type="residuals", saveplots=F)
+    plot(x=fitted_abundances, type="residuals", saveplots=F)
     ```
     
-    This is shown in Figure 3. 
+    This is shown in Figure 3.
     
     ![Plot of the residuals for an unlabelled (top) and a labelled (bottom) sample. ](Figure_3.pdf)
 
@@ -285,16 +285,16 @@ After having discussed the principles behind this package, our final aim here is
                                        chrom_width=7, initial_abundance=NA)
 
     # Quickly look at the results
-    summary(fitted_abundances)
+    summary(object=fitted_abundances)
     
     # Plot the patterns
-    plot(fitted_abundances, type="patterns", saveplots=F)
+    plot(x=fitted_abundances, type="patterns", saveplots=F)
     
     # Plot the residuals
-    plot(fitted_abundances, type="residuals", saveplots=F)
+    plot(x=fitted_abundances, type="residuals", saveplots=F)
     
     # Plot the overall results
-    plot(fitted_abundances, type="summary", saveplots=F)
+    plot(x=fitted_abundances, type="summary", saveplots=F)
     
     # Save the results to a *.csv file
     save_labelling(fitted_abundances)

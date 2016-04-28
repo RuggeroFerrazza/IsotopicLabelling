@@ -48,10 +48,10 @@
 #'                                     RT_shift=20, 
 #'                                     chrom_width=7, 
 #'                                     initial_abundance=NA)
-#' summary(fitted_abundances)
-#' plot(fitted_abundances, type="patterns", saveplots=FALSE)
-#' plot(fitted_abundances, type="residuals", saveplots=FALSE)
-#' plot(fitted_abundances, type="summary", saveplots=FALSE)
+#' summary(object=fitted_abundances)
+#' plot(x=fitted_abundances, type="patterns", saveplots=FALSE)
+#' plot(x=fitted_abundances, type="residuals", saveplots=FALSE)
+#' plot(x=fitted_abundances, type="summary", saveplots=FALSE)
 #' save_labelling(fitted_abundances)
 #' grouped_estimates <- group_labelling(fitted_abundances, 
 #'                                      groups=factor(c(rep("C12",4), 

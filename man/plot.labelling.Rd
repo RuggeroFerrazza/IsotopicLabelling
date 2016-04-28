@@ -4,11 +4,10 @@
 \alias{plot.labelling}
 \title{Plot method for \code{labelling} objects}
 \usage{
-\method{plot}{labelling}(fitted_abundances, type = "patterns",
-  saveplots = F)
+\method{plot}{labelling}(x, type = "patterns", saveplots = F, ...)
 }
 \arguments{
-\item{fitted_abundances}{Object of class \code{labelling}}
+\item{x}{Object of class \code{labelling}}
 
 \item{type}{The type of output produced. Available options are "patterns", "residuals", "summary"}
 
@@ -29,9 +28,9 @@ If \code{saveplot} is TRUE, the plots are saved to a PDF file in the working dir
 }
 \examples{
 ## to be added
-plot(fitted_abundances, type="patterns", saveplots=TRUE) 
-plot(fitted_abundances, type="residuals", saveplots=TRUE) 
-plot(fitted_abundances, type="summary", saveplots=TRUE)
+plot(x=fitted_abundances, type="patterns", saveplots=TRUE) 
+plot(x=fitted_abundances, type="residuals", saveplots=TRUE) 
+plot(x=fitted_abundances, type="summary", saveplots=TRUE)
 
 
 }

@@ -2,7 +2,7 @@
 #' 
 #' Produces different types of summary plots for a \code{labelling} object.
 #'
-#' @param fitted_abundances Object of class \code{labelling}
+#' @param x Object of class \code{labelling}
 #' @param type The type of output produced. Available options are "patterns", "residuals", "summary"
 #' @param saveplots Should the plots be saved as a PDF file?
 #'
@@ -16,9 +16,9 @@
 #'
 #' @examples
 #' ## to be added
-#' plot(fitted_abundances, type="patterns", saveplots=TRUE) 
-#' plot(fitted_abundances, type="residuals", saveplots=TRUE) 
-#' plot(fitted_abundances, type="summary", saveplots=TRUE)
+#' plot(x=fitted_abundances, type="patterns", saveplots=TRUE) 
+#' plot(x=fitted_abundances, type="residuals", saveplots=TRUE) 
+#' plot(x=fitted_abundances, type="summary", saveplots=TRUE)
 #' 
 #' 
 #' @author Ruggero Ferrazza
@@ -26,7 +26,8 @@
 
   
 
-plot.labelling <- function(fitted_abundances, type="patterns", saveplots=F){
+plot.labelling <- function(x, type="patterns", saveplots=F, ...){
+  fitted_abundances <- x
   plot.new()
   old.par <- par(no.readonly = T)
   

@@ -2,7 +2,7 @@
 #'
 #' Function that produces a summary of the results from an object of class \code{labelling}.
 #'
-#' @param fitted_abundances Object of class \code{labeling},
+#' @param object Object of class \code{labelling},
 #' output of either \code{\link{main_labelling}} or \code{\link{find_abundance}} functions
 #'
 #' @return 
@@ -18,7 +18,9 @@
 #' 
 #' @keywords manip
 #' 
-summary.labelling <- function(fitted_abundances){
+summary.labelling <- function(object, ...){
+  
+  fitted_abundances <- object
   
   best_est <- fitted_abundances$best_estimate
   std_error <- fitted_abundances$std_error

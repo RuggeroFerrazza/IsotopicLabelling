@@ -4,10 +4,10 @@
 \alias{summary.labelling}
 \title{Summary of the labelling fitting}
 \usage{
-\method{summary}{labelling}(fitted_abundances)
+\method{summary}{labelling}(object, ...)
 }
 \arguments{
-\item{fitted_abundances}{Object of class \code{labeling},
+\item{object}{Object of class \code{labelling},
 output of either \code{\link{main_labelling}} or \code{\link{find_abundance}} functions}
 }
 \value{
