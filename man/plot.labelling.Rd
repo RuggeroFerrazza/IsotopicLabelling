@@ -28,6 +28,14 @@ By setting type to 'residuals', the function plots the residuals (the difference
 Type 'summary' produces a summary plot showing the estimated percentage abundances with related standard errors.
 If \code{saveplot} is TRUE, the plots are saved to a PDF file in the working directory.
 }
+\examples{
+\dontrun{
+plot(x=fitted_abundances, type="patterns", saveplots=TRUE) 
+plot(x=fitted_abundances, type="residuals", saveplots=TRUE) 
+plot(x=fitted_abundances, type="summary", saveplots=TRUE)
+}
+
+}
 \author{
 Ruggero Ferrazza
 }

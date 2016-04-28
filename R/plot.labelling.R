@@ -15,6 +15,13 @@
 #' If \code{saveplot} is TRUE, the plots are saved to a PDF file in the working directory.
 #' @export
 #'
+#' @examples
+#' \dontrun{
+#' plot(x=fitted_abundances, type="patterns", saveplots=TRUE) 
+#' plot(x=fitted_abundances, type="residuals", saveplots=TRUE) 
+#' plot(x=fitted_abundances, type="summary", saveplots=TRUE)
+#' }
+#' 
 #' @author Ruggero Ferrazza
 #' @keywords hplot
 
