@@ -26,9 +26,6 @@
 #' 
 #' @export
 #'
-#' @examples
-#' grouped_estimates <- group_labelling(fitted_abundances, groups=factor(c(rep("CTRL",4), rep("TRTD",4))))
-#' 
 #' @author Ruggero Ferrazza
 #' @keywords manip
 #' 

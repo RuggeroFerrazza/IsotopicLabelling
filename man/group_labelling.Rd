@@ -35,10 +35,6 @@ For each group, the average is simply computed by considering that the obtained 
 
 As for the standard deviations, they are obtained using the law of total variance: the overall variance in each group is the sum of two distinct contributions, the first one related to the uncertainties associated in each sample estimate, and the second one arising from the spread of the estimates (biological variability).
 }
-\examples{
-grouped_estimates <- group_labelling(fitted_abundances, groups=factor(c(rep("CTRL",4), rep("TRTD",4))))
-
-}
 \author{
 Ruggero Ferrazza
 }

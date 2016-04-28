@@ -5,6 +5,7 @@
 #' @param x Object of class \code{labelling}
 #' @param type The type of output produced. Available options are "patterns", "residuals", "summary"
 #' @param saveplots Should the plots be saved as a PDF file?
+#' @param ... Other parameters
 #'
 #' @return One or more plots
 #' @details The default (type 'patterns') plot shows, for each sample in the class \code{labelling} object, 
@@ -14,13 +15,6 @@
 #' If \code{saveplot} is TRUE, the plots are saved to a PDF file in the working directory.
 #' @export
 #'
-#' @examples
-#' ## to be added
-#' plot(x=fitted_abundances, type="patterns", saveplots=TRUE) 
-#' plot(x=fitted_abundances, type="residuals", saveplots=TRUE) 
-#' plot(x=fitted_abundances, type="summary", saveplots=TRUE)
-#' 
-#' 
 #' @author Ruggero Ferrazza
 #' @keywords hplot
 
@@ -44,7 +38,7 @@ plot.labelling <- function(x, type="patterns", saveplots=F, ...){
       
       for (k in 1:length(sample_name)){
     
-        plot(fitted_abundances$x_scale, fitted_abundances$y_exp[,k], type="h", main=paste(sample_name[k], " ,   Compound: ",  fitted_abundances$compound), xlab="Target mass", ylab="Normalised intensity", ylim=c(0,110), cex.main=1)
+        plot(fitted_abundances$x_scale, fitted_abundances$y_exp[,k], type="h", main=paste(sample_name[k], " ,   Compound: ",  fitted_abundances$compound), xlab="Target mass", ylab="Normalised intensity", ylim=c(0,110), cex.main=1, ...)
         text=paste("Fitted X Abundance: (", sprintf("%1.3f", fitted_abundances$best_estimate[k]), "+/-", sprintf("%1.3f", fitted_abundances$std_error[k]), ")\ %")
     
         mtext(text, cex=0.8)
@@ -70,7 +64,7 @@ plot.labelling <- function(x, type="patterns", saveplots=F, ...){
 
     for (k in 1:length(sample_name)){
       
-      plot(fitted_abundances$x_scale, fitted_abundances$residuals[,k], type="h", main=paste("Residuals for ", sample_name[k]), xlab="Target mass", ylab="Normalised intensity", cex.main=1)
+      plot(fitted_abundances$x_scale, fitted_abundances$residuals[,k], type="h", main=paste("Residuals for ", sample_name[k]), xlab="Target mass", ylab="Normalised intensity", cex.main=1, ...)
       text=paste("Fitted X Abundance: (", sprintf("%1.3f", fitted_abundances$best_estimate[k]), "+/-", sprintf("%1.3f", fitted_abundances$std_error[k]), ")\ %")
       
       mtext(text, cex=0.8)
@@ -84,7 +78,7 @@ plot.labelling <- function(x, type="patterns", saveplots=F, ...){
     if (saveplots==T) pdf(paste(fitted_abundances$compound, "_Summary", ".pdf", sep=""), width=10, height=7) 
     par(mar=c(6.4,4.1,4.1,2.1))
     
-    plot(fitted_abundances$best_estimate, type="p", pch=16, cex=0.6, xaxt="n", main="Summary of the Estimated Abundances", ylab="Fitted X abundance  [%]", xlab="", cex.main=1.2)
+    plot(fitted_abundances$best_estimate, type="p", pch=16, cex=0.6, xaxt="n", main="Summary of the Estimated Abundances", ylab="Fitted X abundance  [%]", xlab="", cex.main=1.2, ...)
     mtext(paste("Compound: ", fitted_abundances$compound))
     axis(side=1, at=1:length(sample_name), labels=sample_name, las=2, cex.axis=0.7)
     

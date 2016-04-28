@@ -22,10 +22,6 @@
 #' 
 #' @export
 #'
-#' @examples
-#' experimental_patterns <- isotopic_pattern(peak_table, info, mass_shift=0.05, 
-#' RT=285, RT_shift=20, chrom_width=7)
-#' 
 #' @author Ruggero Ferrazza
 #' @seealso \code{\link{table_xcms}} , \code{\link{isotopic_information}}
 #' @keywords manip

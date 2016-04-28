@@ -34,11 +34,6 @@ containing MS peak intensities or areas.
 The table can be obtained from an \code{xcmsSet} 
 object (output of the \code{xcms} R package) through the \code{\link{table_xcms}} function.
 }
-\examples{
-experimental_patterns <- isotopic_pattern(peak_table, info, mass_shift=0.05, 
-RT=285, RT_shift=20, chrom_width=7)
-
-}
 \author{
 Ruggero Ferrazza
 }

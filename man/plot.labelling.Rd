@@ -12,6 +12,8 @@
 \item{type}{The type of output produced. Available options are "patterns", "residuals", "summary"}
 
 \item{saveplots}{Should the plots be saved as a PDF file?}
+
+\item{...}{Other parameters}
 }
 \value{
 One or more plots
@@ -25,14 +27,6 @@ the normalized experimental pattern superimposed to its fitted theoretical patte
 By setting type to 'residuals', the function plots the residuals (the differences between experimental and best fitted theoretical patterns).
 Type 'summary' produces a summary plot showing the estimated percentage abundances with related standard errors.
 If \code{saveplot} is TRUE, the plots are saved to a PDF file in the working directory.
-}
-\examples{
-## to be added
-plot(x=fitted_abundances, type="patterns", saveplots=TRUE) 
-plot(x=fitted_abundances, type="residuals", saveplots=TRUE) 
-plot(x=fitted_abundances, type="summary", saveplots=TRUE)
-
-
 }
 \author{
 Ruggero Ferrazza

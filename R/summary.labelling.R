@@ -4,14 +4,13 @@
 #'
 #' @param object Object of class \code{labelling},
 #' output of either \code{\link{main_labelling}} or \code{\link{find_abundance}} functions
+#' @param ... Additional parameters
 #'
 #' @return 
 #' \item{results}{Matrix containing a summary of the fitted results. It has two rows, 
 #' the first containing the estimated percentage isotopic abundances of the labelling isotope X (^2H or ^13C), 
 #' and the second one containing the standard errors from the fitting procedure}
 #' @export 
-#'
-#' @examples
 #' 
 #' @author Ruggero Ferrazza
 #' 

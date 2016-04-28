@@ -32,9 +32,6 @@
 #' 
 #' @export
 #'
-#' @examples
-#' fitted_abundances <- find_abundance(patterns, info, initial_abundance=NA)
-#' 
 #' @author Ruggero Ferrazza
 #' @seealso \code{\link{isotopic_information}}
 

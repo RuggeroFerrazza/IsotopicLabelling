@@ -25,9 +25,6 @@ For each sample (one for each row) there are four columns:
 \description{
 Function that saves the obtained results to a csv file.
 }
-\examples{
-
-}
 \author{
 Ruggero Ferrazza
 }

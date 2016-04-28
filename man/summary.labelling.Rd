@@ -9,6 +9,8 @@
 \arguments{
 \item{object}{Object of class \code{labelling},
 output of either \code{\link{main_labelling}} or \code{\link{find_abundance}} functions}
+
+\item{...}{Additional parameters}
 }
 \value{
 \item{results}{Matrix containing a summary of the fitted results. It has two rows, 
@@ -17,9 +19,6 @@ and the second one containing the standard errors from the fitting procedure}
 }
 \description{
 Function that produces a summary of the results from an object of class \code{labelling}.
-}
-\examples{
-
 }
 \author{
 Ruggero Ferrazza

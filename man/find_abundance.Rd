@@ -40,10 +40,6 @@ Function that takes each of the provided experimental MS isotopic patterns,
 and fits the best theoretical pattern that reproduces it through a weighted non-linear least squares 
 procedure.
 }
-\examples{
-fitted_abundances <- find_abundance(patterns, info, initial_abundance=NA)
-
-}
 \author{
 Ruggero Ferrazza
 }

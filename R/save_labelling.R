@@ -16,7 +16,7 @@
 #' }
 #' @export
 #' @author Ruggero Ferrazza
-#' @examples
+#' 
 #' 
 #' @keywords IO
 #' @seealso \link{main_labelling}
