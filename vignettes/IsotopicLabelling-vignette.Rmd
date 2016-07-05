@@ -37,9 +37,9 @@ data("xcms_obj")
 This is an *xcmsSet* object representing lipid extracts of 8 samples from ^13^C labelling experiments:
 
 - The first 4 samples are relative to unlabelled cell cultures (natural ^13^C abundance);
-- In the last 4 samples the cells were grown in a substrate where the glucose was replaced by uniformly-labelled ^13^C glucose (99% ^13^C labelling). 
+- In the last 4 samples the cells were grown in a substrate where the glucose was replaced by uniformly-labelled ^13^C glucose (99% ^13^C labelling).
 
-This LC-MS data was kindly provided by Dr. Julian L Griffin and Dr. Nyasha Munjoma (Department of Biochemistry, University of Cambridge - UK). 
+This LC-MS data was kindly provided by Dr. Julian L Griffin and Dr. Nyasha Munjoma (Department of Biochemistry, University of Cambridge - UK).
 
 The conversion of the *xcmsSet* object to the required data frame is achieved through:
 
