@@ -265,7 +265,7 @@ This data frame contains all the information needed for additional statistical a
 
 One of the crucial parameters of `batch_labelling` is a data frame containing all the required information from the user, including the list of target analytes and their chromatographic characteristics (same inputs required by `main_labelling`). A more extensive explanation is reported in the manual.
 
-Here is a practical script on how to batch-process the data. In the example, the example data frame that comes with the package is used.
+Here is a practical script on how to batch-process the data. In the example, the data frame that comes with the package is used.
 
 ```{r, eval=FALSE}
 
