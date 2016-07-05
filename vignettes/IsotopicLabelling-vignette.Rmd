@@ -260,6 +260,33 @@ The last three columns of the data frame contain the critical value for a 95% co
 This data frame contains all the information needed for additional statistical analysis, such as the comparison across sample groups in order to understand wheteher or not two (or more) groups have statistically different estimates.
 
 
+# Batch Processing
+*IsotopicLabelling* also makes a function available, called `batch_labelling`, that allows to batch-process the MS data. This is useful when the users have in mind a list of target analytes over which they would like to run the pattern analysis.
+
+One of the crucial parameters of `batch_labelling` is a data frame containing all the required information from the user, including the list of target analytes and their chromatographic characteristics (same inputs required by `main_labelling`). A more extensive explanation is reported in the manual.
+
+Here is a practical script on how to batch-process the data. In the example, the example data frame that comes with the package is used.
+
+```{r, eval=FALSE}
+
+    # Load the package
+    library("IsotopicLabelling")
+    
+    # Load the xcmsSet object
+    data(xcms_obj)
+    
+    # Convert the object into the required data frame
+    peak_table <- table_xcms(xcms_obj)
+    
+    # Batch-process the data
+    batch_grouped_estimates <- batch_labelling(targets=targets, 
+                                               groups=factor(c(rep("C12",4), rep("C13",4))),
+                                               plot_patterns=FALSE, plot_residuals=FALSE, 
+                                               plot_results=FALSE, save_results=FALSE)
+    
+```
+
+
 # Conclusion
 
 In this document we introduced the main functions of the *IsotopicLabelling* R package, explaining their basic working principles. Using the provided data set, we illustrated how to use the package in practice and how to quickly assess the results, with the hope that this package will prove to be a useful tool to researchers dealing with labelling experiments.
