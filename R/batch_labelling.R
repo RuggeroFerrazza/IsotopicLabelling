@@ -2,6 +2,7 @@
 #' 
 #' This function batch processes LC- or GC-MS data, analyzing the isotopic patterns of a set of target analytes specified by the user. As with other functions of the package, it also requires chromatogrpahic information.
 #' 
+#' 
 #' @param targets A data frame containing information on the target analytes. Columns 1 to 7 are: "name_compound" (the name of the target analytes), "compound", "labelling", "RT", "RT_shift", "chrom_width", "mass_shift" (the same parameters for \code{\link{main_labelling}} function). Columns from 8 onwards contain the initial estimates for the label abundances (one estimate for each sample). If not known, a single column of NA values can be entered
 #' @param groups A factor containing the name of the group of each sample analysed; 
 #' The function will calculate summary statistics for the samples belonging to the same group
@@ -10,12 +11,9 @@
 #' 
 #' @return batch_grouped_estimates A list as long as the number of target analytes, containing the summary of the fitted results (group estimates)
 #' 
-#' @author Ruggero Ferrazza
-#' 
-#' @seealso \link{main_labelling}, \link{group_labelling}, \link{save_labelling}, \link{plot.labelling}
+#' @export
 #' 
 #' @examples
-#' 
 #' # Get the sample dataset
 #' data("xcms_obj")
 #' 
@@ -26,11 +24,14 @@
 #' data("targets")
 #' 
 #'  # Batch process the data
-#'  batch_grouped_estimates <- batch_labelling(targets=targets, plot_patterns=T, plot_residuals=F, plot_results=F, save_results=F)
+#'  batch_grouped_estimates <- batch_labelling(targets=targets, 
+#'  groups=factor(c(rep("C12",4), rep("C13",4))),
+#'  plot_patterns=FALSE, plot_residuals=FALSE, plot_results=FALSE, save_results=FALSE)
 #'    
+#' @author Ruggero Ferrazza
 #' 
-#' @export
-#' 
+#' @seealso \link{main_labelling}, \link{group_labelling}, \link{save_labelling}, \link{plot.labelling}
+
 batch_labelling <- function(targets, groups, plot_patterns=T, plot_residuals=F, plot_results=F, save_results=F){
   
   # attach targets data frame

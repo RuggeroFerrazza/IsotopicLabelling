@@ -2,6 +2,7 @@
 
 S3method(plot,labelling)
 S3method(summary,labelling)
+export(batch_labelling)
 export(find_abundance)
 export(group_labelling)
 export(isotopic_information)
