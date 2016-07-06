@@ -5,6 +5,7 @@
 #' 
 #' @param compound Character vector specifying the chemical formula of the compound of interest, 
 #' with X being the element with unknown isotopic distribution (to be fitted)
+#' @param charge Natural number, denoting the charge state of the target adduct (1,2,3,...). If not provided, it is 1 by default 
 #' @param labelling Character, either "H" or "C", specifying the labelling element 
 #' 
 #' @return A list with the following elements:
@@ -30,14 +31,14 @@
 #' @export
 #'
 #' @examples
-#' info <- isotopic_information(compound="X40H77NO8P", labelling="C") 
+#' info <- isotopic_information(compound="X40H77NO8P", charge=1, labelling="C") 
 #' # This is the case for [PC 32:2+H]+ in a ^13C-labelling experiment 
 #' @author Ruggero Ferrazza
 #' @keywords manip
 #' 
 
 
-isotopic_information <- function(compound, labelling){
+isotopic_information <- function(compound, charge=1, labelling){
 
   # Check that labelling is correct
   if (labelling !="H" & labelling !="C") stop("Check the labelling character: it should be either H or C")
@@ -52,7 +53,7 @@ isotopic_information <- function(compound, labelling){
   
   
   # Compute the mass difference between heavier and lighter isotope
-  mass_diff <- abs(diff(X_new[,"mass"]))
+  mass_diff <- abs(diff(X_new[,"mass"]))/charge
   
   
   # In isotopes data frame keep only the elements of interest
@@ -71,7 +72,7 @@ isotopic_information <- function(compound, labelling){
                                       a <- a[which.max(isotopes$abundance[a])]
                                       return(isotopes$mass[a])})
   
-  exact_mass <- sum(DF[[2]]*DF[[3]])
+  exact_mass <- sum(DF[[2]]*DF[[3]])/charge
   
   
   # Set the X abundance to be unknown

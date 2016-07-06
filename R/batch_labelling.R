@@ -3,7 +3,7 @@
 #' This function batch processes LC- or GC-MS data, analyzing the isotopic patterns of a set of target analytes specified by the user. As with other functions of the package, it also requires chromatogrpahic information.
 #' 
 #' 
-#' @param targets A data frame containing information on the target analytes. Columns 1 to 7 are: "name_compound" (the name of the target analytes), "compound", "labelling", "RT", "RT_shift", "chrom_width", "mass_shift" (the same parameters for \code{\link{main_labelling}} function). Columns from 8 onwards contain the initial estimates for the label abundances (one estimate for each sample). If not known, a single column of NA values can be entered
+#' @param targets A data frame containing information on the target analytes. Columns 1 to 8 are: "name_compound" (the name of the target analytes), "compound", "charge", "labelling", "RT", "RT_shift", "chrom_width", "mass_shift" (the same parameters for \code{\link{main_labelling}} function). Columns from 9 onwards contain the initial estimates for the label abundances (one estimate for each sample). If not known, a single column of NA values can be entered
 #' @param groups A factor containing the name of the group of each sample analysed; 
 #' The function will calculate summary statistics for the samples belonging to the same group
 #' @param plot_patterns,plot_residuals,plot_results Whether or not to plot the patterns, the residuals and a summary of the results. If so, pdf files are created in the working directory
@@ -43,7 +43,7 @@ batch_labelling <- function(targets, groups, plot_patterns=T, plot_residuals=F, 
   
   for (i in 1:length(compound)){
     
-    batch_fitted <- main_labelling(peak_table, compound=compound[i], labelling=labelling[i],
+    batch_fitted <- main_labelling(peak_table, compound=compound[i], charge=charge[i], labelling=labelling[i],
                                    mass_shift=mass_shift[i], RT=RT[i], RT_shift=RT_shift[i],
                                    chrom_width=chrom_width[i], initial_abundance=as.numeric(targets[i,8:ncol(targets)]))
     

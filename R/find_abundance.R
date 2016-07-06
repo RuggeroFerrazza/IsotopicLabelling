@@ -11,6 +11,7 @@
 #' @param initial_abundance Either NA, or a numeric vector of length equal to the number of samples, 
 #' with the initial guesses on the percentage isotopic abundance of the labelling isotope 
 #' (denoted as X, it can be either ^2H or ^13C). If provided, numbers between 0 and 100
+#' @param charge Natural number, denoting the charge state of the target adduct (1,2,3,...). If not provided, it is 1 by default 
 #'
 #' @return An object of class \code{labelling}, 
 #' which is a list containing the results of the fitting procedure:
@@ -34,17 +35,17 @@
 #'
 #' @examples
 #' \dontrun{
-#' fitted_abundances <- find_abundance(patterns, info, initial_abundance=NA)
+#' fitted_abundances <- find_abundance(patterns, info, initial_abundance=NA, charge=1)
 #' }
 #' 
 #' @author Ruggero Ferrazza
 #' @seealso \code{\link{isotopic_information}}
 
-find_abundance <- function(patterns, info, initial_abundance=NA){
+find_abundance <- function(patterns, info, initial_abundance=NA, charge=1){
   tmp_results <- list()
   
   
-      analysis_X <- function(pattern, info, initial_ab=NA){
+      analysis_X <- function(pattern, info, initial_ab=NA, charge=1){
             
             # Create a vector of masses
             target <- info$target[-c(1,2)]
@@ -62,14 +63,14 @@ find_abundance <- function(patterns, info, initial_abundance=NA){
     
             # First, rough estimate of the X abundance (either 2H or 13C), using mass_max and the exact mass 
             # If the user inserts a first estimate (initial_abundance), skip this step
-            if (is.na(initial_ab)) initial_ab <-  unname(round((mass_max - target[1])/info$nX, digits=3)) 
+            if (is.na(initial_ab)) initial_ab <-  unname(round(((mass_max - target[1])*charge)/info$nX, digits=3)) 
             if (initial_ab <0) initial_ab <- 0 
             if (initial_ab >1) initial_ab <- 1 
     
             # Fitting procedure to find the best estimate for the X isotopic abundance 
             # The signals of the pattern are given weights proportional to the square root of their intensity, so as to give less importance to noise
             # Define a function of only one parameter, the abundance, which will have to be fitted by the nls function
-            pattern_fit <- function(abundance) { pattern_from_abundance(abundance, info=info)}
+            pattern_fit <- function(abundance) { pattern_from_abundance(abundance, info=info, charge=charge)}
     
             fit <- nls(formula=pattern~pattern_fit(abundance), start=list(abundance=initial_ab), control=list(maxiter=50, tol=5e-8, warnOnly=T), algorithm="port", weights=sqrt(pattern), na.action=na.exclude, lower=0, upper=1)
     
@@ -84,7 +85,7 @@ find_abundance <- function(patterns, info, initial_abundance=NA){
   
   for (i in 3:ncol(patterns)){
     
-    tmp_results[[i-2]] <- analysis_X(pattern=patterns[,i], info=info, initial_ab=initial_abundance[i-2]/100)
+    tmp_results[[i-2]] <- analysis_X(pattern=patterns[,i], info=info, initial_ab=initial_abundance[i-2]/100, charge=charge)
 
   }
   names(tmp_results) <- colnames(patterns[,-c(1,2)])

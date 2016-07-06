@@ -5,6 +5,7 @@
 #' 
 #' @param peak_table A data.frame containing the integrated signals for the samples 
 #' @param compound The chemical formula of the compound of interest
+#' @param charge Natural number, denoting the charge state of the target adduct (1,2,3,...). If not provided, it is 1 by default 
 #' @param labelling Character, either "H" or "C", specifying which is the labelling element
 #' @param mass_shift Maximum shift allowed in the mass range
 #' @param RT Expected retention time of the compund of interest
@@ -42,6 +43,7 @@
 #' peak_table <- table_xcms(xcms_obj)
 #' fitted_abundances <- main_labelling(peak_table, 
 #'                                     compound="X40H77NO8P", 
+#'                                     charge=1,
 #'                                     labelling="C", 
 #'                                     mass_shift=0.05, 
 #'                                     RT=285, 
@@ -68,6 +70,7 @@
 
 main_labelling <- function(peak_table, 
                            compound, 
+                           charge=1,
                            labelling, 
                            mass_shift, 
                            RT, 
@@ -77,13 +80,13 @@ main_labelling <- function(peak_table,
 
 
   # Get some useful isotopic information, to be used in the coming functions
-  info <- isotopic_information(compound, labelling)
+  info <- isotopic_information(compound, charge, labelling)
   
   # Extract one pattern for each sample (each column of the peak_table data frame)
   experimental_patterns <- isotopic_pattern(peak_table, info, mass_shift, RT, RT_shift, chrom_width)
   
   # For each extracted pattern, find the X isotopic distribution that better fits the experimental data 
-  fitted_abundances <- find_abundance(patterns=experimental_patterns, info, initial_abundance)
+  fitted_abundances <- find_abundance(patterns=experimental_patterns, info, initial_abundance, charge)
   
   return(fitted_abundances)
   

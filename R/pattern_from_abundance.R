@@ -10,6 +10,7 @@
 #' number between 0 and 1
 #' @param info Named list containing isotopic information, 
 #' output of the \code{\link{isotopic_information}} function
+#' @param charge Natural number, denoting the charge state of the target adduct (1,2,3,...). If not provided, it is 1 by default 
 #'
 #' @return A vector representing the normalised isotopic pattern of the compound of interest, 
 #' corresponding to the specified isotopic distribution
@@ -25,7 +26,8 @@
 #' 
 #' 
 
-pattern_from_abundance <-function(abundance, info){
+pattern_from_abundance <-function(abundance, info, charge=1){
+  
   # Get the table containing isotopic information
   isotopes <- info$isotopes
   
@@ -39,10 +41,14 @@ pattern_from_abundance <-function(abundance, info){
                                       id = FALSE, 
                                       sortby = "mass")[[1]])
   
+  # Correct masses for charge state
+  theoret_pattern[,1] <- theoret_pattern[,1]/charge
+  
+  
   # Group together signals coming from isotopologues with the same nucleon number,
   # and assign them the proper position
   theoretical_pattern <- unlist(lapply(info$target[-c(1,2)], function(x){  
-    ind <- which(abs(x - theoret_pattern[,1]) <0.2)
+    ind <- which(abs(x - theoret_pattern[,1]) <0.2/charge)
     return(sum(theoret_pattern[ind,2]))
                             }))
   # Normalise the theoretical pattern

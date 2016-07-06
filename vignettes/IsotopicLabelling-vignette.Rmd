@@ -70,6 +70,7 @@ From the MS data frame, the whole isotopic pattern analysis can be performed thr
 - **peak_table**, the data frame containing MS peak intensities or areas;
 - **compound**, a character vector specifying the chemical formula of the compound of interest. A special notation should be used, whereby the character "X" denotes the element with unknown isotopic distribution. For example, the proton adduct of phosphocholine 32:2, [PC 32:2 + H]^+^, has chemical formula C40H77NO8P, but it should be written "X40H77NO8P" for ^13^C labelling experiments, and "C40X76HNO8P" for ^2^H experiments, in this last case keeping in mind that one hydrogen atom comes from the solvent, and has therefore fixed natural abundance. Please note that adduct ions should be specified, and not the neutral molecular species;
 
+- **charge**, a natural number representing the charge state of the target adduct (1,2,3,...)
 - **labelling**, a character, either "H" or "C", specifying the labelling isotope;
 - **mass_shift**, the maximum difference between measured and true mass. In other words, the mass accuracy;
 - **RT**, the expected retention time of the compound of interest;
@@ -79,9 +80,9 @@ From the MS data frame, the whole isotopic pattern analysis can be performed thr
 
 Using the example data set, the parameters to enter for [PC 32:2 + H]^+^ are:
 ```{r, eval=FALSE}
-fitted_abundances <- main_labelling(peak_table, compound="X40H77NO8P", labelling="C", 
-                                   mass_shift=0.05, RT=285, RT_shift=20, 
-                                   chrom_width=7, initial_abundance=NA)
+fitted_abundances <- main_labelling(peak_table, compound="X40H77NO8P", charge=1,
+                                    labelling="C", mass_shift=0.05, RT=285, 
+                                    RT_shift=20, chrom_width=7, initial_abundance=NA)
 ```
 
 The output is an object of class *labelling*, a list containing the results of the analysis.
@@ -102,9 +103,9 @@ An alternative to using `main_labelling` is to run the three distinct functions 
 
 ## Isotopes and Isotopologues
 
-The first function used by `main_labelling` is `isotopic_information`, which summarizes important isotopic information in a single object, a list required by the subsequent functions. The input parameters are the chemical formula and the type of labelling; for [PC 32:2 + H]^+^, the list can be obtained through:
+The first function used by `main_labelling` is `isotopic_information`, which summarizes important isotopic information in a single object, a list required by the subsequent functions. The input parameters are the chemical formula, the type of labelling and, if different from 1, the charge state of the target analyte; for [PC 32:2 + H]^+^, the list can be obtained through:
 ```{r, eval=FALSE}
-info <- isotopic_information(compound="X40H77NO8P", labelling="C")
+info <- isotopic_information(compound="X40H77NO8P", charge=1, labelling="C")
 ```
 As detailed in the reference manual, the output is a named list:
 ```{r, results = "hide", echo = FALSE, message = FALSE, warning = FALSE}
@@ -118,15 +119,18 @@ In particular, "isotopes" is a table with the natural isotopic abundances (numbe
 info$isotopes
 ```
 
-Importantly, "target" is a named vector with the exact masses of all the possible isotopologues arising because of the labelling isotope; in the example, [PC 32:2 + H]^+^ has 40 carbon atoms, and therefore the possible isotopologues coming from ^13^C span a 41 mass range: the lightest one is the monoisotopic species (with 40 ^12^C atoms), whereas the heaviest is the species with 40 ^13^C atoms. However, the isotopic patterns also depend on the other elements, and therefore the list of target isotopologues is further extended by two *m/z* units, enough for small and medium-sized molecules such as lipids and metabolites.
+Importantly, "target" is a named vector with the exact m/z of all the possible isotopologues arising because of the labelling isotope; in the example, [PC 32:2 + H]^+^ has 40 carbon atoms, and therefore (considering that charge=1) the possible isotopologues coming from ^13^C span a 41 mass range: the lightest one is the monoisotopic species (with 40 ^12^C atoms), whereas the heaviest is the species with 40 ^13^C atoms. However, the isotopic patterns also depend on the other elements, and therefore the list of target isotopologues is further extended by two *m/z* units, enough for small and medium-sized molecules such as lipids and metabolites.
 
 The naming of the target masses follows this convention:
 
-- **M+0** is the monoisotopic mass, the sum of the masses of the atoms using the lightest isotope for each element, X included;
-- **M+1** is the mass where one light isotope (either X or any other element) is replaced by its heaviest counterpart;
-- **M+i** is the mass where there have been "i" replacements.
+- **M+0** is the monoisotopic m/z, the sum of the masses of the atoms using the lightest isotope for each element, X included;
+- **M+1** is the m/z where one light isotope (either X or any other element) is replaced by its heaviest counterpart;
+- **M+i** is the m/z where there have been "i" replacements.
 
-The underlying assumption is that the MS resolution is not high enough to resolve the isotopic fine structure; consequently, the replacement of, for example, ^1^H with ^2^H is indistinguishable from ^12^C with ^13^C. This is true for most of the instruments currently used in LC-MS measurements.
+These target masses already take into consideration the charge state of the analyte.
+
+Crucially, the underlying assumption of *IsotopicLabelling* is that the MS resolution is not high enough to resolve the isotopic fine structure; consequently, the replacement of, for example, ^1^H with ^2^H is indistinguishable from ^12^C with ^13^C. This is true for most of the instruments currently used in LC-MS measurements.
+
 
 ## Extraction of the Experimental Isotopic Patterns
 
@@ -137,7 +141,7 @@ experimental_patterns <- isotopic_pattern(peak_table, info, mass_shift=0.05,
                                           RT=285, RT_shift=20, chrom_width=7)
 ```
 
-In addition to the table of peaks and the list obtained above, the used also has to provide the parameters `mass_shift`, `RT`, `RT_shift` and `chrom_width` (already discussed above and further detailed in the reference manual).
+In addition to the table of peaks and the list obtained above, the user also has to provide the parameters `mass_shift`, `RT`, `RT_shift` and `chrom_width` (already discussed above and further detailed in the reference manual).
 
 The output is a matrix containing the extracted signals, with its first two columns reserved for the exact *m/z* and the retention times of the peaks:
 ```{r, results = "hide", echo = FALSE, message = FALSE, warning = FALSE}
@@ -168,13 +172,13 @@ In the example, this information can be achieved through:
 
 ```{r, eval=FALSE}
 fitted_abundances <- find_abundance(patterns=experimental_patterns, info=info, 
-                                    initial_abundance=NA)
+                                    initial_abundance=NA, charge=1)
 ```
 
 
 The output is a class *labelling* object, which is a list containing the results of the isotopic pattern analysis:
 ```{r, results = "hide", echo = FALSE, message = FALSE, warning = FALSE}
-fitted_abundances <- find_abundance(patterns=experimental_patterns, info, initial_abundance=NA)
+fitted_abundances <- find_abundance(patterns=experimental_patterns, info, initial_abundance=NA, charge=1)
 ```
 ```{r}
 attributes(fitted_abundances)
@@ -307,9 +311,9 @@ After having discussed the principles behind this package, our final aim here is
     peak_table <- table_xcms(xcms_obj)
     
     # Process the data
-    fitted_abundances <- main_labelling(peak_table, compound="X40H77NO8P", labelling="C",
-                                       mass_shift=0.05, RT=285, RT_shift=20, 
-                                       chrom_width=7, initial_abundance=NA)
+    fitted_abundances <- main_labelling(peak_table, compound="X40H77NO8P", charge=1,
+                                        labelling="C", mass_shift=0.05, RT=285, 
+                                        RT_shift=20, chrom_width=7, initial_abundance=NA)
 
     # Quickly look at the results
     summary(object=fitted_abundances)
