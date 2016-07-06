@@ -4,12 +4,12 @@
 \name{targets}
 \alias{targets}
 \title{Example data frame for batch processing}
-\format{An object of class \code{data.frame} with 9 rows and 8 columns.}
+\format{An object of class \code{data.frame} with 9 rows and 9 columns.}
 \usage{
 targets
 }
 \description{
-A data frame containing information on target analytes to batch process. The first 7 columns contain the same parameters to input when using \code{\link{main_labelling}} function. See the details in \code{\link{batch_labelling}}
+A data frame containing information on target analytes to batch process. The first 8 columns contain the same parameters to input when using \code{\link{main_labelling}} function. See the details in \code{\link{batch_labelling}}
 }
 \examples{
 data(targets)

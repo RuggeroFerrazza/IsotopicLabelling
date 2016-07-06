@@ -4,11 +4,13 @@
 \alias{isotopic_information}
 \title{Get useful isotopic information}
 \usage{
-isotopic_information(compound, labelling)
+isotopic_information(compound, charge = 1, labelling)
 }
 \arguments{
 \item{compound}{Character vector specifying the chemical formula of the compound of interest, 
 with X being the element with unknown isotopic distribution (to be fitted)}
+
+\item{charge}{Natural number, denoting the charge state of the target adduct (1,2,3,...). If not provided, it is 1 by default}
 
 \item{labelling}{Character, either "H" or "C", specifying the labelling element}
 }
@@ -39,7 +41,7 @@ since the one giving rise to the adduct comes from the solvent,
 and is considered to have fixed natural abundance.
 }
 \examples{
-info <- isotopic_information(compound="X40H77NO8P", labelling="C") 
+info <- isotopic_information(compound="X40H77NO8P", charge=1, labelling="C") 
 # This is the case for [PC 32:2+H]+ in a ^13C-labelling experiment 
 }
 \author{

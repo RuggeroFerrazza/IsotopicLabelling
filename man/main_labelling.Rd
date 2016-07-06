@@ -4,13 +4,15 @@
 \alias{main_labelling}
 \title{Main function of the package}
 \usage{
-main_labelling(peak_table, compound, labelling, mass_shift, RT, RT_shift,
-  chrom_width, initial_abundance = NA)
+main_labelling(peak_table, compound, charge = 1, labelling, mass_shift, RT,
+  RT_shift, chrom_width, initial_abundance = NA)
 }
 \arguments{
 \item{peak_table}{A data.frame containing the integrated signals for the samples}
 
 \item{compound}{The chemical formula of the compound of interest}
+
+\item{charge}{Natural number, denoting the charge state of the target adduct (1,2,3,...). If not provided, it is 1 by default}
 
 \item{labelling}{Character, either "H" or "C", specifying which is the labelling element}
 
@@ -58,6 +60,7 @@ data(xcms_obj)
 peak_table <- table_xcms(xcms_obj)
 fitted_abundances <- main_labelling(peak_table, 
                                     compound="X40H77NO8P", 
+                                    charge=1,
                                     labelling="C", 
                                     mass_shift=0.05, 
                                     RT=285, 

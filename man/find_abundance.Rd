@@ -4,7 +4,7 @@
 \alias{find_abundance}
 \title{Fit experimental isotopic patterns}
 \usage{
-find_abundance(patterns, info, initial_abundance = NA)
+find_abundance(patterns, info, initial_abundance = NA, charge = 1)
 }
 \arguments{
 \item{patterns}{A matrix of experimental isotopic patterns (one column for each sample), 
@@ -15,6 +15,8 @@ with the first two columns representing \emph{m/z} and retention time of the cor
 \item{initial_abundance}{Either NA, or a numeric vector of length equal to the number of samples, 
 with the initial guesses on the percentage isotopic abundance of the labelling isotope 
 (denoted as X, it can be either ^2H or ^13C). If provided, numbers between 0 and 100}
+
+\item{charge}{Natural number, denoting the charge state of the target adduct (1,2,3,...). If not provided, it is 1 by default}
 }
 \value{
 An object of class \code{labelling}, 
@@ -42,7 +44,7 @@ procedure.
 }
 \examples{
 \dontrun{
-fitted_abundances <- find_abundance(patterns, info, initial_abundance=NA)
+fitted_abundances <- find_abundance(patterns, info, initial_abundance=NA, charge=1)
 }
 
 }

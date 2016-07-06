@@ -4,7 +4,7 @@
 \alias{pattern_from_abundance}
 \title{Compute theoretical isotopic patterns}
 \usage{
-pattern_from_abundance(abundance, info)
+pattern_from_abundance(abundance, info, charge = 1)
 }
 \arguments{
 \item{abundance}{Isotopic abundance of the labelling isotope X (either ^2H or ^13C); 
@@ -12,6 +12,8 @@ number between 0 and 1}
 
 \item{info}{Named list containing isotopic information, 
 output of the \code{\link{isotopic_information}} function}
+
+\item{charge}{Natural number, denoting the charge state of the target adduct (1,2,3,...). If not provided, it is 1 by default}
 }
 \value{
 A vector representing the normalised isotopic pattern of the compound of interest, 

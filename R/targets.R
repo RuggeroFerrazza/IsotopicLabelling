@@ -5,4 +5,4 @@
 #' @examples
 #' data(targets)
 #
-
+"targets"
