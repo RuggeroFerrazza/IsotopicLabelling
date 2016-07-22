@@ -38,6 +38,7 @@ An object of the class \code{labelling}, which is a list containing the results 
  \item{y_exp}{ Matrix containing normalised experimental patterns, 
  where for each sample the most intense signal is set to 100}
  \item{y_theor}{ Matrix of normalised fitted theoretical pattern (most intense signal set to 100 for each sample)}
+ \item{residuals}{Matrix of residuals: each column is the difference between experimental and best fitted theoretical patterns}
  \item{warnings}{ Character vector containing possible warnings coming from the fitting procedure}
 }
 \description{
